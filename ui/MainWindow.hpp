@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <atomic>
 #include <mutex>
 #include <string>
@@ -23,10 +22,10 @@ extern "C" {
 #include "audio.h"
 }
 
-class CameraWindow : public Gtk::Window {
+class MainWindow : public Gtk::Window {
 public:
-  CameraWindow();
-  ~CameraWindow() override;
+  MainWindow();
+  ~MainWindow() override;
 
 private:
   void initialise_device();

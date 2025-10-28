@@ -1,4 +1,4 @@
-#include "CameraWindow.hpp"
+#include "MainWindow.hpp"
 
 #include <chrono>
 #include <cstring>
@@ -8,8 +8,8 @@
 #include <stdexcept>
 
 #include <glibmm/fileutils.h>
-#include <glibmm/miscutils.h>
 #include <glibmm/main.h>
+#include <glibmm/miscutils.h>
 
 extern "C" {
 #include <glib.h>
@@ -19,13 +19,14 @@ extern "C" {
 namespace {
 constexpr const char *kDefaultDevice = "/dev/video0";
 constexpr std::chrono::milliseconds kRetryDelay{10};
-}
+constexpr const char *kResourcePath = "ui/resources/style.css";
+} // namespace
 
-CameraWindow::CameraWindow() {
+MainWindow::MainWindow() {
   set_title("guvcview (GTK prototype)");
   set_default_size(960, 720);
 
-  dispatcher_.connect(sigc::mem_fun(*this, &CameraWindow::on_frame_ready));
+  dispatcher_.connect(sigc::mem_fun(*this, &MainWindow::on_frame_ready));
 
   add(layout_box_);
   layout_box_.pack_start(content_box_, Gtk::PACK_EXPAND_WIDGET);
@@ -36,41 +37,33 @@ CameraWindow::CameraWindow() {
 
   status_label_.set_margin_top(6);
   status_label_.set_margin_bottom(6);
-  status_label_.set_text("Abrindo dispositivo " + std::string{kDefaultDevice} + "...");
+  status_label_.set_text("Abrindo dispositivo " + std::string{kDefaultDevice} +
+                         "...");
 
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
   sidebar_box_.set_spacing(16);
   sidebar_box_.set_valign(Gtk::ALIGN_FILL);
   sidebar_box_.set_halign(Gtk::ALIGN_FILL);
-  sidebar_box_.set_size_request(160, -1);
 
   auto css = Gtk::CssProvider::create();
-  try {
-    auto current_dir = Glib::get_current_dir();
-    auto candidate = Glib::build_filename(current_dir, "ui/style.css");
-    if (!Glib::file_test(candidate, Glib::FILE_TEST_EXISTS))
-      candidate = Glib::build_filename(current_dir, "style.css");
-    css->load_from_path(candidate);
-  } catch (const Glib::Error &err) {
-    css->load_from_data(
-        ".sidebar { background-color: #111; }\n"
-        ".sidebar-button { background-image: none; background-color: #222; color: #f5f5f5; }\n"
-        ".sidebar-button:hover { background-color: #333; }\n");
-  }
-  Gtk::StyleContext::add_provider_for_screen(Gdk::Screen::get_default(), css,
-                                             GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  auto current_dir = Glib::get_current_dir();
+  auto css_path = Glib::build_filename(current_dir, kResourcePath);
+  css->load_from_path(css_path);
+  Gtk::StyleContext::add_provider_for_screen(
+      Gdk::Screen::get_default(), css,
+      GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   sidebar_box_.get_style_context()->add_class("sidebar");
 
   capture_button_.set_label("Foto");
-  capture_button_.set_size_request(-1, 50);
-  capture_button_.set_margin_left(5);
-  capture_button_.set_margin_right(5);
+  capture_button_.set_size_request(60, 50);
+  capture_button_.set_margin_left(15);
+  capture_button_.set_margin_right(15);
   capture_button_.get_style_context()->add_class("sidebar-button");
 
   record_button_.set_label("Gravar");
-  record_button_.set_size_request(-1, 50);
-  record_button_.set_margin_left(5);
-  record_button_.set_margin_right(5);
+  record_button_.set_size_request(60, 50);
+  record_button_.set_margin_left(15);
+  record_button_.set_margin_right(15);
   record_button_.get_style_context()->add_class("sidebar-button");
 
   sidebar_box_.pack_start(spacer_top_, Gtk::PACK_EXPAND_WIDGET, 0);
@@ -78,15 +71,17 @@ CameraWindow::CameraWindow() {
   sidebar_box_.pack_start(record_button_, Gtk::PACK_SHRINK, 0);
   sidebar_box_.pack_start(spacer_bottom_, Gtk::PACK_EXPAND_WIDGET, 0);
 
-  capture_button_.signal_clicked().connect(sigc::mem_fun(*this, &CameraWindow::on_capture_button_clicked));
-  record_button_.signal_clicked().connect(sigc::mem_fun(*this, &CameraWindow::on_record_button_clicked));
+  capture_button_.signal_clicked().connect(
+      sigc::mem_fun(*this, &MainWindow::on_capture_button_clicked));
+  record_button_.signal_clicked().connect(
+      sigc::mem_fun(*this, &MainWindow::on_record_button_clicked));
 
   show_all_children();
   initialise_audio();
   initialise_device();
 }
 
-CameraWindow::~CameraWindow() {
+MainWindow::~MainWindow() {
   running_ = false;
   if (capture_thread_.joinable())
     capture_thread_.join();
@@ -99,7 +94,7 @@ CameraWindow::~CameraWindow() {
   }
 }
 
-void CameraWindow::initialise_device() {
+void MainWindow::initialise_device() {
   v4l2core_set_verbosity(0);
   device_ = v4l2core_init_dev(kDefaultDevice);
   if (!device_) {
@@ -110,14 +105,16 @@ void CameraWindow::initialise_device() {
   v4l2core_prepare_valid_format(device_);
   v4l2core_prepare_valid_resolution(device_);
   if (v4l2core_update_current_format(device_) != E_OK) {
-    status_label_.set_text("Não foi possível aplicar formato ao dispositivo");
+    status_label_.set_text(
+        "Não foi possível aplicar formato ao dispositivo");
     return;
   }
 
   frame_width_ = v4l2core_get_frame_width(device_);
   frame_height_ = v4l2core_get_frame_height(device_);
   if (frame_width_ <= 0 || frame_height_ <= 0) {
-    status_label_.set_text("Resolução inválida reportada pelo dispositivo");
+    status_label_.set_text(
+        "Resolução inválida reportada pelo dispositivo");
     return;
   }
 
@@ -128,11 +125,11 @@ void CameraWindow::initialise_device() {
 
   rgb_buffer_.resize(static_cast<size_t>(frame_width_) * frame_height_ * 3);
   running_ = true;
-  capture_thread_ = std::thread(&CameraWindow::capture_loop, this);
+  capture_thread_ = std::thread(&MainWindow::capture_loop, this);
   status_label_.set_text("Capturando de " + std::string{kDefaultDevice});
 }
 
-void CameraWindow::stop_stream() {
+void MainWindow::stop_stream() {
   if (device_) {
     v4l2core_stop_stream(device_);
     v4l2core_close_dev(device_);
@@ -140,7 +137,7 @@ void CameraWindow::stop_stream() {
   }
 }
 
-void CameraWindow::capture_loop() {
+void MainWindow::capture_loop() {
   while (running_) {
     if (!device_) {
       std::this_thread::sleep_for(kRetryDelay);
@@ -155,7 +152,8 @@ void CameraWindow::capture_loop() {
 
     {
       std::lock_guard<std::mutex> guard(frame_mutex_);
-      yu12_to_rgb24(rgb_buffer_.data(), frame->yuv_frame, frame_width_, frame_height_);
+      yu12_to_rgb24(rgb_buffer_.data(), frame->yuv_frame, frame_width_,
+                    frame_height_);
       pending_frame_ = true;
     }
 
@@ -180,7 +178,7 @@ void CameraWindow::capture_loop() {
   }
 }
 
-void CameraWindow::on_frame_ready() {
+void MainWindow::on_frame_ready() {
   std::vector<uint8_t> local_copy;
   {
     std::lock_guard<std::mutex> guard(frame_mutex_);
@@ -190,23 +188,24 @@ void CameraWindow::on_frame_ready() {
     pending_frame_ = false;
   }
 
-  auto pixbuf = Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, frame_width_, frame_height_);
+  auto pixbuf =
+      Gdk::Pixbuf::create(Gdk::COLORSPACE_RGB, false, 8, frame_width_,
+                          frame_height_);
   auto *pixels = pixbuf->get_pixels();
   const int rowstride = pixbuf->get_rowstride();
 
   const size_t src_row_bytes = static_cast<size_t>(frame_width_) * 3;
   for (int y = 0; y < frame_height_; ++y) {
-    std::memcpy(pixels + y * rowstride, local_copy.data() + y * src_row_bytes, src_row_bytes);
+    std::memcpy(pixels + y * rowstride,
+                local_copy.data() + y * src_row_bytes, src_row_bytes);
   }
 
   image_widget_.set(pixbuf);
 }
 
-void CameraWindow::on_capture_button_clicked() {
-  snapshot_request_ = true;
-}
+void MainWindow::on_capture_button_clicked() { snapshot_request_ = true; }
 
-void CameraWindow::on_record_button_clicked() {
+void MainWindow::on_record_button_clicked() {
   if (recording_.load(std::memory_order_acquire)) {
     stop_record_request_ = true;
   } else {
@@ -214,7 +213,7 @@ void CameraWindow::on_record_button_clicked() {
   }
 }
 
-std::string CameraWindow::timestamp_string() const {
+std::string MainWindow::timestamp_string() const {
   auto now = std::chrono::system_clock::now();
   std::time_t tt = std::chrono::system_clock::to_time_t(now);
   std::tm tm;
@@ -224,9 +223,9 @@ std::string CameraWindow::timestamp_string() const {
   return oss.str();
 }
 
-std::string CameraWindow::build_output_path(bool video) const {
-  const char *special = g_get_user_special_dir(video ? G_USER_DIRECTORY_VIDEOS
-                                                     : G_USER_DIRECTORY_PICTURES);
+std::string MainWindow::build_output_path(bool video) const {
+  const char *special = g_get_user_special_dir(
+      video ? G_USER_DIRECTORY_VIDEOS : G_USER_DIRECTORY_PICTURES);
   std::string base;
   if (special && *special)
     base = special;
@@ -235,7 +234,9 @@ std::string CameraWindow::build_output_path(bool video) const {
   else
     base = ".";
 
-  std::string filename = std::string("guvcview_") + timestamp_string() + (video ? ".mkv" : ".jpg");
+  std::string filename =
+      std::string("guvcview_") + timestamp_string() +
+      (video ? ".mkv" : ".jpg");
   if (!base.empty())
     g_mkdir_with_parents(base.c_str(), 0755);
 
@@ -244,7 +245,7 @@ std::string CameraWindow::build_output_path(bool video) const {
   return base + "/" + filename;
 }
 
-void CameraWindow::save_snapshot(v4l2_frame_buff_t *frame) {
+void MainWindow::save_snapshot(v4l2_frame_buff_t *frame) {
   if (!frame)
     return;
 
@@ -255,7 +256,7 @@ void CameraWindow::save_snapshot(v4l2_frame_buff_t *frame) {
     post_status("Falha ao salvar foto");
 }
 
-bool CameraWindow::start_recording(v4l2_frame_buff_t *frame) {
+bool MainWindow::start_recording(v4l2_frame_buff_t *frame) {
   if (recording_.load(std::memory_order_acquire) || !device_ || !frame)
     return false;
 
@@ -283,10 +284,10 @@ bool CameraWindow::start_recording(v4l2_frame_buff_t *frame) {
 
   {
     std::lock_guard<std::mutex> lock(encoder_mutex_);
-    encoder_ctx_ = encoder_init(v4l2core_get_requested_frame_format(device_), 0,
-                                0, ENCODER_MUX_MKV, frame_width_,
-                                frame_height_, fps_num, fps_den, audio_channels,
-                                audio_samprate);
+    encoder_ctx_ =
+        encoder_init(v4l2core_get_requested_frame_format(device_), 0, 0,
+                     ENCODER_MUX_MKV, frame_width_, frame_height_, fps_num,
+                     fps_den, audio_channels, audio_samprate);
     if (!encoder_ctx_) {
       post_status("Falha ao iniciar encoder");
       return false;
@@ -306,7 +307,7 @@ bool CameraWindow::start_recording(v4l2_frame_buff_t *frame) {
   return true;
 }
 
-void CameraWindow::handle_recording_frame(v4l2_frame_buff_t *frame) {
+void MainWindow::handle_recording_frame(v4l2_frame_buff_t *frame) {
   std::lock_guard<std::mutex> lock(encoder_mutex_);
   if (!encoder_ctx_ || !frame)
     return;
@@ -332,7 +333,7 @@ void CameraWindow::handle_recording_frame(v4l2_frame_buff_t *frame) {
   encoder_process_next_video_buffer(encoder_ctx_);
 }
 
-void CameraWindow::stop_recording() {
+void MainWindow::stop_recording() {
   if (!recording_.load(std::memory_order_acquire))
     return;
 
@@ -357,17 +358,17 @@ void CameraWindow::stop_recording() {
   current_video_path_.clear();
 }
 
-void CameraWindow::post_status(const std::string &text) {
+void MainWindow::post_status(const std::string &text) {
   Glib::signal_idle().connect_once(
       [this, text]() { status_label_.set_text(text); });
 }
 
-void CameraWindow::set_record_button_label(const std::string &text) {
+void MainWindow::set_record_button_label(const std::string &text) {
   Glib::signal_idle().connect_once(
       [this, text]() { record_button_.set_label(text); });
 }
 
-void CameraWindow::initialise_audio() {
+void MainWindow::initialise_audio() {
   audio_set_verbosity(0);
   audio_ctx_ = audio_init(AUDIO_PORTAUDIO, -1);
   if (!audio_ctx_)
@@ -379,8 +380,9 @@ void CameraWindow::initialise_audio() {
     audio_set_samprate(audio_ctx_, 44100);
 }
 
-void CameraWindow::start_audio_capture(int frame_size) {
-  if (!audio_ctx_ || audio_get_api(audio_ctx_) == AUDIO_NONE || frame_size <= 0)
+void MainWindow::start_audio_capture(int frame_size) {
+  if (!audio_ctx_ || audio_get_api(audio_ctx_) == AUDIO_NONE ||
+      frame_size <= 0)
     return;
 
   int channels = audio_get_channels(audio_ctx_);
@@ -398,25 +400,21 @@ void CameraWindow::start_audio_capture(int frame_size) {
   }
 
   audio_sample_type_ = encoder_get_audio_sample_fmt(encoder_ctx_);
-  audio_thread_running_ = true;
-  audio_thread_ = std::thread(&CameraWindow::audio_capture_loop, this);
+  audio_thread_running_.store(true, std::memory_order_release);
+  audio_thread_ = std::thread(&MainWindow::audio_capture_loop, this);
 }
 
-void CameraWindow::stop_audio_capture() {
-  if (audio_thread_running_) {
-    audio_thread_running_ = false;
-    if (audio_thread_.joinable())
-      audio_thread_.join();
-  }
+void MainWindow::stop_audio_capture() {
+  audio_thread_running_.store(false, std::memory_order_release);
+  if (audio_thread_.joinable())
+    audio_thread_.join();
+
   if (audio_ctx_)
     audio_stop(audio_ctx_);
-  if (audio_buffer_) {
-    audio_delete_buffer(audio_buffer_);
-    audio_buffer_ = nullptr;
-  }
+  audio_buffer_ = nullptr;
 }
 
-void CameraWindow::audio_capture_loop() {
+void MainWindow::audio_capture_loop() {
   while (audio_thread_running_) {
     if (!audio_ctx_ || !audio_buffer_) {
       std::this_thread::sleep_for(std::chrono::milliseconds(2));
