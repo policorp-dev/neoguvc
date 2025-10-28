@@ -1,0 +1,47 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+CMAKE_FLAGS = \
+        -DCMAKE_BUILD_TYPE=Release      \
+        -DCMAKE_CXX_FLAGS_RELEASE="$(CXXFLAGS)" \
+        -DCMAKE_C_FLAGS_RELEASE="$(CFLAGS)" \
+        -DCMAKE_EXE_LINKER_FLAGS_RELEASE="$(LDFLAGS)" \
+        -DCMAKE_INSTALL_LIBDIR="lib/$(DEB_HOST_MULTIARCH)" \
+        -DCMAKE_INSTALL_PREFIX=/usr \
+        -DCMAKE_SKIP_RPATH=ON \
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
+        -DENABLE_PRECOMPILED_HEADERS=OFF \
+	-DINSTALL_DEVKIT=ON \
+	-DUSE_PULSE=ON \
+
+%:
+	dh $@ --buildsystem=cmake
+
+override_dh_auto_configure:
+	dh_auto_configure \
+                -- $(CMAKE_FLAGS) \
+                -DCMAKE_SHARED_LINKER_FLAGS_RELEASE="$(LDFLAGS)"
+
+override_dh_auto_install:
+	dh_auto_install --destdir=$(CURDIR)/debian/guvcview
+
+override_dh_install:
+	rm -rf debian/guvcview/usr/share/doc/guvcview/NEWS \
+		debian/guvcview/usr/share/doc/guvcview/COPYING \
+		debian/guvcview/usr/share/doc/guvcview/INSTALL \
+		debian/guvcview/usr/share/doc/guvcview/ChangeLog
+
+	install -d debian/guvcview/usr/share/metainfo
+	if [ -f debian/guvcview/usr/share/appdata/guvcview.appdata.xml ]; then \
+	  cp -a debian/guvcview/usr/share/appdata/guvcview.appdata.xml \
+	    debian/guvcview/usr/share/metainfo/org.guvcview.appdata.xml; \
+	  rm -f debian/guvcview/usr/share/appdata/guvcview.appdata.xml; \
+	fi
+
+	dh_install
+
+override_dh_auto_test:

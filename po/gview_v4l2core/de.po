@@ -1,0 +1,944 @@
+# translation of de.po to Portuguese
+# translation of guvcview to German
+# Copyright (C) 2008 Paulo Assis
+# This file is distributed under the same license as the guvcview package.
+# guvcview <pj.assis@gmail.com>, 2008.
+# Paulo Assis <pj.assis@gmail.com>, 2008.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: de\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-01 23:47+0100\n"
+"PO-Revision-Date: 2013-02-25 05:34+0000\n"
+"Last-Translator: Paulo Assis <pj.assis@gmail.com>\n"
+"Language-Team: Portuguese <pt@li.org>\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-08 10:36+0000\n"
+"X-Generator: Launchpad (build 16869)\n"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:73
+msgid "Aperture Priority Mode"
+msgstr "Blendenpriorität-Modus"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:67
+msgid "Auto"
+msgstr "Automatisch"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:92
+msgid "Auto Exposure"
+msgstr "Automatische Belichtung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:71
+msgid "Auto Mode"
+msgstr "Automatischer Modus"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:66
+msgid "Backlight Compensation"
+msgstr "Korrektur der Hintergrundbeleuchtung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:74
+msgid "Black Level"
+msgstr "Schwarzwert"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:66
+msgid "Blinking"
+msgstr "Blinken"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:78
+msgid "Blue Balance"
+msgstr "Blauabgleich"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:60
+msgid "Brightness"
+msgstr "Helligkeit"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:91
+msgid "Camera Controls"
+msgstr "Kamerasteuerung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:86
+msgid "Chroma AGC"
+msgstr "Automatische Chrominanz-Verstärkung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:88
+msgid "Color Effects"
+msgstr "Farbeffekte"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:87
+msgid "Color Killer"
+msgstr "Entsättigen"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:61
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:165
+msgid "Disable video processing"
+msgstr "Video-Verarbeitung ausschalten"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:76
+msgid "Do White Balance"
+msgstr "Weißabgleich durchführen"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:79
+msgid "Exposure"
+msgstr "Belichtung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:112
+msgid "Exposure (Absolute)"
+msgstr "Belichtung (Absolut)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:93
+msgid "Exposure Time, Absolute"
+msgstr "Belichtungszeit, direkt"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:110
+msgid "Exposure, Auto"
+msgstr "Belichtung, automatisch"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:111
+msgid "Exposure, Auto Priority"
+msgstr "Belichtung, automatische Priorität"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:94
+msgid "Exposure, Dynamic Framerate"
+msgstr "Belichtung, dynamische Bildwiederholrate"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:120
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:126
+msgid "Focus"
+msgstr "Fokus"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:121
+msgid "Focus (Absolute)"
+msgstr "Focus (direkt)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:101
+msgid "Focus, Absolute"
+msgstr "Fokus, direkt"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:69
+msgid "Focus, Auto"
+msgstr "Fokus, automatisch"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:103
+msgid "Focus, Automatic"
+msgstr "Fokus, automatisch"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:102
+msgid "Focus, Relative"
+msgstr "Fokus, relativ"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:81
+msgid "Gain"
+msgstr "Verstärkung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:80
+msgid "Gain, Automatic"
+msgstr "Verstärkung, automatisch"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:65
+msgid "Gamma"
+msgstr "Gamma"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:84
+msgid "Horizontal Center"
+msgstr "Horizontal zentrieren"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:82
+msgid "Horizontal Flip"
+msgstr "Horizontal spiegeln"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:62
+msgid "Hue"
+msgstr "Farbe"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:68
+msgid "Hue, Automatic"
+msgstr "Farbton, automatisch"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:152
+msgid "LED1 Frequency"
+msgstr "Frequenz LED1"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:139
+msgid "LED1 Mode"
+msgstr "Modus LED1"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:70
+msgid "Manual Mode"
+msgstr "Händischer Modus"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:64
+msgid "Off"
+msgstr "Aus"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:65
+msgid "On"
+msgstr "An"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:74
+msgid "Pan (relative)"
+msgstr "Umdrehung (relativ)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:100
+msgid "Pan Reset"
+msgstr "Umdrehung (Zurückstellen)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:99
+msgid "Pan, Absolute"
+msgstr "Schwenken, direkt"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:95
+msgid "Pan, Relative"
+msgstr "Schwenken, relativ"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:97
+msgid "Pan, Reset"
+msgstr "Schwenken zurücksetzen"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:67
+msgid "Power Line Frequency"
+msgstr "Netzfrequenz"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:107
+msgid "Privacy"
+msgstr "Privatsphäre"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:178
+msgid "Raw bits per pixel"
+msgstr "Rohe Bits pro Pixel"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:77
+msgid "Red Balance"
+msgstr "Rotabgleich"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:63
+msgid "Saturation"
+msgstr "Sättigung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:64
+msgid "Sharpness"
+msgstr "Schärfe"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:72
+msgid "Shutter Priority Mode"
+msgstr "Blendenautomatik-Modus"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:87
+msgid "Tilt (relative)"
+msgstr "Neigung (relativ)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:113
+msgid "Tilt Reset"
+msgstr "Neigung (Zurückstellen)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:96
+msgid "Tilt, Relative"
+msgstr "Neigen, relativ"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:98
+msgid "Tilt, Reset"
+msgstr "Neigung zurücksetzen"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:59
+msgid "User Controls"
+msgstr "Benutzersteuerung"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:85
+msgid "Vertical Center"
+msgstr "Vertikal zentrieren"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:83
+msgid "Vertical Flip"
+msgstr "Vertikal spiegeln"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:116
+msgid "White Balance Blue Component"
+msgstr "Weißabgleich (Blau)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:115
+msgid "White Balance Component, Auto"
+msgstr "Automatischer Weißabgleich (Komponente)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:117
+msgid "White Balance Red Component"
+msgstr "Weißabgleich (Rot)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:114
+msgid "White Balance Temperature"
+msgstr "Weißabgleich (Temperatur)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:113
+msgid "White Balance Temperature, Auto"
+msgstr "Automatischer Weißabgleich (Temperatur)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:75
+msgid "White Balance, Automatic"
+msgstr "Weißabgleich, automatisch"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:104
+msgid "Zoom, Absolute"
+msgstr "Vergrößerung, direkt"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:106
+msgid "Zoom, Continuous"
+msgstr "Vergrößerung, fortlaufend"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:105
+msgid "Zoom, Relative"
+msgstr "Vergrößerung, relativ"
+
+#~ msgid ""
+#~ "\n"
+#~ "You have more than one video device installed.\n"
+#~ "Do you want to try another one ?\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Sie haben mehr als ein Video-Gerät installiert\n"
+#~ "Möchten Sie ein weiteres versuchen?\n"
+
+#~ msgid ""
+#~ "                              encoder fps:   \n"
+#~ " (0 - use fps combobox value)"
+#~ msgstr ""
+#~ "                              Kodierer Bilder/s:   \n"
+#~ " (0 – FPS-Wert aus Auswahlliste)"
+
+#~ msgid " Ducky"
+#~ msgstr " Ente"
+
+#~ msgid " Echo"
+#~ msgstr " Echo"
+
+#~ msgid " Fuzz"
+#~ msgstr " Fuzz"
+
+#~ msgid " Invert"
+#~ msgstr " Gedreht"
+
+#~ msgid " Mirror"
+#~ msgstr " Gespiegelt"
+
+#~ msgid " Mono"
+#~ msgstr " Monochrom"
+
+#~ msgid " Negative"
+#~ msgstr " Negativ"
+
+#~ msgid " Particles"
+#~ msgstr " Partikel"
+
+#~ msgid " Pieces"
+#~ msgstr " Bausteine"
+
+#~ msgid " Reverb"
+#~ msgstr " Hall"
+
+#~ msgid " Show"
+#~ msgstr " Anzeigen"
+
+#~ msgid " Show VU meter"
+#~ msgstr " VU-Meter anzeigen"
+
+#~ msgid " Sound"
+#~ msgstr " Audio"
+
+#~ msgid " WahWah"
+#~ msgstr " Wah-Wah"
+
+#~ msgid " monotonic pts"
+#~ msgstr " Monoton ansteigender PTS"
+
+#~ msgid "- local options"
+#~ msgstr "- lokale Wahlen"
+
+#~ msgid "---- Audio Effects ----"
+#~ msgstr "— Audio-Filter —"
+
+#, fuzzy
+#~ msgid "---- Audio Filters ----"
+#~ msgstr "— Video-Filter —"
+
+#~ msgid "---- Video Filters ----"
+#~ msgstr "— Video-Filter —"
+
+#~ msgid "1 - mono"
+#~ msgstr "1 - Mono"
+
+#~ msgid "12 bit"
+#~ msgstr "12 Bit"
+
+#~ msgid "2 - stereo"
+#~ msgstr "2 - Stereo"
+
+#~ msgid "8 bit"
+#~ msgstr "8 Bit"
+
+#~ msgid "A video viewer and capturer for the linux uvc driver"
+#~ msgstr "Ein Video-Betrachter und Aufnahmewerkzeug für den Linux-UVC-Treiber"
+
+#~ msgid "ACC Low - (faac)"
+#~ msgstr "ACC Niedrig – (faac)"
+
+#~ msgid "AVI - avi format"
+#~ msgstr "AVI – Avi-Format"
+
+#~ msgid ""
+#~ "An error occurred while adding extension\n"
+#~ "controls to the UVC driver\n"
+#~ "Make sure you run guvcview as root (or sudo)."
+#~ msgstr ""
+#~ "Ein Fehler ist beim Hinzufügen der erweiterten\n"
+#~ "Bedienelemente zum UVC-Treiber aufgetreten.\n"
+#~ "Stellen Sie sicher, dass Sie »guvcview« als Systemverwalter\n"
+#~ "(Benutzer »root) ausführen oder mit »sudo«."
+
+#~ msgid "Audio"
+#~ msgstr "Audio"
+
+#~ msgid "Audio API:"
+#~ msgstr "Audio API:"
+
+#~ msgid "Audio Codec"
+#~ msgstr "Audio-Codec"
+
+#~ msgid "Audio Codec Properties"
+#~ msgstr "Audio-Codec-Eigenschaften"
+
+#, fuzzy
+#~ msgid "Audio Controls"
+#~ msgstr "Benutzersteuerung"
+
+#~ msgid "Auto Focus (continuous)"
+#~ msgstr "Automatisch Fokus (andauernd)"
+
+#~ msgid "Bitmap (Bmp)"
+#~ msgstr "Bitmap (bmp)"
+
+#~ msgid "Camera Button"
+#~ msgstr "Kameraknopf"
+
+#~ msgid "Camera Output:"
+#~ msgstr "Farbmodell:"
+
+#~ msgid "Cap. Image"
+#~ msgstr "Bild aufnehmen"
+
+#~ msgid "Cap. Image (I)"
+#~ msgstr "Bild aufnehmen (I)"
+
+#~ msgid "Cap. Video"
+#~ msgstr "Video aufnehmen"
+
+#~ msgid "Cap. Video (V)"
+#~ msgstr "Video aufnehmen (V)"
+
+#~ msgid "Capture Image"
+#~ msgstr "Bild aufnehmen"
+
+#~ msgid "Capture Video"
+#~ msgstr "Video aufnehmen"
+
+#~ msgid "Channels:"
+#~ msgstr "Kanäle:"
+
+#~ msgid "Configuration file"
+#~ msgstr "Konfigurationsdatei"
+
+#~ msgid "Dev. Default"
+#~ msgstr "Standard"
+
+#~ msgid "Device:"
+#~ msgstr "Eingabegerät:"
+
+#~ msgid "Displays debug information"
+#~ msgstr "Extra Informationen anzeigen"
+
+#~ msgid "Dolby AC3 - (lavc)"
+#~ msgstr "Dolby AC3 – (lavc)"
+
+#~ msgid "Don't display a GUI"
+#~ msgstr "Keine grafische Benutzeroberfläche anzeigen"
+
+#~ msgid "Don't stream video (image controls only)"
+#~ msgstr "Video nicht streamen (nur Bildsteuerung)"
+
+#~ msgid "Down"
+#~ msgstr "Runter"
+
+#~ msgid "Error"
+#~ msgstr "Fehler"
+
+#~ msgid "Exit after adding UVC extension controls (needs root/sudo)"
+#~ msgstr ""
+#~ "Nach Hinzufügen der erweiterten UVC-Bedienelemente beenden (root/sudo "
+#~ "erforderlich)"
+
+#~ msgid "Exits guvcview after closing video"
+#~ msgstr "GUVCView beenden, nachdem Video geschlossen wurde"
+
+#~ msgid "Extension controls were added to the UVC driver"
+#~ msgstr "Erweiterte Bedienelemente wurden zum UVC-Treiber hinzugefügt"
+
+#~ msgid "FLV1 - flash video 1"
+#~ msgstr "FLV1 – Flash-Video 1"
+
+#~ msgid "File"
+#~ msgstr "Datei"
+
+#~ msgid "File Format:"
+#~ msgstr "Dateiformat:"
+
+#~ msgid "Focus (absolute)"
+#~ msgstr "Fokus (absolut)"
+
+#~ msgid "Frame Rate:"
+#~ msgstr "Bildrate:"
+
+#~ msgid "Frame size, default: 640x480"
+#~ msgstr "Auflösung (Standard: 640x480)"
+
+#~ msgid "GTK UVC video viewer"
+#~ msgstr "UVC-Video-Betrachter in GTK"
+
+#~ msgid "GUVCViewer Controls"
+#~ msgstr "GUVCViewer-Bedienfeld"
+
+#, fuzzy
+#~ msgid "Guvcview"
+#~ msgstr "GUVCView"
+
+#~ msgid "Guvcview Video Capture"
+#~ msgstr "GUVCView-Video-Aufnahme"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Can't set a valid video stream for guvcview"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Es kann kein gültiger Video-Stream für guvcview festgelegt werden"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Couldn't query device capabilities"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Geräteeigenschaften konnten nicht abgefragt werden"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Read method error"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Fehler der Lesemethode"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "UVC Extension controls"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Erweiterte UVC-Bedienelemente"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to allocate Buffers"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Puffer konnten nicht angelegt werden"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to create Video Thread"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Video-Thread konnte nicht erzeugt werden"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to open device"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Das Gerät konnte nicht geöffnet werden"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to start with minimum setup"
+#~ msgstr ""
+#~ "GUVCView-Fehler:\n"
+#~ "\n"
+#~ "Es konnte nicht im minimalen Modus gestartet werden"
+
+#, fuzzy
+#~ msgid ""
+#~ "Guvcview version %s\n"
+#~ "\n"
+#~ msgstr "GUVCView-Warnung:"
+
+#~ msgid ""
+#~ "Guvcview:\n"
+#~ "\n"
+#~ "UVC Extension controls"
+#~ msgstr ""
+#~ "GUVCView:\n"
+#~ "\n"
+#~ "Erweiterte UVC-Bedienelemente"
+
+#~ msgid "Hardware Defaults"
+#~ msgstr "Hardware-Standards"
+
+#~ msgid "Hardware accelaration (enable(1) | disable(0))"
+#~ msgstr "Hardware accel. (aktivieren(1) | inaktivieren(0))"
+
+#~ msgid "Image Controls"
+#~ msgstr "Bildsteuerung"
+
+#~ msgid "Image capture interval in seconds"
+#~ msgstr "Bild aufnehmenabgelaufen (sekunden)"
+
+#~ msgid "Increment Filename"
+#~ msgstr "Dateinamen hochzählen"
+
+#~ msgid "Input Device:"
+#~ msgstr "Eingabegerät:"
+
+#, fuzzy
+#~ msgid "Jpeg (*.jpg)"
+#~ msgstr "JPEG (jpg)"
+
+#~ msgid "Left"
+#~ msgstr "Links"
+
+#~ msgid "Load Profile"
+#~ msgstr "Profil laden"
+
+#~ msgid "Load Profile at start"
+#~ msgstr "kontrollen - Datei öffnen"
+
+#~ msgid "MJPG - compressed"
+#~ msgstr "MJPG - komprimiert"
+
+#~ msgid "MKV - Matroska format"
+#~ msgstr "MKV – Matroska-Format"
+
+#~ msgid "MP3 - (lavc)"
+#~ msgstr "MP3 – (lavc)"
+
+#~ msgid "MPEG video 1"
+#~ msgstr "MPEG-Video 1"
+
+#~ msgid "MPEG2 - (lavc)"
+#~ msgstr "MPEG2 – (lavc)"
+
+#~ msgid "MPEG4-ASP"
+#~ msgstr "MPEG4-ASP"
+
+#~ msgid "MPEG4-AVC (H264)"
+#~ msgstr "MPEG4-AVC (H264)"
+
+#~ msgid "MPG2 - MPG2 format"
+#~ msgstr "MPG2 – MPEG-2-Format"
+
+#~ msgid "MS MP4 V3"
+#~ msgstr "MS MP4 V3"
+
+#~ msgid "Make sure the device driver supports v4l2."
+#~ msgstr "Stellen Sie sicher, dass der Gerätetreiber v4l2 unterstützt."
+
+#~ msgid ""
+#~ "Make sure your device driver is v4l2 compliant\n"
+#~ "and that it is properly installed."
+#~ msgstr ""
+#~ "Stellen Sie bitte sicher, dass Sie sowohl eine v4l2 kompatible Kamera "
+#~ "besitzen als auch den Treiber geladen haben."
+
+#~ msgid "Not enough free space left on disk"
+#~ msgstr "Nicht genügend freier Speicherplatz vorhanden"
+
+#~ msgid "Number of Pictures to capture"
+#~ msgstr "Bildquantität"
+
+#~ msgid "Number of initial frames to skip"
+#~ msgstr "Anzahl der am Anfang zu überspringenden Einzelbilder"
+
+#, fuzzy
+#~ msgid "PCM - uncompressed (float 32 bit)"
+#~ msgstr "PCM – Unkomprimiert (16 Bit)"
+
+#~ msgid "PORTAUDIO"
+#~ msgstr "PORTAUDIO"
+
+#~ msgid "PULSEAUDIO"
+#~ msgstr "PULSEAUDIO"
+
+#~ msgid "Photo"
+#~ msgstr "Foto"
+
+#, fuzzy
+#~ msgid "Photo file name"
+#~ msgstr "Bilddatei"
+
+#~ msgid ""
+#~ "Pixel format(mjpg|jpeg|yuyv|yvyu|uyvy|yyuv|yu12|yv12|nv12|nv21|nv16|nv61|"
+#~ "y41p|grey|y10b|y16 |s501|s505|s508|gbrg|grbg|ba81|rggb|bgr3|rgb3)"
+#~ msgstr ""
+#~ "Pixel-Format (mjpg|jpeg|yuyv|yvyu|uyvy|yyuv|yu12|yv12|nv12|nv21|nv16|nv61|"
+#~ "y41p|grey|y10b|y16 |s501|s505|s508|gbrg|grbg|ba81|rggb|bgr3|rgb3)"
+
+#~ msgid ""
+#~ "Please make sure the camera is connected\n"
+#~ "and that the correct driver is installed."
+#~ msgstr ""
+#~ "Bitte stellen Sie sicher, dass die Kamera angeschlossen wird\n"
+#~ "und dass die driver angebracht ist."
+
+#~ msgid "Please reconnect your camera."
+#~ msgstr "Bitte schließen Sie Ihre Kamera erneut an."
+
+#~ msgid "Please report it to http://developer.berlios.de/bugs/?group_id=8179"
+#~ msgstr ""
+#~ "Bitte melden Sie dies an http://developer.berlios.de/bugs/?group_id=8179"
+
+#~ msgid "Please try mmap instead (--capture_method=1)."
+#~ msgstr "Bitte versuchen sie es mit mmap (--capture_method=1)"
+
+#~ msgid "Please try restarting your system."
+#~ msgstr "Bitte System neu starten."
+
+#~ msgid "Portable Network Graphics (Png)"
+#~ msgstr "Portable Network Graphics (png)"
+
+#, fuzzy
+#~ msgid "Print version"
+#~ msgstr "Zeigt die Version an"
+
+#~ msgid "Quality:"
+#~ msgstr "Qualität:"
+
+#~ msgid "RGB - uncomp BMP"
+#~ msgstr "RGB - keine Komp. BMP"
+
+#, fuzzy
+#~ msgid "Raw  (*.raw)"
+#~ msgstr "Rohdatenbild (raw)"
+
+#, fuzzy
+#~ msgid "Raw camera input"
+#~ msgstr "Farbmodell:"
+
+#~ msgid "Resolution:"
+#~ msgstr "Auflösung:"
+
+#~ msgid "Right"
+#~ msgstr "Rechts"
+
+#~ msgid "Sample Rate:"
+#~ msgstr "Samplingrate:"
+
+#~ msgid "Save File"
+#~ msgstr "Datei speichern"
+
+#~ msgid "Save Profile"
+#~ msgstr "Profil speichern"
+
+#, fuzzy
+#~ msgid "Set capture method [read | mmap (def)]"
+#~ msgstr "Aufnahmemethode (1-mmap (Vorgabe)  2-read)"
+
+#, fuzzy
+#~ msgid "Set device name (def: /dev/video0)"
+#~ msgstr "Verwendetes Video-Gerät [Standard: /dev/video0]"
+
+#~ msgid "Settings"
+#~ msgstr "Einstellungen"
+
+#~ msgid "Show FPS value (enable(1) | disable (0))"
+#~ msgstr "FPS anzeigen (aktivieren(1)|inaktivieren(0))"
+
+#, fuzzy
+#~ msgid "Stop Cap. (I)"
+#~ msgstr "Automatisch anhalten (I)"
+
+#~ msgid "Stop Video (V)"
+#~ msgstr "Video stoppen (V)"
+
+#~ msgid "Theora (ogg theora)"
+#~ msgstr "Theora (Ogg-Theora)"
+
+#~ msgid "Up"
+#~ msgstr "Hoch"
+
+#~ msgid "VP8 (VP8)"
+#~ msgstr "VP8 (VP8)"
+
+#~ msgid "Video"
+#~ msgstr "Video"
+
+#~ msgid "Video Codec"
+#~ msgstr "Video-Codec"
+
+#~ msgid "Video Codec Properties"
+#~ msgstr "Video-Codec-Eigenschaften"
+
+#, fuzzy
+#~ msgid "Video Controls"
+#~ msgstr "Benutzersteuerung"
+
+#~ msgid "Video File name (capture from start)"
+#~ msgstr "Video-Dateiname (Aufnahme von Anfang)"
+
+#~ msgid "Video capture time (in seconds)"
+#~ msgstr "Video-Aufnahmedauer (Sek)"
+
+#, fuzzy
+#~ msgid "Video file name"
+#~ msgstr "Bilddatei"
+
+#~ msgid "Vorbis"
+#~ msgstr "Vorbis"
+
+#~ msgid "WEBM - format"
+#~ msgstr "WEBM-Format"
+
+#~ msgid "WMV1 - win. med. video 7"
+#~ msgstr "WMV1 – Win.-Med.-Video 7"
+
+#~ msgid "YUY2 - uncomp YUV"
+#~ msgstr "YUY2 - keine Komp. YUV"
+
+#, fuzzy
+#~ msgid "_Apply"
+#~ msgstr "Anwenden"
+
+#, fuzzy
+#~ msgid "_Cancel"
+#~ msgstr "Abbrechen"
+
+#~ msgid "audio codec values"
+#~ msgstr "Audio-Codec-Werte"
+
+#~ msgid "bit rate:   "
+#~ msgstr "Bitrate:   "
+
+#~ msgid "cancel"
+#~ msgstr "Abbrechen"
+
+#~ msgid "capturing photo to"
+#~ msgstr "Foto speichern in"
+
+#~ msgid "cmp:   "
+#~ msgstr "cmp:   "
+
+#~ msgid "codec values"
+#~ msgstr "Codec-Werte"
+
+#~ msgid "dia size:   "
+#~ msgstr "DIA, Größe:   "
+
+#~ msgid "framerefs:   "
+#~ msgstr "FrameRefs:   "
+
+#~ msgid "gop size:   "
+#~ msgstr "GOP, Größe:   "
+
+#~ msgid "guvcview"
+#~ msgstr "GUVCView"
+
+#~ msgid "last predictor count:   "
+#~ msgstr "Letzter Prädiktorzählstand:   "
+
+#~ msgid ""
+#~ "launch new process or restart?.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Neuer prozess oder programm neustarten?\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "load control profile"
+#~ msgstr "Profil laden"
+
+#~ msgid "max B frames:   "
+#~ msgstr "Max. B-Frames:   "
+
+#~ msgid "max. qdiff:   "
+#~ msgstr "max. qdiff:   "
+
+#~ msgid "mb decision:   "
+#~ msgstr "MD, Entscheidung:   "
+
+#~ msgid "me method:   "
+#~ msgstr "ME, Methode:   "
+
+#~ msgid "new"
+#~ msgstr "Neue"
+
+#~ msgid "num threads:   "
+#~ msgstr "Anzahl Threads:   "
+
+#~ msgid "pre cmp:   "
+#~ msgstr "Präd.-CMP:   "
+
+#~ msgid "pre dia size:   "
+#~ msgstr "Präd.-DIA, Größe:   "
+
+#~ msgid "pre me:   "
+#~ msgstr "Präd.-ME:   "
+
+#~ msgid "qblur:   "
+#~ msgstr "QBlur:   "
+
+#~ msgid "qcompress:   "
+#~ msgstr "QCompress:   "
+
+#~ msgid "qmax:   "
+#~ msgstr "qmax:   "
+
+#~ msgid "qmin:   "
+#~ msgstr "qmin:   "
+
+#~ msgid "restart"
+#~ msgstr "Neustart"
+
+#~ msgid "sample format:   "
+#~ msgstr "Sample-Format:   "
+
+#, fuzzy
+#~ msgid "saving video to %s"
+#~ msgstr "Video speichern in"
+
+#~ msgid "set Focus"
+#~ msgstr "Fokus"
+
+#~ msgid "start new"
+#~ msgstr "beginnen neue"
+
+#~ msgid "sub cmp:   "
+#~ msgstr "sub cmp:   "
+
+#~ msgid "subq:   "
+#~ msgstr "Subq:   "
+
+#, fuzzy
+#~ msgid "video codec values"
+#~ msgstr "Audio-Codec-Werte"

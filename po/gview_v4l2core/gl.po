@@ -1,0 +1,551 @@
+# Galician translation for guvcview
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the guvcview package.
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+# Dario Villar Veres <dario.villar.v@gmail.com>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: guvcview\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-01 23:47+0100\n"
+"PO-Revision-Date: 2013-02-25 05:34+0000\n"
+"Last-Translator: Dario <dario.villar.v@gmail.com>\n"
+"Language-Team: Galician <gl@li.org>\n"
+"Language: gl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-08 10:36+0000\n"
+"X-Generator: Launchpad (build 16869)\n"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:73
+msgid "Aperture Priority Mode"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:67
+#, fuzzy
+msgid "Auto"
+msgstr "Modo Automático"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:92
+msgid "Auto Exposure"
+msgstr "Exposición automática"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:71
+msgid "Auto Mode"
+msgstr "Modo Automático"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:66
+msgid "Backlight Compensation"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:74
+msgid "Black Level"
+msgstr "Nivel de negro"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:66
+msgid "Blinking"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:78
+msgid "Blue Balance"
+msgstr "Balance azul"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:60
+msgid "Brightness"
+msgstr "Brillo"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:91
+msgid "Camera Controls"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:86
+msgid "Chroma AGC"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:88
+msgid "Color Effects"
+msgstr "Efectos de cor"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:87
+msgid "Color Killer"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:61
+msgid "Contrast"
+msgstr "Contraste"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:165
+msgid "Disable video processing"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:76
+msgid "Do White Balance"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:79
+msgid "Exposure"
+msgstr "Exposición"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:112
+msgid "Exposure (Absolute)"
+msgstr "Exposición (absoluto)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:93
+msgid "Exposure Time, Absolute"
+msgstr "Tempo de exposición, Absoluto"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:110
+msgid "Exposure, Auto"
+msgstr "Exposición, Automático"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:111
+msgid "Exposure, Auto Priority"
+msgstr "Exposición, Prioridade automática"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:94
+msgid "Exposure, Dynamic Framerate"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:120
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:126
+msgid "Focus"
+msgstr "Foco"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:121
+msgid "Focus (Absolute)"
+msgstr "Foco(absoluto)"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:101
+msgid "Focus, Absolute"
+msgstr "Foco, absoluto"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:69
+msgid "Focus, Auto"
+msgstr "Foco, Automático"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:103
+msgid "Focus, Automatic"
+msgstr "Foco, automático"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:102
+msgid "Focus, Relative"
+msgstr "Foco, relativo"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:81
+msgid "Gain"
+msgstr "Ganancia"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:80
+msgid "Gain, Automatic"
+msgstr "Ganancia, Automática"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:65
+msgid "Gamma"
+msgstr "Gamma"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:84
+msgid "Horizontal Center"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:82
+msgid "Horizontal Flip"
+msgstr "Xiro horizontal"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:62
+msgid "Hue"
+msgstr "Ton"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:68
+msgid "Hue, Automatic"
+msgstr "Matiz, Automático"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:152
+msgid "LED1 Frequency"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:139
+msgid "LED1 Mode"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:70
+msgid "Manual Mode"
+msgstr "Modo Manual"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:64
+msgid "Off"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:65
+msgid "On"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:74
+msgid "Pan (relative)"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:100
+msgid "Pan Reset"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:99
+msgid "Pan, Absolute"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:95
+msgid "Pan, Relative"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:97
+msgid "Pan, Reset"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:67
+msgid "Power Line Frequency"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:107
+msgid "Privacy"
+msgstr "Privacidade"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:178
+msgid "Raw bits per pixel"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:77
+msgid "Red Balance"
+msgstr "Balance vermello"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:63
+msgid "Saturation"
+msgstr "Saturación"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:64
+msgid "Sharpness"
+msgstr "Focalización"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:72
+msgid "Shutter Priority Mode"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:87
+msgid "Tilt (relative)"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:113
+msgid "Tilt Reset"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:96
+msgid "Tilt, Relative"
+msgstr "Inclinación, relativo"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:98
+msgid "Tilt, Reset"
+msgstr "Inclinación, Restabelecer"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:59
+msgid "User Controls"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:85
+msgid "Vertical Center"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:83
+msgid "Vertical Flip"
+msgstr "Xiro vertical"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:116
+msgid "White Balance Blue Component"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:115
+msgid "White Balance Component, Auto"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:117
+msgid "White Balance Red Component"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:114
+msgid "White Balance Temperature"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:113
+msgid "White Balance Temperature, Auto"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:75
+msgid "White Balance, Automatic"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:104
+msgid "Zoom, Absolute"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:106
+msgid "Zoom, Continuous"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:105
+msgid "Zoom, Relative"
+msgstr ""
+
+#~ msgid " Echo"
+#~ msgstr " Echo"
+
+#~ msgid " Fuzz"
+#~ msgstr " Difuso"
+
+#~ msgid " Invert"
+#~ msgstr " Inverter"
+
+#~ msgid " Mirror"
+#~ msgstr " Espello"
+
+#~ msgid " Mono"
+#~ msgstr " Mono"
+
+#~ msgid " Negative"
+#~ msgstr " Negativo"
+
+#~ msgid " Particles"
+#~ msgstr " Partículas"
+
+#~ msgid " Reverb"
+#~ msgstr " Reverberar"
+
+#~ msgid " Show"
+#~ msgstr " Mostrar"
+
+#~ msgid " Sound"
+#~ msgstr " Son"
+
+#~ msgid "1 - mono"
+#~ msgstr "1 - mono"
+
+#~ msgid "2 - stereo"
+#~ msgstr "2 - stereo"
+
+#~ msgid "Audio"
+#~ msgstr "Son"
+
+#, fuzzy
+#~ msgid "Audio Controls"
+#~ msgstr "Controles de GUVCViewer"
+
+#~ msgid "Auto Focus (continuous)"
+#~ msgstr "Foco automático(continuo)"
+
+#~ msgid "Camera Output:"
+#~ msgstr "Saída da cámara:"
+
+#~ msgid "Cap. Image"
+#~ msgstr "Cap. Imaxe"
+
+#~ msgid "Cap. Image (I)"
+#~ msgstr "Cap. Imaxe (I)"
+
+#~ msgid "Cap. Video"
+#~ msgstr "Cap. Video"
+
+#~ msgid "Cap. Video (V)"
+#~ msgstr "Cap. Video (V)"
+
+#~ msgid "Channels:"
+#~ msgstr "Canles:"
+
+#~ msgid "Device:"
+#~ msgstr "Dispositivo:"
+
+#~ msgid "Down"
+#~ msgstr "Abaixo"
+
+#~ msgid "Error"
+#~ msgstr "Erro"
+
+#~ msgid "Frame Rate:"
+#~ msgstr "Taxa de fotogramas:"
+
+#~ msgid "Frame size, default: 640x480"
+#~ msgstr "Tamaño predeterminado do marco:640x480"
+
+#~ msgid "Guvcview Video Capture"
+#~ msgstr "Capturador de vídeo GUVCView"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Couldn't query device capabilities"
+#~ msgstr ""
+#~ "Erro de GUVCView:\n"
+#~ "\n"
+#~ "Non se poideron consultar as capacidades do dispositivo"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Read method error"
+#~ msgstr ""
+#~ "Erro de GUVCView:\n"
+#~ "\n"
+#~ "Erro no método de lectura"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to allocate Buffers"
+#~ msgstr ""
+#~ "Erro de GUVCView:\n"
+#~ "\n"
+#~ "Non foi posíbel asignarlle memoria aos búferes"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to create Video Thread"
+#~ msgstr ""
+#~ "Erro en GUVCView:\n"
+#~ "\n"
+#~ "Non foi posíble crear un fío de execución de vídeo"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to open device"
+#~ msgstr ""
+#~ "Erro de GUVCView:\n"
+#~ "\n"
+#~ "Non foi posíbel conectar a cámara"
+
+#~ msgid "Input Device:"
+#~ msgstr "Dispositivo de entrada:"
+
+#~ msgid "Left"
+#~ msgstr "Esquerda"
+
+#~ msgid "MPEG4-ASP"
+#~ msgstr "MPEG4-ASP"
+
+#~ msgid "MPEG4-AVC (H264)"
+#~ msgstr "MPEG4-AVC (H264)"
+
+#~ msgid "MS MP4 V3"
+#~ msgstr "MS MP4 V3"
+
+#~ msgid "Make sure the device driver supports v4l2."
+#~ msgstr "Asegúrese de que o controlador do dispositivo soporta v4l2."
+
+#~ msgid "PULSEAUDIO"
+#~ msgstr "PULSEAUDIO"
+
+#, fuzzy
+#~ msgid "Photo file name"
+#~ msgstr "Nome da imaxe"
+
+#~ msgid ""
+#~ "Please make sure the camera is connected\n"
+#~ "and that the correct driver is installed."
+#~ msgstr ""
+#~ "Asegúrese de que a súa cámara está conectada\n"
+#~ "e que o controlador está correctamente instalada."
+
+#~ msgid "Please reconnect your camera."
+#~ msgstr "Conecte de novo a súa cámara."
+
+#~ msgid "Please report it to http://developer.berlios.de/bugs/?group_id=8179"
+#~ msgstr ""
+#~ "Por favor, informe do erro a http://developer.berlios.de/bugs/?"
+#~ "group_id=8179"
+
+#~ msgid "Please try mmap instead (--capture_method=1)."
+#~ msgstr "Probe mmap no seu lugar  (--capture_method=1)."
+
+#~ msgid "Please try restarting your system."
+#~ msgstr "Probe reiniciando o seu sistema."
+
+#, fuzzy
+#~ msgid "Print version"
+#~ msgstr "Mostrar a versión"
+
+#~ msgid "Quality:"
+#~ msgstr "Calidade:"
+
+#, fuzzy
+#~ msgid "Raw camera input"
+#~ msgstr "Saída da cámara:"
+
+#~ msgid "Resolution:"
+#~ msgstr "Resolution:"
+
+#~ msgid "Right"
+#~ msgstr "Dereita"
+
+#~ msgid "Sample Rate:"
+#~ msgstr "Taxa de mostraxe:"
+
+#~ msgid "Save File"
+#~ msgstr "Gardar o ficheiro"
+
+#~ msgid "Stop Video (V)"
+#~ msgstr "Deter vídeo (V)"
+
+#~ msgid "Up"
+#~ msgstr "Arriba"
+
+#, fuzzy
+#~ msgid "Video Controls"
+#~ msgstr "Controles de GUVCViewer"
+
+#, fuzzy
+#~ msgid "Video file name"
+#~ msgstr "Nome da imaxe"
+
+#, fuzzy
+#~ msgid "_Apply"
+#~ msgstr "Aplicar"
+
+#, fuzzy
+#~ msgid "_Cancel"
+#~ msgstr "cancelar"
+
+#~ msgid "bit rate:   "
+#~ msgstr "Taxa de bits:   "
+
+#~ msgid "cancel"
+#~ msgstr "cancelar"
+
+#~ msgid "cmp:   "
+#~ msgstr "cmp:   "
+
+#~ msgid "gop size:   "
+#~ msgstr "Tamaño do gop:   "
+
+#~ msgid "max. qdiff:   "
+#~ msgstr "max. qdiff:   "
+
+#~ msgid "new"
+#~ msgstr "novo"
+
+#~ msgid "pre cmp:   "
+#~ msgstr "pre cmp:   "
+
+#~ msgid "pre me:   "
+#~ msgstr "pre me:   "
+
+#~ msgid "qmax:   "
+#~ msgstr "qmax:   "
+
+#~ msgid "qmin:   "
+#~ msgstr "qmin:   "
+
+#~ msgid "restart"
+#~ msgstr "reiniciar"
+
+#~ msgid "set Focus"
+#~ msgstr "Definir foco"
+
+#~ msgid "sub cmp:   "
+#~ msgstr "sub cmp:   "

@@ -1,0 +1,788 @@
+# Ukrainian translation for guvcview
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
+# This file is distributed under the same license as the guvcview package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: guvcview\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-01 23:47+0100\n"
+"PO-Revision-Date: 2013-02-25 05:37+0000\n"
+"Last-Translator: Paulo Assis <pj.assis@gmail.com>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2013-12-08 10:36+0000\n"
+"X-Generator: Launchpad (build 16869)\n"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:73
+msgid "Aperture Priority Mode"
+msgstr "Пріоритет діафрагми"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:67
+#, fuzzy
+msgid "Auto"
+msgstr "Авторежим"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:92
+msgid "Auto Exposure"
+msgstr "Авто експозиція"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:71
+msgid "Auto Mode"
+msgstr "Авторежим"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:66
+msgid "Backlight Compensation"
+msgstr "Компенсація підсвітки"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:74
+msgid "Black Level"
+msgstr "Рівень чорного"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:66
+msgid "Blinking"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:78
+msgid "Blue Balance"
+msgstr "Баланс синього"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:60
+msgid "Brightness"
+msgstr "Яскравість"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:91
+msgid "Camera Controls"
+msgstr "Керування камерою"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:86
+msgid "Chroma AGC"
+msgstr "Chroma AGC"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:88
+msgid "Color Effects"
+msgstr "Ефекти кольору"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:87
+msgid "Color Killer"
+msgstr "Подавлювач кольору"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:61
+msgid "Contrast"
+msgstr "Контраст"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:165
+msgid "Disable video processing"
+msgstr "Відключити обробку відео"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:76
+msgid "Do White Balance"
+msgstr "Збалансувати білий"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:79
+msgid "Exposure"
+msgstr "Експозиція"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:112
+msgid "Exposure (Absolute)"
+msgstr "Абсолютна експозиція"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:93
+msgid "Exposure Time, Absolute"
+msgstr "Абсолютний час експозиції"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:110
+msgid "Exposure, Auto"
+msgstr "Авто експозиція"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:111
+msgid "Exposure, Auto Priority"
+msgstr "Пріоритет авто експозиції"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:94
+msgid "Exposure, Dynamic Framerate"
+msgstr "Експозиція, динамічна частота кадрів"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:120
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:126
+msgid "Focus"
+msgstr "Фокус"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:121
+msgid "Focus (Absolute)"
+msgstr "Абсолютний фокус"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:101
+msgid "Focus, Absolute"
+msgstr "Абсолютний фокус"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:69
+msgid "Focus, Auto"
+msgstr "Авто фокус"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:103
+msgid "Focus, Automatic"
+msgstr "Авто фокус"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:102
+msgid "Focus, Relative"
+msgstr "Відносний фокус"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:81
+msgid "Gain"
+msgstr "Посилення"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:80
+msgid "Gain, Automatic"
+msgstr "Авто посилення"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:65
+msgid "Gamma"
+msgstr "Гамма"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:84
+msgid "Horizontal Center"
+msgstr "Горизонтальна середина"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:82
+msgid "Horizontal Flip"
+msgstr "Горизонтальне віддзеркалення"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:62
+msgid "Hue"
+msgstr "Відтінок"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:68
+msgid "Hue, Automatic"
+msgstr "Авто відтінок"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:152
+msgid "LED1 Frequency"
+msgstr "Частота світлодіода"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:139
+msgid "LED1 Mode"
+msgstr "Метод світлодіода"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:70
+msgid "Manual Mode"
+msgstr "Ручний режим"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:64
+msgid "Off"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:65
+msgid "On"
+msgstr ""
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:74
+msgid "Pan (relative)"
+msgstr "Відносний поворот"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:100
+msgid "Pan Reset"
+msgstr "Скинути поворот"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:99
+msgid "Pan, Absolute"
+msgstr "Абсолютний поворот"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:95
+msgid "Pan, Relative"
+msgstr "Відносний поворот"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:97
+msgid "Pan, Reset"
+msgstr "Скинути поворот"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:67
+msgid "Power Line Frequency"
+msgstr "Частота електромережі"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:107
+msgid "Privacy"
+msgstr "Конфіденційність"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:178
+msgid "Raw bits per pixel"
+msgstr "Сирі біти на піксель"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:77
+msgid "Red Balance"
+msgstr "Баланс червоного"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:63
+msgid "Saturation"
+msgstr "Насиченість"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:64
+msgid "Sharpness"
+msgstr "Різкість"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:72
+msgid "Shutter Priority Mode"
+msgstr "Пріоритет затвору"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:87
+msgid "Tilt (relative)"
+msgstr "Відносний нахил"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_xu_ctrls.c:113
+msgid "Tilt Reset"
+msgstr "Скинути нахил"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:96
+msgid "Tilt, Relative"
+msgstr "Відносний нахил"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:98
+msgid "Tilt, Reset"
+msgstr "Скинути нахил"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:59
+msgid "User Controls"
+msgstr "Керуючі елементи користувача"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:85
+msgid "Vertical Center"
+msgstr "Вертикальна середина"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:83
+msgid "Vertical Flip"
+msgstr "Вертикальне віддзеркалення"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:116
+msgid "White Balance Blue Component"
+msgstr "Синій компонент балансу білого"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:115
+msgid "White Balance Component, Auto"
+msgstr "Авто компонент балансу білого"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:117
+msgid "White Balance Red Component"
+msgstr "Червоний компонент балансу білого"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:114
+msgid "White Balance Temperature"
+msgstr "Температура балансу білого"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:113
+msgid "White Balance Temperature, Auto"
+msgstr "Авто температура балансу білого"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:75
+msgid "White Balance, Automatic"
+msgstr "Авто баланс білого"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:104
+msgid "Zoom, Absolute"
+msgstr "Абсолютний зум"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:106
+msgid "Zoom, Continuous"
+msgstr "Безперервний зум"
+
+#: /home/paulo/Documentos/Devel/guvcview-git-master/gview_v4l2core/v4l2_controls.c:105
+msgid "Zoom, Relative"
+msgstr "Відносний зум"
+
+#~ msgid ""
+#~ "\n"
+#~ "You have more than one video device installed.\n"
+#~ "Do you want to try another one ?\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Встановлено більше одного відео пристрою.\n"
+#~ "Ви хочете спробувати ще один?\n"
+
+#~ msgid ""
+#~ "                              encoder fps:   \n"
+#~ " (0 - use fps combobox value)"
+#~ msgstr ""
+#~ "                              частота кадрів:   \n"
+#~ " (0 - використати значення з випадаючого списку)"
+
+#~ msgid " Ducky"
+#~ msgstr " Голубка"
+
+#~ msgid " Echo"
+#~ msgstr " Ехо"
+
+#~ msgid " Fuzz"
+#~ msgstr " Пух"
+
+#~ msgid " Invert"
+#~ msgstr " Верт. віддзеркал."
+
+#~ msgid " Mirror"
+#~ msgstr " Гор. віддзеркал."
+
+#~ msgid " Mono"
+#~ msgstr " Чорно-біле"
+
+#~ msgid " Negative"
+#~ msgstr " Негатив"
+
+#~ msgid " Particles"
+#~ msgstr " Часточки"
+
+#~ msgid " Pieces"
+#~ msgstr " Мозаїка"
+
+#~ msgid " Reverb"
+#~ msgstr " Ревербація"
+
+#~ msgid " Show"
+#~ msgstr " Показати"
+
+#~ msgid " Sound"
+#~ msgstr " Звук"
+
+#~ msgid " WahWah"
+#~ msgstr " ВахВах"
+
+#~ msgid "- local options"
+#~ msgstr "- локальні параметри"
+
+#~ msgid "---- Audio Effects ----"
+#~ msgstr "---- Ефекти аудіо ----"
+
+#, fuzzy
+#~ msgid "---- Audio Filters ----"
+#~ msgstr "---- Відео фільтри ----"
+
+#~ msgid "---- Video Filters ----"
+#~ msgstr "---- Відео фільтри ----"
+
+#~ msgid "1 - mono"
+#~ msgstr "1 - моно"
+
+#~ msgid "2 - stereo"
+#~ msgstr "2 - стерео"
+
+#~ msgid ""
+#~ "An error occurred while adding extension\n"
+#~ "controls to the UVC driver\n"
+#~ "Make sure you run guvcview as root (or sudo)."
+#~ msgstr ""
+#~ "Виникла помилка в процесі додавання керуючих \n"
+#~ "елементів розширення до драйверу UVC.\n"
+#~ "Переконайтесь що Guvcview запущено від імені root (чи sudo)."
+
+#~ msgid "Audio"
+#~ msgstr "Аудіо"
+
+#~ msgid "Audio API:"
+#~ msgstr "Аудіо API:"
+
+#, fuzzy
+#~ msgid "Audio Controls"
+#~ msgstr "Керуючі елементи користувача"
+
+#~ msgid "Auto Focus (continuous)"
+#~ msgstr "Авто фокус (безперервний)"
+
+#~ msgid "Camera Output:"
+#~ msgstr "Вивід камери:"
+
+#~ msgid "Cap. Image"
+#~ msgstr "Знімок"
+
+#~ msgid "Cap. Video"
+#~ msgstr "Відео"
+
+#~ msgid "Channels:"
+#~ msgstr "Канали:"
+
+#~ msgid "Configuration file"
+#~ msgstr "Файл конфігурації"
+
+#~ msgid "Dev. Default"
+#~ msgstr "Пристрій по замовч."
+
+#~ msgid "Device:"
+#~ msgstr "Пристрій:"
+
+#~ msgid "Displays debug information"
+#~ msgstr "Показує інформацію для відлагоджування"
+
+#~ msgid "Don't stream video (image controls only)"
+#~ msgstr "Не потокове відео (керувати лише зображенням)"
+
+#~ msgid "Down"
+#~ msgstr "Вниз"
+
+#~ msgid "Error"
+#~ msgstr "Помилка"
+
+#~ msgid "Exit after adding UVC extension controls (needs root/sudo)"
+#~ msgstr ""
+#~ "Вийти після додавання керуючих елементів розширення UVC\n"
+#~ "(потрібні права адміністратора)"
+
+#~ msgid "Exits guvcview after closing video"
+#~ msgstr "Вийти з Guvcview після закриття відео"
+
+#~ msgid "Extension controls were added to the UVC driver"
+#~ msgstr "Керуючі елементи розширення були додані до драйверу UVC"
+
+#~ msgid "FLV1 - flash video 1"
+#~ msgstr "FLV1 флеш-відео 1"
+
+#~ msgid "Focus (absolute)"
+#~ msgstr "Абсолютний фокус"
+
+#~ msgid "Frame Rate:"
+#~ msgstr "Частота кадрів:"
+
+#~ msgid "Frame size, default: 640x480"
+#~ msgstr "Розмір кадру (замовч. - 640x480)"
+
+#~ msgid "GUVCViewer Controls"
+#~ msgstr "Панель налаштувань Guvcview"
+
+#, fuzzy
+#~ msgid "Guvcview"
+#~ msgstr "Попередження:"
+
+#~ msgid "Guvcview Video Capture"
+#~ msgstr "Захоплювач відео Guvcview"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Can't set a valid video stream for guvcview"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Не можу встановити правильний відео потік для Guvcview"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Couldn't query device capabilities"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Не можу надіслати запит про можливості пристрою"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Read method error"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Помилка методу зчитування."
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "UVC Extension controls"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Керуючі елементи UVC"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to allocate Buffers"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Не можу виділити місце під Буфери."
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to create Video Thread"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Не можу створити потік команд для відео"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to open device"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Не можу відкрити пристрій"
+
+#~ msgid ""
+#~ "Guvcview error:\n"
+#~ "\n"
+#~ "Unable to start with minimum setup"
+#~ msgstr ""
+#~ "Помилка:\n"
+#~ "\n"
+#~ "Не можу запуститись з мінімальною установкою"
+
+#, fuzzy
+#~ msgid ""
+#~ "Guvcview version %s\n"
+#~ "\n"
+#~ msgstr "Попередження:"
+
+#~ msgid ""
+#~ "Guvcview:\n"
+#~ "\n"
+#~ "UVC Extension controls"
+#~ msgstr ""
+#~ "Guvcview:\n"
+#~ "\n"
+#~ "Елементи керування розширенням UVC"
+
+#~ msgid "Hardware accelaration (enable(1) | disable(0))"
+#~ msgstr "Апаратне прискорення (увімкн.(1) | вимкн.(0))"
+
+#~ msgid "Image Controls"
+#~ msgstr ""
+#~ "Керування\n"
+#~ "зображенням"
+
+#~ msgid "Image capture interval in seconds"
+#~ msgstr "Інтервал між знімками (сек.)"
+
+#~ msgid "Input Device:"
+#~ msgstr "Пристрій вводу:"
+
+#~ msgid "Left"
+#~ msgstr "Лівий"
+
+#~ msgid "Load Profile at start"
+#~ msgstr "Завантажити профіль при запуску"
+
+#~ msgid "MJPG - compressed"
+#~ msgstr "MJPG - стиснено"
+
+#~ msgid "MPEG video 1"
+#~ msgstr "MPEG-відео 1"
+
+#~ msgid "MPEG4-ASP"
+#~ msgstr "MPEG4-ASP"
+
+#~ msgid "MPEG4-AVC (H264)"
+#~ msgstr "MPEG4-AVC (H264)"
+
+#~ msgid "MPG2 - MPG2 format"
+#~ msgstr "MPG2 - формат MPG2"
+
+#~ msgid "MS MP4 V3"
+#~ msgstr "MS MP4 V3"
+
+#~ msgid "Make sure the device driver supports v4l2."
+#~ msgstr "Переконайтесь, що драйвер пристрою підтримує v4l2"
+
+#~ msgid ""
+#~ "Make sure your device driver is v4l2 compliant\n"
+#~ "and that it is properly installed."
+#~ msgstr ""
+#~ "Переконайтесь, що драйвер сумісний з v4l2\n"
+#~ "і встановлений правильно."
+
+#~ msgid "Not enough free space left on disk"
+#~ msgstr "Не вистачає вільного місця на диску"
+
+#~ msgid "Number of Pictures to capture"
+#~ msgstr "Кількість знімків"
+
+#~ msgid "Number of initial frames to skip"
+#~ msgstr "Кількість початкових кадрів для пропуску"
+
+#~ msgid "PORTAUDIO"
+#~ msgstr "PORTAUDIO"
+
+#~ msgid "PULSEAUDIO"
+#~ msgstr "PULSEAUDIO"
+
+#, fuzzy
+#~ msgid "Photo file name"
+#~ msgstr "Файл зображення"
+
+#~ msgid ""
+#~ "Please make sure the camera is connected\n"
+#~ "and that the correct driver is installed."
+#~ msgstr ""
+#~ "Переконайтесь, що камера підключена\n"
+#~ "і встановлено відповідний драйвер."
+
+#~ msgid "Please reconnect your camera."
+#~ msgstr "Будь ласка, повторно підключіть свою камеру."
+
+#~ msgid "Please report it to http://developer.berlios.de/bugs/?group_id=8179"
+#~ msgstr ""
+#~ "Будь ласка, повідомте про це тут http://developer.berlios.de/bugs/?"
+#~ "group_id=8179"
+
+#~ msgid "Please try mmap instead (--capture_method=1)."
+#~ msgstr "Будь ласка, спробуйте mmap instead (--capture_method=1)."
+
+#~ msgid "Please try restarting your system."
+#~ msgstr "Будь ласка, спробуйте перезавантажити систему."
+
+#, fuzzy
+#~ msgid "Print version"
+#~ msgstr "Показує версію"
+
+#~ msgid "Quality:"
+#~ msgstr "Якість:"
+
+#~ msgid "RGB - uncomp BMP"
+#~ msgstr "RGB - не стиснений BMP"
+
+#, fuzzy
+#~ msgid "Raw camera input"
+#~ msgstr "Вивід камери:"
+
+#~ msgid "Resolution:"
+#~ msgstr "Роздільна здатність:"
+
+#~ msgid "Right"
+#~ msgstr "Правий"
+
+#~ msgid "Sample Rate:"
+#~ msgstr "Частота дискредитації:"
+
+#~ msgid "Save File"
+#~ msgstr "Зберегти"
+
+#, fuzzy
+#~ msgid "Set capture method [read | mmap (def)]"
+#~ msgstr "Метод захоплення (1-mmap (замовч.) 2-read)"
+
+#, fuzzy
+#~ msgid "Set device name (def: /dev/video0)"
+#~ msgstr "Використаний відео-пристрій [default: /dev/video0]"
+
+#~ msgid "Show FPS value (enable(1) | disable (0))"
+#~ msgstr "Відображення частоти кадрів (увімкн.(1) | вимкн. (0))"
+
+#~ msgid "Up"
+#~ msgstr "Вверх"
+
+#, fuzzy
+#~ msgid "Video Controls"
+#~ msgstr "Керуючі елементи користувача"
+
+#~ msgid "Video File name (capture from start)"
+#~ msgstr "Файл відео (запис зразу після запуску)"
+
+#~ msgid "Video capture time (in seconds)"
+#~ msgstr "Тривалість запису (сек.)"
+
+#, fuzzy
+#~ msgid "Video file name"
+#~ msgstr "Файл зображення"
+
+#~ msgid "WMV1 - win. med. video 7"
+#~ msgstr "WMV1 - відео Windows Media 7"
+
+#~ msgid "YUY2 - uncomp YUV"
+#~ msgstr "YUY2 - не стиснений YUV"
+
+#, fuzzy
+#~ msgid "_Apply"
+#~ msgstr "Застосувати"
+
+#, fuzzy
+#~ msgid "_Cancel"
+#~ msgstr "відмінити"
+
+#~ msgid "audio codec values"
+#~ msgstr "значення аудіо-кодека"
+
+#~ msgid "bit rate:   "
+#~ msgstr "бітрейт:   "
+
+#~ msgid "cancel"
+#~ msgstr "відмінити"
+
+#~ msgid "cmp:   "
+#~ msgstr "cmp:   "
+
+#~ msgid "codec values"
+#~ msgstr "значення кодека"
+
+#~ msgid "dia size:   "
+#~ msgstr "dia size:   "
+
+#~ msgid "framerefs:   "
+#~ msgstr "framerefs:   "
+
+#~ msgid "gop size:   "
+#~ msgstr "gop size:   "
+
+#~ msgid "last predictor count:   "
+#~ msgstr "значення лічильника прогнозиста:   "
+
+#~ msgid ""
+#~ "launch new process or restart?.\n"
+#~ "\n"
+#~ msgstr ""
+#~ "запустити новий процес, \n"
+#~ "чи перезавантажити?\n"
+#~ "\n"
+
+#~ msgid "max B frames:   "
+#~ msgstr "max B frames:   "
+
+#~ msgid "max. qdiff:   "
+#~ msgstr "макс. qdiff:   "
+
+#~ msgid "mb decision:   "
+#~ msgstr "mb decision:   "
+
+#~ msgid "me method:   "
+#~ msgstr "me method:   "
+
+#~ msgid "new"
+#~ msgstr "новий"
+
+#~ msgid "pre cmp:   "
+#~ msgstr "pre cmp:   "
+
+#~ msgid "pre dia size:   "
+#~ msgstr "pre dia size:   "
+
+#~ msgid "pre me:   "
+#~ msgstr "pre me:   "
+
+#~ msgid "qblur:   "
+#~ msgstr "qblur:   "
+
+#~ msgid "qcompress:   "
+#~ msgstr "qcompress   "
+
+#~ msgid "qmax:   "
+#~ msgstr "qmax:   "
+
+#~ msgid "qmin:   "
+#~ msgstr "qmin:   "
+
+#~ msgid "restart"
+#~ msgstr "перезавантаж."
+
+#~ msgid "set Focus"
+#~ msgstr "встановити фокус"
+
+#~ msgid "start new"
+#~ msgstr "запустити новий"
+
+#~ msgid "sub cmp:   "
+#~ msgstr "sub cmp:   "
+
+#~ msgid "subq:   "
+#~ msgstr "subq:   "
+
+#, fuzzy
+#~ msgid "video codec values"
+#~ msgstr "значення аудіо-кодека"

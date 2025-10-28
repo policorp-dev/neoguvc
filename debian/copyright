@@ -1,0 +1,127 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: guvcview
+Upstream-Contact: Paulo Assis <pj.assis@gmail.com>
+Source: http://guvcview.sourceforge.net/
+
+Files: *
+Copyright: Copyright (C) Paulo Assis <pj.assis@gmail.com>
+License: GPL-2+
+
+Files: po/cs.po
+ po/da.po
+ po/eu.po
+ po/gview_v4l2core/cs.po
+ po/gview_v4l2core/da.po
+ po/gview_v4l2core/eu.po
+ po/gview_v4l2core/he.po
+ po/gview_v4l2core/nl.po
+ po/gview_v4l2core/pl.po
+ po/he.po
+ po/nl.po
+ po/pl.po
+Copyright: 2009, Rosetta Contributors and Canonical Ltd 2009
+License: GPL-2+
+
+Files: po/fo.po
+ po/gl.po
+ po/gview_v4l2core/fo.po
+ po/gview_v4l2core/gl.po
+ po/gview_v4l2core/hr.po
+ po/gview_v4l2core/uk.po
+ po/hr.po
+ po/uk.po
+Copyright: 2010, Rosetta Contributors and Canonical Ltd 2010
+License: GPL-2+
+
+Files: po/bs.po
+ po/en_AU.po
+ po/gview_v4l2core/bs.po
+ po/gview_v4l2core/en_AU.po
+ po/gview_v4l2core/sr.po
+ po/sr.po
+Copyright: 2011, Rosetta Contributors and Canonical Ltd 2011
+License: GPL-2+
+
+Files: po/bg.po
+ po/gview_v4l2core/bg.po
+ po/gview_v4l2core/lv.po
+ po/lv.po
+Copyright: 2012, Rosetta Contributors and Canonical Ltd 2012
+License: GPL-2+
+
+Files: po/gview_v4l2core/tr.po
+ po/tr.po
+Copyright: 2008, Rosetta Contributors and Canonical Ltd 2008
+License: GPL-2+
+
+Files: po/gview_v4l2core/si.po
+ po/si.po
+Copyright: 2013, Rosetta Contributors and Canonical Ltd 2013
+License: GPL-2+
+
+Files: po/gview_v4l2core/ja.po
+ po/ja.po
+Copyright: Rosetta Contributors and Canonical Ltd
+License: GPL-2+
+
+Files: gview_v4l2core/colorspaces.c
+Copyright: 2008, Hans de Goede <j.w.r.degoede@hhs.nl>
+License: GPL-2+
+
+Files: gview_encoder/avi.c
+ gview_encoder/avi.h
+ gview_encoder/matroska.c
+ gview_encoder/matroska.h
+Copyright: 2005, Mike Matsnev
+License: GPL-2+
+
+Files: INSTALL
+Copyright: 1994-1996, 1999-2002, 2004-2013, Free Software Foundation,
+License: FSFAP
+
+Files: debian/*
+Copyright: Copyright (C) 2008-2022,2025 Nobuhiro Iwamatsu <iwamatsu@debian.org>
+           Copyright (C) 2024 Phil Wyett <philip.wyett@kathenas.org>
+License: GPL-2+
+
+License: GPL-2+
+ This program is free software; you can redistribute it
+ and/or modify it under the terms of the GNU General Public
+ License as published by the Free Software Foundation; either
+ version 2 of the License, or (at your option) any later
+ version.
+ .
+ This program is distributed in the hope that it will be
+ useful, but WITHOUT ANY WARRANTY; without even the implied
+ warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+ PURPOSE.  See the GNU General Public License for more
+ details.
+ .
+ You should have received a copy of the GNU General Public
+ License along with this package; if not, write to the Free
+ Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+ Boston, MA  02110-1301 USA
+ .
+ On Debian systems, the full text of the GNU General Public
+ License version 2 can be found in the file
+ `/usr/share/common-licenses/GPL-2'.
+
+License: FSFAP
+ Copying and distribution of this file, with or without modification, are
+ permitted in any medium without royalty provided the copyright notice
+ and this notice are preserved. This file is offered as-is, without any
+ warranty.
+
+License: GPL-2+-with-libtool-exception
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; version 2, or (at your option) any
+ later version.
+ .
+ On Debian systems, the complete text of version 2 of the GNU General
+ Public License can be found in '/usr/share/common-licenses/GPL-2'.
+ .
+ As a special exception to the GNU General Public License,
+ if you distribute this file as part of a program or library that
+ is built using GNU Libtool, you may include this file under the
+ same distribution terms that you use for the rest of that program.
