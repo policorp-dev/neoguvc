@@ -1,3 +1,10 @@
+guvcview (3.0.0) stable; urgency=medium
+
+  * Troca de nome
+  * Reaplicação da de fotos e vídeos
+
+ -- Carlos Eduardo Obristo <carlos.eduardo@policorp.com.br>  Fri, 29 Oct 2025 13:43:47 -0300
+
 guvcview (2.2.1) unstable; urgency=medium
 
   * Non-maintainer upload.

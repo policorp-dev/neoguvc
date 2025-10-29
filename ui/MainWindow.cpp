@@ -19,39 +19,41 @@ extern "C" {
 namespace {
 constexpr const char *kDefaultDevice = "/dev/video0";
 constexpr std::chrono::milliseconds kRetryDelay{10};
-constexpr const char *kResourcePath = "ui/resources/style.css";
 } // namespace
 
 MainWindow::MainWindow() {
-  set_title("guvcview (GTK prototype)");
+  set_title("neoguvc");
   set_default_size(960, 720);
+  set_resizable(false);
 
   dispatcher_.connect(sigc::mem_fun(*this, &MainWindow::on_frame_ready));
+
+  auto css = Gtk::CssProvider::create();
+  auto css_path = "/usr/share/neoguvc/style.css";
+  css->load_from_path(css_path);
+  Gtk::StyleContext::add_provider_for_screen(
+      Gdk::Screen::get_default(), css,
+      GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
   add(layout_box_);
   layout_box_.pack_start(content_box_, Gtk::PACK_EXPAND_WIDGET);
   layout_box_.pack_start(sidebar_box_, Gtk::PACK_SHRINK);
+  layout_box_.get_style_context()->add_class("content-box");
 
   content_box_.pack_start(image_widget_, Gtk::PACK_EXPAND_WIDGET);
   content_box_.pack_start(status_label_, Gtk::PACK_SHRINK);
+  content_box_.get_style_context()->add_class("content-box");
 
   status_label_.set_margin_top(6);
   status_label_.set_margin_bottom(6);
   status_label_.set_text("Abrindo dispositivo " + std::string{kDefaultDevice} +
                          "...");
+  status_label_.get_style_context()->add_class("status-label");
 
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
   sidebar_box_.set_spacing(16);
   sidebar_box_.set_valign(Gtk::ALIGN_FILL);
   sidebar_box_.set_halign(Gtk::ALIGN_FILL);
-
-  auto css = Gtk::CssProvider::create();
-  auto current_dir = Glib::get_current_dir();
-  auto css_path = Glib::build_filename(current_dir, kResourcePath);
-  css->load_from_path(css_path);
-  Gtk::StyleContext::add_provider_for_screen(
-      Gdk::Screen::get_default(), css,
-      GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
   sidebar_box_.get_style_context()->add_class("sidebar");
 
   capture_button_.set_label("Foto");
