@@ -7,6 +7,14 @@
 #include <sstream>
 #include <stdexcept>
 
+#include <algorithm>
+#include <array>
+#include <cmath>
+
+#include <cairomm/context.h>
+#include <cairomm/surface.h>
+#include <gdk/gdk.h>
+
 #include <glibmm/fileutils.h>
 #include <glibmm/main.h>
 #include <glibmm/miscutils.h>
@@ -19,6 +27,59 @@ extern "C" {
 namespace {
 constexpr const char *kDefaultDevice = "/dev/video0";
 constexpr std::chrono::milliseconds kRetryDelay{10};
+
+enum class IconShape { Circle, RoundedSquare };
+
+Glib::RefPtr<Gdk::Pixbuf> create_control_icon(IconShape shape,
+                                              const std::array<double, 4> &inner_color,
+                                              const std::array<double, 4> &ring_color) {
+  constexpr int kSize = 48;
+  constexpr double kRingWidth = 4.0;
+  constexpr double kGap = 6.0;
+  auto surface = Cairo::ImageSurface::create(Cairo::FORMAT_ARGB32, kSize, kSize);
+  auto cr = Cairo::Context::create(surface);
+
+  cr->set_source_rgba(0.0, 0.0, 0.0, 0.0);
+  cr->paint();
+
+  const double center = kSize / 2.0;
+  const double ring_radius = center - 1.0;
+  cr->set_line_width(kRingWidth);
+  cr->set_source_rgba(ring_color[0], ring_color[1], ring_color[2], ring_color[3]);
+  cr->arc(center, center, ring_radius - kRingWidth * 0.5, 0.0, 2.0 * G_PI);
+  cr->stroke();
+
+  cr->set_source_rgba(inner_color[0], inner_color[1], inner_color[2], inner_color[3]);
+
+  if (shape == IconShape::Circle) {
+    const double inner_radius = std::max(ring_radius - kRingWidth * 0.5 - kGap, 0.0);
+    cr->arc(center, center, inner_radius, 0.0, 2.0 * G_PI);
+    cr->fill();
+  } else {
+    const double target_radius = std::max(ring_radius - kRingWidth * 0.5 - kGap, 0.0);
+    const double half_inner = target_radius / std::sqrt(2.0);
+    const double corner_radius = std::max(half_inner * 0.25, 3.0);
+
+    cr->begin_new_path();
+    cr->move_to(center - half_inner + corner_radius, center - half_inner);
+    cr->line_to(center + half_inner - corner_radius, center - half_inner);
+    cr->arc(center + half_inner - corner_radius, center - half_inner + corner_radius,
+            corner_radius, -G_PI_2, 0.0);
+    cr->line_to(center + half_inner, center + half_inner - corner_radius);
+    cr->arc(center + half_inner - corner_radius, center + half_inner - corner_radius,
+            corner_radius, 0.0, G_PI_2);
+    cr->line_to(center - half_inner + corner_radius, center + half_inner);
+    cr->arc(center - half_inner + corner_radius, center + half_inner - corner_radius,
+            corner_radius, G_PI_2, G_PI);
+    cr->line_to(center - half_inner, center - half_inner + corner_radius);
+    cr->arc(center - half_inner + corner_radius, center - half_inner + corner_radius,
+            corner_radius, G_PI, 3.0 * G_PI_2);
+    cr->close_path();
+    cr->fill();
+  }
+
+  return Gdk::Pixbuf::create(surface, 0, 0, kSize, kSize);
+}
 } // namespace
 
 MainWindow::MainWindow() {
@@ -53,21 +114,66 @@ MainWindow::MainWindow() {
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
   sidebar_box_.set_spacing(16);
   sidebar_box_.set_valign(Gtk::ALIGN_FILL);
-  sidebar_box_.set_halign(Gtk::ALIGN_FILL);
+  sidebar_box_.set_halign(Gtk::ALIGN_CENTER);
+  sidebar_box_.set_margin_left(15);
+  sidebar_box_.set_margin_right(15);
+  sidebar_box_.set_hexpand(false);
   sidebar_box_.get_style_context()->add_class("sidebar");
 
-  capture_button_.set_label("Foto");
-  capture_button_.set_size_request(60, 50);
-  capture_button_.set_margin_left(15);
-  capture_button_.set_margin_right(15);
-  capture_button_.get_style_context()->add_class("sidebar-button");
+  auto menu_icon = Gtk::manage(new Gtk::Image());
+  menu_icon->set_from_icon_name("open-menu-symbolic", Gtk::ICON_SIZE_MENU);
+  menu_button_.set_image(*menu_icon);
+  menu_icon->show();
+  menu_button_.set_tooltip_text("Mais opções");
+  menu_button_.set_relief(Gtk::RELIEF_NONE);
+  menu_button_.set_focus_on_click(false);
+  menu_button_.set_margin_left(0);
+  menu_button_.set_margin_right(0);
+  menu_button_.set_halign(Gtk::ALIGN_CENTER);
+  menu_button_.get_style_context()->add_class("menu-button");
+  menu_button_.signal_clicked().connect(
+      sigc::mem_fun(*this, &MainWindow::on_menu_button_clicked));
 
-  record_button_.set_label("Gravar");
-  record_button_.set_size_request(60, 50);
-  record_button_.set_margin_left(15);
-  record_button_.set_margin_right(15);
-  record_button_.get_style_context()->add_class("sidebar-button");
+  menu_popup_.append(controls_menu_item_);
+  controls_menu_item_.signal_activate().connect(
+      sigc::mem_fun(*this, &MainWindow::on_controls_menu_item_activated));
+  menu_popup_.show_all();
 
+  capture_button_.set_margin_left(0);
+  capture_button_.set_margin_right(0);
+  capture_button_.set_relief(Gtk::RELIEF_NONE);
+  capture_button_.set_focus_on_click(false);
+  capture_button_.set_always_show_image(true);
+  capture_button_.set_tooltip_text("Capturar foto");
+  capture_button_.set_halign(Gtk::ALIGN_CENTER);
+  capture_button_.get_style_context()->add_class("capture-button");
+  auto capture_icon_pixbuf =
+      create_control_icon(IconShape::Circle,
+                          {1.0, 1.0, 1.0, 1.0},
+                          {1.0, 1.0, 1.0, 1.0});
+  auto capture_icon = Gtk::manage(new Gtk::Image(capture_icon_pixbuf));
+  capture_button_.set_image(*capture_icon);
+  capture_icon->show();
+
+  record_button_.set_margin_left(0);
+  record_button_.set_margin_right(0);
+  record_button_.set_relief(Gtk::RELIEF_NONE);
+  record_button_.set_focus_on_click(false);
+  record_button_.set_always_show_image(true);
+  record_button_.set_tooltip_text("Iniciar/encerrar gravação");
+  record_button_.set_halign(Gtk::ALIGN_CENTER);
+  record_button_.get_style_context()->add_class("record-button");
+  record_icon_idle_ = create_control_icon(IconShape::Circle,
+                                         {0.90, 0.0, 0.0, 1.0},
+                                         {1.0, 1.0, 1.0, 1.0});
+  record_icon_active_ = create_control_icon(IconShape::RoundedSquare,
+                                           {0.90, 0.0, 0.0, 1.0},
+                                           {1.0, 1.0, 1.0, 1.0});
+  record_button_icon_ = Gtk::manage(new Gtk::Image(record_icon_idle_));
+  record_button_.set_image(*record_button_icon_);
+  record_button_icon_->show();
+
+  sidebar_box_.pack_start(menu_button_, Gtk::PACK_SHRINK, 0);
   sidebar_box_.pack_start(spacer_top_, Gtk::PACK_EXPAND_WIDGET, 0);
   sidebar_box_.pack_start(capture_button_, Gtk::PACK_SHRINK, 0);
   sidebar_box_.pack_start(record_button_, Gtk::PACK_SHRINK, 0);
@@ -178,6 +284,31 @@ void MainWindow::capture_loop() {
     v4l2core_release_frame(device_, frame);
     dispatcher_();
   }
+}
+
+void MainWindow::on_menu_button_clicked() {
+  auto *widget = dynamic_cast<Gtk::Widget *>(&menu_button_);
+  if (!widget)
+    return;
+
+  menu_popup_.popup_at_widget(widget, Gdk::GRAVITY_SOUTH,
+                              Gdk::GRAVITY_NORTH, nullptr);
+}
+
+void MainWindow::on_controls_menu_item_activated() {
+  if (!image_controls_window_) {
+    image_controls_window_ = std::make_unique<ImageControlsWindow>();
+    image_controls_window_->set_transient_for(*this);
+    image_controls_window_->set_position(Gtk::WIN_POS_CENTER_ON_PARENT);
+    image_controls_window_->signal_hide().connect(
+        sigc::mem_fun(*this, &MainWindow::on_controls_window_hidden));
+  }
+
+  image_controls_window_->present();
+}
+
+void MainWindow::on_controls_window_hidden() {
+  image_controls_window_.reset();
 }
 
 void MainWindow::on_frame_ready() {
@@ -299,7 +430,10 @@ bool MainWindow::start_recording(v4l2_frame_buff_t *frame) {
     encoder_muxer_init(encoder_ctx_, current_video_path_.c_str());
   }
   recording_.store(true, std::memory_order_release);
-  set_record_button_label("Parar");
+  Glib::signal_idle().connect_once([this]() {
+    if (record_button_icon_ && record_icon_active_)
+      record_button_icon_->set(record_icon_active_);
+  });
   post_status("Gravando em " + current_video_path_);
   if (audio_channels > 0) {
     std::lock_guard<std::mutex> lock(encoder_mutex_);
@@ -340,6 +474,10 @@ void MainWindow::stop_recording() {
     return;
 
   recording_.store(false, std::memory_order_release);
+  Glib::signal_idle().connect_once([this]() {
+    if (record_button_icon_ && record_icon_idle_)
+      record_button_icon_->set(record_icon_idle_);
+  });
   stop_audio_capture();
   {
     std::lock_guard<std::mutex> lock(encoder_mutex_);
@@ -356,18 +494,12 @@ void MainWindow::stop_recording() {
     post_status("Vídeo salvo em " + current_video_path_);
   else
     post_status("Gravação finalizada");
-  set_record_button_label("Gravar");
   current_video_path_.clear();
 }
 
 void MainWindow::post_status(const std::string &text) {
   Glib::signal_idle().connect_once(
       [this, text]() { status_label_.set_text(text); });
-}
-
-void MainWindow::set_record_button_label(const std::string &text) {
-  Glib::signal_idle().connect_once(
-      [this, text]() { record_button_.set_label(text); });
 }
 
 void MainWindow::initialise_audio() {

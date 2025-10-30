@@ -1,6 +1,7 @@
 #pragma once
 
 #include <atomic>
+#include <memory>
 #include <mutex>
 #include <string>
 #include <thread>
@@ -9,11 +10,15 @@
 #include <gtkmm/box.h>
 #include <gtkmm/button.h>
 #include <gtkmm/cssprovider.h>
+#include <gtkmm/menu.h>
+#include <gtkmm/menuitem.h>
+#include <gtkmm/messagedialog.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 #include <gtkmm/stylecontext.h>
 #include <gtkmm/window.h>
 #include <glibmm/dispatcher.h>
+#include <glibmm/refptr.h>
 
 extern "C" {
 #include "gviewv4l2core.h"
@@ -21,6 +26,8 @@ extern "C" {
 #include "gviewencoder.h"
 #include "audio.h"
 }
+
+#include "ImageControlsWindow.hpp"
 
 class MainWindow : public Gtk::Window {
 public:
@@ -40,9 +47,16 @@ private:
   Gtk::Box sidebar_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_top_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_bottom_{Gtk::ORIENTATION_VERTICAL};
-  Gtk::Button capture_button_{"Foto"};
-  Gtk::Button record_button_{"Gravar"};
+  Gtk::Button menu_button_;
+  Gtk::Button capture_button_{};
+  Gtk::Button record_button_{};
+  Gtk::Image *record_button_icon_ = nullptr;
+  Glib::RefPtr<Gdk::Pixbuf> record_icon_idle_;
+  Glib::RefPtr<Gdk::Pixbuf> record_icon_active_;
+  Gtk::Menu menu_popup_;
+  Gtk::MenuItem controls_menu_item_{"Controles de imagem"};
   Glib::Dispatcher dispatcher_;
+  std::unique_ptr<ImageControlsWindow> image_controls_window_;
 
   v4l2_dev_t *device_ = nullptr;
   std::thread capture_thread_;
@@ -71,6 +85,9 @@ private:
 
   void on_capture_button_clicked();
   void on_record_button_clicked();
+  void on_menu_button_clicked();
+  void on_controls_menu_item_activated();
+  void on_controls_window_hidden();
   void save_snapshot(v4l2_frame_buff_t *frame);
   void handle_recording_frame(v4l2_frame_buff_t *frame);
   bool start_recording(v4l2_frame_buff_t *frame);
@@ -78,7 +95,6 @@ private:
   std::string build_output_path(bool video) const;
   std::string timestamp_string() const;
   void post_status(const std::string &text);
-  void set_record_button_label(const std::string &text);
   void initialise_audio();
   void start_audio_capture(int frame_size);
   void stop_audio_capture();
