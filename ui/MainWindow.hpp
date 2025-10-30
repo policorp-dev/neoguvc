@@ -1,6 +1,7 @@
 #pragma once
 
 #include <atomic>
+#include <functional>
 #include <memory>
 #include <mutex>
 #include <string>
@@ -19,6 +20,7 @@
 #include <gtkmm/window.h>
 #include <glibmm/dispatcher.h>
 #include <glibmm/refptr.h>
+#include <sigc++/connection.h>
 
 extern "C" {
 #include "gviewv4l2core.h"
@@ -27,7 +29,7 @@ extern "C" {
 #include "audio.h"
 }
 
-#include "ImageControlsWindow.hpp"
+#include "ControlsBase.hpp"
 
 class MainWindow : public Gtk::Window {
 public:
@@ -54,9 +56,7 @@ private:
   Glib::RefPtr<Gdk::Pixbuf> record_icon_idle_;
   Glib::RefPtr<Gdk::Pixbuf> record_icon_active_;
   Gtk::Menu menu_popup_;
-  Gtk::MenuItem controls_menu_item_{"Controles de imagem"};
   Glib::Dispatcher dispatcher_;
-  std::unique_ptr<ImageControlsWindow> image_controls_window_;
 
   v4l2_dev_t *device_ = nullptr;
   std::thread capture_thread_;
@@ -86,8 +86,8 @@ private:
   void on_capture_button_clicked();
   void on_record_button_clicked();
   void on_menu_button_clicked();
-  void on_controls_menu_item_activated();
-  void on_controls_window_hidden();
+  void on_config_menu_item_activated(const std::string &id);
+  void on_config_window_hidden(const std::string &id);
   void save_snapshot(v4l2_frame_buff_t *frame);
   void handle_recording_frame(v4l2_frame_buff_t *frame);
   bool start_recording(v4l2_frame_buff_t *frame);
@@ -99,4 +99,15 @@ private:
   void start_audio_capture(int frame_size);
   void stop_audio_capture();
   void audio_capture_loop();
+
+  struct ConfigWindowEntry {
+    std::string id;
+    Glib::ustring menu_label;
+    std::function<std::unique_ptr<ControlsBase>()> factory;
+    std::unique_ptr<ControlsBase> window;
+    Gtk::MenuItem *menu_item{nullptr};
+    sigc::connection hide_connection;
+  };
+
+  std::vector<ConfigWindowEntry> config_windows_;
 };

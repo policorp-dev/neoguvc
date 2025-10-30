@@ -9,7 +9,8 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 add_executable(guvcview
   main.cpp
   MainWindow.cpp
-  ImageControlsWindow.cpp
+  ControlsBase.cpp
+  ImageControls.cpp
 )
 
 target_include_directories(guvcview PRIVATE

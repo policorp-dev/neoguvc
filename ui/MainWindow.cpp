@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "ImageControls.hpp"
 
 #include <chrono>
 #include <cstring>
@@ -18,6 +19,7 @@
 #include <glibmm/fileutils.h>
 #include <glibmm/main.h>
 #include <glibmm/miscutils.h>
+#include <sigc++/bind.h>
 
 extern "C" {
 #include <glib.h>
@@ -134,9 +136,21 @@ MainWindow::MainWindow() {
   menu_button_.signal_clicked().connect(
       sigc::mem_fun(*this, &MainWindow::on_menu_button_clicked));
 
-  menu_popup_.append(controls_menu_item_);
-  controls_menu_item_.signal_activate().connect(
-      sigc::mem_fun(*this, &MainWindow::on_controls_menu_item_activated));
+  menu_popup_.get_style_context()->add_class("controls-popup");
+
+  config_windows_.push_back(
+      ConfigWindowEntry{"image_controls", "Controles de imagem",
+                        []() { return std::make_unique<ImageControls>(); }});
+
+  for (auto &entry : config_windows_) {
+    auto *menu_item = Gtk::manage(new Gtk::MenuItem(entry.menu_label));
+    entry.menu_item = menu_item;
+    menu_item->signal_activate().connect(sigc::bind(
+        sigc::mem_fun(*this, &MainWindow::on_config_menu_item_activated),
+        entry.id));
+    menu_popup_.append(*menu_item);
+  }
+
   menu_popup_.show_all();
 
   capture_button_.set_margin_left(0);
@@ -295,20 +309,45 @@ void MainWindow::on_menu_button_clicked() {
                               Gdk::GRAVITY_NORTH, nullptr);
 }
 
-void MainWindow::on_controls_menu_item_activated() {
-  if (!image_controls_window_) {
-    image_controls_window_ = std::make_unique<ImageControlsWindow>();
-    image_controls_window_->set_transient_for(*this);
-    image_controls_window_->set_position(Gtk::WIN_POS_CENTER_ON_PARENT);
-    image_controls_window_->signal_hide().connect(
-        sigc::mem_fun(*this, &MainWindow::on_controls_window_hidden));
+void MainWindow::on_config_menu_item_activated(const std::string &id) {
+  auto it = std::find_if(config_windows_.begin(), config_windows_.end(),
+                         [&id](const ConfigWindowEntry &entry) {
+                           return entry.id == id;
+                         });
+  if (it == config_windows_.end())
+    return;
+
+  auto &entry = *it;
+  if (!entry.window) {
+    if (!entry.factory)
+      return;
+
+    entry.window = entry.factory();
+    if (!entry.window)
+      return;
+
+    entry.window->set_transient_for(*this);
+    entry.window->set_position(Gtk::WIN_POS_CENTER_ON_PARENT);
+    entry.hide_connection = entry.window->signal_hide().connect(
+        sigc::bind(sigc::mem_fun(*this, &MainWindow::on_config_window_hidden),
+                   entry.id));
   }
 
-  image_controls_window_->present();
+  entry.window->present();
 }
 
-void MainWindow::on_controls_window_hidden() {
-  image_controls_window_.reset();
+void MainWindow::on_config_window_hidden(const std::string &id) {
+  auto it = std::find_if(config_windows_.begin(), config_windows_.end(),
+                         [&id](const ConfigWindowEntry &entry) {
+                           return entry.id == id;
+                         });
+  if (it == config_windows_.end())
+    return;
+
+  auto &entry = *it;
+  if (entry.hide_connection.connected())
+    entry.hide_connection.disconnect();
+  entry.window.reset();
 }
 
 void MainWindow::on_frame_ready() {

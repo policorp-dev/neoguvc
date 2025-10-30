@@ -68,3 +68,197 @@
 .content-box {
   background-color: #111111;
 }
+
+.controls-window-root {
+  background-color: #101010;
+}
+
+.controls-window {
+  background-color: #101010;
+  color: #f5f5f5;
+  border-radius: 6px;
+  border: 1px solid #191919;
+}
+
+.controls-window GtkLabel {
+  color: #f5f5f5;
+}
+
+.controls-scroll {
+  background-color: #101010;
+  border: none;
+}
+
+.controls-container {
+  background-color: transparent;
+  border: none;
+}
+
+.controls-window GtkViewport {
+  background-color: transparent;
+}
+
+.controls-row {
+  background-color: transparent;
+}
+
+.controls-label {
+  color: #f5f5f5;
+  font-weight: 500;
+}
+
+.controls-row:insensitive .controls-label,
+.controls-row:insensitive .controls-scale,
+.controls-row:insensitive .controls-scale value,
+.controls-row:insensitive .controls-entry,
+.controls-row:insensitive .controls-toggle,
+.controls-row:insensitive .controls-entry arrow {
+  color: #8a8a8a;
+}
+
+.controls-window button {
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  padding: 4px 12px;
+}
+
+.controls-window button:hover {
+  background-color: #2b2b2b;
+}
+
+.controls-scale {
+  color: #f5f5f5;
+}
+
+.controls-scale value {
+  color: #f5f5f5;
+}
+
+.controls-scale trough {
+  background-color: #2a2a2a;
+  border-radius: 6px;
+}
+
+.controls-scale highlight {
+  background-color: #4f8cff;
+  border-radius: 6px;
+}
+
+.controls-scale slider {
+  background-color: #f5f5f5;
+  border: none;
+}
+
+.controls-row:insensitive .controls-scale trough {
+  background-color: #1e1e1e;
+}
+
+.controls-row:insensitive .controls-scale slider {
+  background-color: #3c3c3c;
+}
+
+.controls-entry {
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+  border: 1px solid #2e2e2e;
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+.controls-entry button {
+  background-color: transparent;
+  background-image: none;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 8px;
+  box-shadow: none;
+}
+
+.controls-entry button:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.controls-entry arrow {
+  color: #f5f5f5;
+}
+
+.controls-entry button:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.controls-entry button:active {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.controls-entry button:insensitive,
+.controls-entry:insensitive button {
+  background-color: transparent;
+  color: #888888;
+  border: none;
+}
+
+.controls-button {
+  background-image: none;
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+  border: 1px solid #2a2a2a;
+  border-radius: 4px;
+  padding: 6px 18px;
+  box-shadow: none;
+}
+
+.controls-button:hover {
+  background-color: #2b2b2b;
+}
+
+.controls-button:active {
+  background-color: #383838;
+}
+
+.controls-button:insensitive {
+  background-color: #1a1a1a;
+  color: #888888;
+  border-color: #2a2a2a;
+}
+
+.controls-entry menu {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+}
+
+.controls-toggle label {
+  color: #f5f5f5;
+}
+
+.controls-toggle check {
+  background-color: #1f1f1f;
+  border: 1px solid #4a4a4a;
+}
+
+.controls-toggle check:checked {
+  background-color: #4f8cff;
+  border-color: #4f8cff;
+}
+
+.controls-popup {
+  background-color: #1a1a1a;
+  color: #f5f5f5;
+  border: 1px solid #2c2c2c;
+}
+
+.controls-popup GtkMenuItem {
+  background-color: transparent;
+  color: #f5f5f5;
+}
+
+.controls-popup GtkMenuItem:hover {
+  background-color: #2b2b2b;
+}
+
+.controls-popup GtkLabel {
+  color: #f5f5f5;
+}
