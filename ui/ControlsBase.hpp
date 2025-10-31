@@ -40,6 +40,9 @@ public:
     std::vector<Glib::ustring> scroll_style_classes{"controls-scroll"};
     std::vector<Glib::ustring> container_style_classes{"controls-container"};
     std::vector<Glib::ustring> close_button_style_classes{"controls-button"};
+    bool show_reset_button{false};
+    Glib::ustring reset_button_label{"Restaurar"};
+    std::vector<Glib::ustring> reset_button_style_classes{"controls-button"};
     bool show_close_button{true};
   };
 
@@ -102,6 +105,9 @@ public:
   Gtk::ScrolledWindow &scrolled_window();
   Gtk::HeaderBar &header_bar();
   Gtk::Button &close_button();
+  Gtk::Button &reset_button();
+  Gtk::Box &footer_box();
+  bool has_reset_button() const;
 
 protected:
   Gtk::Box &body_container();
@@ -131,7 +137,9 @@ private:
   Gtk::Box root_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::ScrolledWindow scroll_;
   Gtk::Box controls_container_{Gtk::ORIENTATION_VERTICAL};
+  Gtk::Box footer_box_{Gtk::ORIENTATION_HORIZONTAL};
   Gtk::HeaderBar header_bar_;
   Gtk::Button close_button_;
+  Gtk::Button reset_button_;
   std::vector<Glib::RefPtr<Gtk::Adjustment>> adjustments_;
 };

@@ -142,13 +142,20 @@ MainWindow::MainWindow() {
 
   config_windows_.push_back(
       ConfigWindowEntry{"image_controls", "Controles de imagem",
-                        []() { return std::make_unique<ImageControls>(); }});
+                        [](MainWindow &window) {
+                          return std::make_unique<ImageControls>(
+                              window.device_handle());
+                        }});
   config_windows_.push_back(
       ConfigWindowEntry{"video_controls", "Controles de vídeo",
-                        []() { return std::make_unique<VideoControls>(); }});
+                        [](MainWindow &) {
+                          return std::make_unique<VideoControls>();
+                        }});
   config_windows_.push_back(
       ConfigWindowEntry{"audio_controls", "Controles de áudio",
-                        []() { return std::make_unique<AudioControls>(); }});
+                        [](MainWindow &) {
+                          return std::make_unique<AudioControls>();
+                        }});
 
   for (auto &entry : config_windows_) {
     auto *menu_item = Gtk::manage(new Gtk::MenuItem(entry.menu_label));
@@ -330,7 +337,7 @@ void MainWindow::on_config_menu_item_activated(const std::string &id) {
     if (!entry.factory)
       return;
 
-    entry.window = entry.factory();
+    entry.window = entry.factory(*this);
     if (!entry.window)
       return;
 

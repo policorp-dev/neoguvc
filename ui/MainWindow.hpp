@@ -103,11 +103,14 @@ private:
   struct ConfigWindowEntry {
     std::string id;
     Glib::ustring menu_label;
-    std::function<std::unique_ptr<ControlsBase>()> factory;
+    std::function<std::unique_ptr<ControlsBase>(MainWindow &)> factory;
     std::unique_ptr<ControlsBase> window;
     Gtk::MenuItem *menu_item{nullptr};
     sigc::connection hide_connection;
   };
 
   std::vector<ConfigWindowEntry> config_windows_;
+
+public:
+  v4l2_dev_t *device_handle() const { return device_; }
 };

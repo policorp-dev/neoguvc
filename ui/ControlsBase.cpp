@@ -45,13 +45,27 @@ ControlsBase::ControlsBase(const ConstructionOptions &options)
   controls_container_.set_margin_right(options_.container_margin_right);
   apply_style_classes(controls_container_, options_.container_style_classes);
 
+  if (options_.show_close_button || options_.show_reset_button) {
+    footer_box_.set_spacing(6);
+    footer_box_.set_margin_top(8);
+    footer_box_.set_hexpand(true);
+    footer_box_.set_halign(Gtk::ALIGN_FILL);
+    root_box_.pack_start(footer_box_, Gtk::PACK_SHRINK);
+  }
+
+  if (options_.show_reset_button) {
+    reset_button_.set_label(options_.reset_button_label);
+    apply_style_classes(reset_button_, options_.reset_button_style_classes);
+    reset_button_.set_halign(Gtk::ALIGN_START);
+    footer_box_.pack_start(reset_button_, Gtk::PACK_SHRINK);
+  }
+
   if (options_.show_close_button) {
     apply_style_classes(close_button_, options_.close_button_style_classes);
     close_button_.set_halign(Gtk::ALIGN_END);
-    close_button_.set_margin_top(8);
     close_button_.signal_clicked().connect(
         sigc::mem_fun(*this, &ControlsBase::on_close_clicked));
-    root_box_.pack_start(close_button_, Gtk::PACK_SHRINK);
+    footer_box_.pack_end(close_button_, Gtk::PACK_SHRINK);
   }
 }
 
@@ -66,6 +80,12 @@ Gtk::ScrolledWindow &ControlsBase::scrolled_window() { return scroll_; }
 Gtk::HeaderBar &ControlsBase::header_bar() { return header_bar_; }
 
 Gtk::Button &ControlsBase::close_button() { return close_button_; }
+
+Gtk::Button &ControlsBase::reset_button() { return reset_button_; }
+
+Gtk::Box &ControlsBase::footer_box() { return footer_box_; }
+
+bool ControlsBase::has_reset_button() const { return options_.show_reset_button; }
 
 Gtk::Box &ControlsBase::body_container() { return controls_container_; }
 
