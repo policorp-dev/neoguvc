@@ -1,5 +1,7 @@
 #include "MainWindow.hpp"
+#include "AudioControls.hpp"
 #include "ImageControls.hpp"
+#include "VideoControls.hpp"
 
 #include <chrono>
 #include <cstring>
@@ -141,6 +143,12 @@ MainWindow::MainWindow() {
   config_windows_.push_back(
       ConfigWindowEntry{"image_controls", "Controles de imagem",
                         []() { return std::make_unique<ImageControls>(); }});
+  config_windows_.push_back(
+      ConfigWindowEntry{"video_controls", "Controles de vídeo",
+                        []() { return std::make_unique<VideoControls>(); }});
+  config_windows_.push_back(
+      ConfigWindowEntry{"audio_controls", "Controles de áudio",
+                        []() { return std::make_unique<AudioControls>(); }});
 
   for (auto &entry : config_windows_) {
     auto *menu_item = Gtk::manage(new Gtk::MenuItem(entry.menu_label));
