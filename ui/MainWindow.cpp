@@ -17,6 +17,7 @@
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
 #include <gdk/gdk.h>
+#include <gtkmm/settings.h>
 
 #include <glibmm/fileutils.h>
 #include <glibmm/main.h>
@@ -90,6 +91,10 @@ MainWindow::MainWindow() {
   set_title("neoguvc");
   set_default_size(960, 720);
   set_resizable(false);
+  if (auto settings = Gtk::Settings::get_default())
+    settings->set_property("gtk-application-prefer-dark-theme", true);
+
+  get_style_context()->add_class("app-window");
   current_device_path_ = kDefaultDevice;
 
   dispatcher_.connect(sigc::mem_fun(*this, &MainWindow::on_frame_ready));

@@ -22,6 +22,7 @@ ControlsBase::ControlsBase(const ConstructionOptions &options)
 
   header_bar_.set_show_close_button(true);
   header_bar_.set_title(options_.header_title);
+  header_bar_.get_style_context()->add_class("controls-header");
   set_titlebar(header_bar_);
 
   add(root_box_);
