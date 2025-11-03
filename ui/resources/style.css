@@ -40,6 +40,7 @@
 .capture-button:hover,
 .record-button:hover {
   background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
 }
 
 .capture-button:active,
@@ -107,12 +108,12 @@
   font-weight: 500;
 }
 
-.controls-row:insensitive .controls-label,
-.controls-row:insensitive .controls-scale,
-.controls-row:insensitive .controls-scale value,
-.controls-row:insensitive .controls-entry,
-.controls-row:insensitive .controls-toggle,
-.controls-row:insensitive .controls-entry arrow {
+.controls-row:disabled .controls-label,
+.controls-row:disabled .controls-scale,
+.controls-row:disabled .controls-scale value,
+.controls-row:disabled .controls-entry,
+.controls-row:disabled .controls-toggle,
+.controls-row:disabled .controls-entry arrow {
   color: #8a8a8a;
 }
 
@@ -151,11 +152,11 @@
   border: none;
 }
 
-.controls-row:insensitive .controls-scale trough {
+.controls-row:disabled .controls-scale trough {
   background-color: #1e1e1e;
 }
 
-.controls-row:insensitive .controls-scale slider {
+.controls-row:disabled .controls-scale slider {
   background-color: #3c3c3c;
 }
 
@@ -194,8 +195,8 @@
   background-color: rgba(255, 255, 255, 0.12);
 }
 
-.controls-entry button:insensitive,
-.controls-entry:insensitive button {
+.controls-entry button:disabled,
+.controls-entry:disabled button {
   background-color: transparent;
   color: #888888;
   border: none;
@@ -219,7 +220,7 @@
   background-color: #383838;
 }
 
-.controls-button:insensitive {
+.controls-button:disabled {
   background-color: #1a1a1a;
   color: #888888;
   border-color: #2a2a2a;

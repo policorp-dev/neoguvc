@@ -90,6 +90,7 @@ MainWindow::MainWindow() {
   set_title("neoguvc");
   set_default_size(960, 720);
   set_resizable(false);
+  current_device_path_ = kDefaultDevice;
 
   dispatcher_.connect(sigc::mem_fun(*this, &MainWindow::on_frame_ready));
 
@@ -148,13 +149,13 @@ MainWindow::MainWindow() {
                         }});
   config_windows_.push_back(
       ConfigWindowEntry{"video_controls", "Controles de vídeo",
-                        [](MainWindow &) {
-                          return std::make_unique<VideoControls>();
+                        [](MainWindow &window) {
+                          return std::make_unique<VideoControls>(window);
                         }});
   config_windows_.push_back(
       ConfigWindowEntry{"audio_controls", "Controles de áudio",
-                        [](MainWindow &) {
-                          return std::make_unique<AudioControls>();
+                        [](MainWindow &window) {
+                          return std::make_unique<AudioControls>(window);
                         }});
 
   for (auto &entry : config_windows_) {
@@ -219,9 +220,7 @@ MainWindow::MainWindow() {
 }
 
 MainWindow::~MainWindow() {
-  running_ = false;
-  if (capture_thread_.joinable())
-    capture_thread_.join();
+  stop_capture_thread();
   stop_recording();
   stop_stream();
   stop_audio_capture();
@@ -233,11 +232,14 @@ MainWindow::~MainWindow() {
 
 void MainWindow::initialise_device() {
   v4l2core_set_verbosity(0);
-  device_ = v4l2core_init_dev(kDefaultDevice);
+  std::string path = current_device_path_.empty() ? std::string{kDefaultDevice}
+                                                  : current_device_path_;
+  device_ = v4l2core_init_dev(path.c_str());
   if (!device_) {
-    status_label_.set_text("Falha ao abrir " + std::string{kDefaultDevice});
+    status_label_.set_text("Falha ao abrir " + path);
     return;
   }
+  current_device_path_ = path;
 
   v4l2core_prepare_valid_format(device_);
   v4l2core_prepare_valid_resolution(device_);
@@ -255,15 +257,11 @@ void MainWindow::initialise_device() {
     return;
   }
 
-  if (v4l2core_start_stream(device_) != E_OK) {
+  if (!start_streaming()) {
     status_label_.set_text("Falha ao iniciar captura no dispositivo");
     return;
   }
-
-  rgb_buffer_.resize(static_cast<size_t>(frame_width_) * frame_height_ * 3);
-  running_ = true;
-  capture_thread_ = std::thread(&MainWindow::capture_loop, this);
-  status_label_.set_text("Capturando de " + std::string{kDefaultDevice});
+  status_label_.set_text("Capturando de " + current_device_path_);
 }
 
 void MainWindow::stop_stream() {
@@ -272,6 +270,132 @@ void MainWindow::stop_stream() {
     v4l2core_close_dev(device_);
     device_ = nullptr;
   }
+}
+
+void MainWindow::stop_capture_thread() {
+  running_.store(false, std::memory_order_release);
+  if (capture_thread_.joinable())
+    capture_thread_.join();
+  pending_frame_ = false;
+}
+
+void MainWindow::resize_rgb_buffer() {
+  if (frame_width_ <= 0 || frame_height_ <= 0) {
+    rgb_buffer_.clear();
+    return;
+  }
+  rgb_buffer_.resize(static_cast<size_t>(frame_width_) * frame_height_ * 3);
+}
+
+bool MainWindow::start_streaming() {
+  if (!device_)
+    return false;
+
+  if (v4l2core_start_stream(device_) != E_OK)
+    return false;
+
+  frame_width_ = v4l2core_get_frame_width(device_);
+  frame_height_ = v4l2core_get_frame_height(device_);
+  resize_rgb_buffer();
+
+  running_.store(true, std::memory_order_release);
+  capture_thread_ = std::thread(&MainWindow::capture_loop, this);
+  return true;
+}
+
+bool MainWindow::reconfigure_video(
+    const std::function<void(v4l2_dev_t *)> &mutator) {
+  if (!device_)
+    return false;
+
+  const uint32_t current_format =
+      v4l2core_get_requested_frame_format(device_);
+  const int current_width = frame_width_;
+  const int current_height = frame_height_;
+  const int current_fps_num = v4l2core_get_fps_num(device_);
+  const int current_fps_den = v4l2core_get_fps_denom(device_);
+
+  auto initializer = [&](v4l2_dev_t *vd) {
+    if (current_format)
+      v4l2core_prepare_new_format(vd, current_format);
+    else
+      v4l2core_prepare_valid_format(vd);
+
+    if (current_width > 0 && current_height > 0)
+      v4l2core_prepare_new_resolution(vd, current_width, current_height);
+    else
+      v4l2core_prepare_valid_resolution(vd);
+
+    if (current_fps_num > 0 && current_fps_den > 0)
+      v4l2core_define_fps(vd, current_fps_num, current_fps_den);
+
+    if (mutator)
+      mutator(vd);
+  };
+
+  return reopen_video_device(current_device_path_, initializer);
+}
+
+bool MainWindow::switch_device(const std::string &device_path) {
+  std::string path =
+      device_path.empty() ? std::string{kDefaultDevice} : device_path;
+  if (reopen_video_device(path, nullptr)) {
+    current_device_path_ = path;
+    return true;
+  }
+  return false;
+}
+
+void MainWindow::set_render_fx_mask(uint32_t mask) {
+  render_fx_mask_.store(mask, std::memory_order_release);
+}
+
+uint32_t MainWindow::render_fx_mask() const {
+  return render_fx_mask_.load(std::memory_order_acquire);
+}
+
+bool MainWindow::reopen_video_device(
+    const std::string &device_path,
+    const std::function<void(v4l2_dev_t *)> &initializer) {
+  stop_capture_thread();
+
+  if (device_) {
+    v4l2core_stop_stream(device_);
+    v4l2core_close_dev(device_);
+    device_ = nullptr;
+  }
+
+  v4l2_dev_t *new_device = v4l2core_init_dev(device_path.c_str());
+  if (!new_device) {
+    post_status("Falha ao abrir " + device_path);
+    return false;
+  }
+
+  if (initializer)
+    initializer(new_device);
+  else {
+    v4l2core_prepare_valid_format(new_device);
+    v4l2core_prepare_valid_resolution(new_device);
+  }
+
+  if (v4l2core_update_current_format(new_device) != E_OK) {
+    post_status("Não foi possível aplicar formato ao dispositivo");
+    v4l2core_close_dev(new_device);
+    return false;
+  }
+
+  device_ = new_device;
+
+  if (!start_streaming()) {
+    post_status("Falha ao iniciar captura no dispositivo");
+    v4l2core_close_dev(device_);
+    device_ = nullptr;
+    return false;
+  }
+
+  current_device_path_ = device_path;
+  post_status("Capturando de " + current_device_path_);
+  return true;
 }
 
 void MainWindow::capture_loop() {
@@ -286,6 +410,10 @@ void MainWindow::capture_loop() {
       std::this_thread::sleep_for(kRetryDelay);
       continue;
     }
+
+    const uint32_t fx_mask = render_fx_mask_.load(std::memory_order_relaxed);
+    if (fx_mask != REND_FX_YUV_NOFILT)
+      render_fx_apply(frame->yuv_frame, frame_width_, frame_height_, fx_mask);
 
     {
       std::lock_guard<std::mutex> guard(frame_mutex_);
@@ -558,14 +686,129 @@ void MainWindow::post_status(const std::string &text) {
 
 void MainWindow::initialise_audio() {
   audio_set_verbosity(0);
-  audio_ctx_ = audio_init(AUDIO_PORTAUDIO, -1);
-  if (!audio_ctx_)
-    return;
+  recreate_audio_context(AUDIO_PORTAUDIO);
+}
+
+bool MainWindow::recreate_audio_context(int api) {
+  const bool was_running =
+      audio_thread_running_.load(std::memory_order_acquire);
+  if (was_running)
+    stop_audio_capture();
+
+  if (audio_ctx_) {
+    audio_close(audio_ctx_);
+    audio_ctx_ = nullptr;
+  }
+
+  if (api == AUDIO_NONE) {
+    audio_buffer_ = nullptr;
+    return true;
+  }
+
+  audio_ctx_ = audio_init(api, -1);
+  if (!audio_ctx_) {
+    audio_buffer_ = nullptr;
+    return false;
+  }
 
   if (audio_get_channels(audio_ctx_) <= 0)
     audio_set_channels(audio_ctx_, 2);
   if (audio_get_samprate(audio_ctx_) <= 0)
     audio_set_samprate(audio_ctx_, 44100);
+  audio_buffer_ = nullptr;
+  if (was_running && encoder_ctx_)
+    start_audio_capture(encoder_get_audio_frame_size(encoder_ctx_));
+
+  return true;
+}
+
+bool MainWindow::set_audio_device(int index) {
+  if (!audio_ctx_)
+    return false;
+
+  const int num_devices = audio_get_num_inp_devices(audio_ctx_);
+  if (num_devices <= 0)
+    return false;
+
+  if (index < 0)
+    index = 0;
+  if (index >= num_devices)
+    index = num_devices - 1;
+
+  const bool was_running =
+      audio_thread_running_.load(std::memory_order_acquire);
+  if (was_running)
+    stop_audio_capture();
+
+  audio_set_device_index(audio_ctx_, index);
+  if (was_running && encoder_ctx_)
+    start_audio_capture(encoder_get_audio_frame_size(encoder_ctx_));
+  return true;
+}
+
+void MainWindow::set_audio_samplerate(int samplerate) {
+  if (!audio_ctx_)
+    return;
+
+  if (samplerate <= 0) {
+    const int device_index = audio_get_device_index(audio_ctx_);
+    if (device_index >= 0 &&
+        device_index < audio_get_num_inp_devices(audio_ctx_))
+      samplerate = audio_get_device(audio_ctx_, device_index)->samprate;
+  }
+
+  if (samplerate > 0)
+    audio_set_samprate(audio_ctx_, samplerate);
+}
+
+void MainWindow::set_audio_channels(int channels) {
+  if (!audio_ctx_)
+    return;
+
+  if (channels <= 0) {
+    const int device_index = audio_get_device_index(audio_ctx_);
+    if (device_index >= 0 &&
+        device_index < audio_get_num_inp_devices(audio_ctx_))
+      channels = audio_get_device(audio_ctx_, device_index)->channels;
+  }
+
+  if (channels <= 0)
+    return;
+
+  const int device_index = audio_get_device_index(audio_ctx_);
+  if (device_index >= 0 &&
+      device_index < audio_get_num_inp_devices(audio_ctx_)) {
+    int max_channels = audio_get_device(audio_ctx_, device_index)->channels;
+    if (max_channels > 0 && channels > max_channels)
+      channels = max_channels;
+  }
+
+  if (channels > 2)
+    channels = 2;
+
+  audio_set_channels(audio_ctx_, channels);
+}
+
+void MainWindow::set_audio_latency(double latency) {
+  if (!audio_ctx_ || latency < 0.0)
+    return;
+  audio_set_latency(audio_ctx_, latency);
+}
+
+void MainWindow::set_audio_fx_mask(uint32_t mask) {
+  audio_fx_mask_.store(mask, std::memory_order_release);
+}
+
+uint32_t MainWindow::audio_fx_mask() const {
+  return audio_fx_mask_.load(std::memory_order_acquire);
+}
+
+int MainWindow::audio_api() const {
+  return audio_ctx_ ? audio_get_api(audio_ctx_) : AUDIO_NONE;
+}
+
+int MainWindow::audio_device_index() const {
+  return audio_ctx_ ? audio_get_device_index(audio_ctx_) : -1;
 }
 
 void MainWindow::start_audio_capture(int frame_size) {
@@ -610,7 +853,8 @@ void MainWindow::audio_capture_loop() {
     }
 
     int ret = audio_get_next_buffer(audio_ctx_, audio_buffer_,
-                                    audio_sample_type_, audio_fx_mask_);
+                                    audio_sample_type_,
+                                    audio_fx_mask_.load(std::memory_order_acquire));
     if (ret > 0) {
       std::this_thread::sleep_for(std::chrono::milliseconds(2));
       continue;

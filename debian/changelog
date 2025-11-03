@@ -1,7 +1,22 @@
+guvcview (3.0.2) stable; urgency=medium
+
+  * Adicionado janela de controle de vídeo
+  * Adicionado janela de controle de áudio
+
+ -- Carlos Eduardo Obristo <carlos.eduardo@policorp.com.br>  Fri, 31 Oct 2025 12:09:00 -0300
+
+guvcview (3.0.1) stable; urgency=medium
+
+  * Menu de opções
+  * Estilização dos botões de foto e vídeo
+  * Funcionalidades de controle de imagem
+
+ -- Carlos Eduardo Obristo <carlos.eduardo@policorp.com.br>  Fri, 31 Oct 2025 12:09:00 -0300
+
 guvcview (3.0.0) stable; urgency=medium
 
   * Troca de nome
-  * Reaplicação da de fotos e vídeos
+  * Reaplicação de fotos e vídeos
 
  -- Carlos Eduardo Obristo <carlos.eduardo@policorp.com.br>  Fri, 29 Oct 2025 13:43:47 -0300
 

@@ -21,6 +21,7 @@ target_include_directories(guvcview PRIVATE
   ${CMAKE_SOURCE_DIR}/gview_v4l2core
   ${CMAKE_SOURCE_DIR}/gview_audio
   ${CMAKE_SOURCE_DIR}/gview_encoder
+  ${CMAKE_SOURCE_DIR}/gview_render
 )
 
 add_definitions(${GTKMM_CFLAGS_OTHER})

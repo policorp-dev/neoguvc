@@ -21,12 +21,15 @@
 #include <glibmm/dispatcher.h>
 #include <glibmm/refptr.h>
 #include <sigc++/connection.h>
+#include <sigc++/functors/mem_fun.h>
 
 extern "C" {
 #include "gviewv4l2core.h"
 #include "colorspaces.h"
 #include "gviewencoder.h"
 #include "audio.h"
+#include "gviewrender.h"
+#include "render.h"
 }
 
 #include "ControlsBase.hpp"
@@ -35,6 +38,25 @@ class MainWindow : public Gtk::Window {
 public:
   MainWindow();
   ~MainWindow() override;
+
+  v4l2_dev_t *device_handle() const { return device_; }
+  audio_context_t *audio_context() const { return audio_ctx_; }
+
+  bool reconfigure_video(const std::function<void(v4l2_dev_t *)> &mutator);
+  bool switch_device(const std::string &device_path);
+
+  void set_render_fx_mask(uint32_t mask);
+  uint32_t render_fx_mask() const;
+
+  bool recreate_audio_context(int api);
+  bool set_audio_device(int index);
+  void set_audio_samplerate(int samplerate);
+  void set_audio_channels(int channels);
+  void set_audio_latency(double latency);
+  void set_audio_fx_mask(uint32_t mask);
+  uint32_t audio_fx_mask() const;
+  int audio_api() const;
+  int audio_device_index() const;
 
 private:
   void initialise_device();
@@ -81,7 +103,9 @@ private:
   std::thread audio_thread_;
   std::atomic<bool> audio_thread_running_{false};
   int audio_sample_type_ = GV_SAMPLE_TYPE_FLOAT;
-  uint32_t audio_fx_mask_ = AUDIO_FX_NONE;
+  std::atomic<uint32_t> audio_fx_mask_{AUDIO_FX_NONE};
+  std::atomic<uint32_t> render_fx_mask_{REND_FX_YUV_MIRROR};
+  std::string current_device_path_;
 
   void on_capture_button_clicked();
   void on_record_button_clicked();
@@ -99,6 +123,11 @@ private:
   void start_audio_capture(int frame_size);
   void stop_audio_capture();
   void audio_capture_loop();
+  void stop_capture_thread();
+  bool start_streaming();
+  void resize_rgb_buffer();
+  bool reopen_video_device(const std::string &device_path,
+                           const std::function<void(v4l2_dev_t *)> &initializer);
 
   struct ConfigWindowEntry {
     std::string id;
@@ -110,7 +139,4 @@ private:
   };
 
   std::vector<ConfigWindowEntry> config_windows_;
-
-public:
-  v4l2_dev_t *device_handle() const { return device_; }
 };
