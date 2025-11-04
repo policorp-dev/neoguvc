@@ -11,13 +11,17 @@
 #include <stdexcept>
 
 #include <algorithm>
+#include <cctype>
+#include <cerrno>
 #include <array>
 #include <cmath>
 #include <vector>
+#include <utility>
 
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
 #include <gdk/gdk.h>
+#include <gtkmm/comboboxtext.h>
 #include <gtkmm/dialog.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/settings.h>
@@ -36,6 +40,11 @@ extern "C" {
 namespace {
 constexpr const char *kDefaultDevice = "/dev/video0";
 constexpr std::chrono::milliseconds kRetryDelay{10};
+
+constexpr const char *kProfileExtension = ".gpfl";
+constexpr const char *kDefaultProfileName = "Default";
+constexpr const char *kDefaultProfileFilename = "Default.gpfl";
+constexpr const char *kSystemProfileDirectory = "/usr/share/neoguvc";
 
 enum class IconShape { Circle, RoundedSquare };
 
@@ -127,8 +136,7 @@ MainWindow::MainWindow() {
   profiles_menu_.append(profiles_separator_);
   profiles_menu_.append(default_profile_item_);
 
-  delete_profile_item_.set_sensitive(false);
-  default_profile_item_.set_sensitive(false);
+  default_profile_item_.set_sensitive(true);
 
   directories_menu_.append(images_directory_item_);
   directories_menu_.append(videos_directory_item_);
@@ -138,10 +146,17 @@ MainWindow::MainWindow() {
 
   save_profile_item_.signal_activate().connect(
       sigc::mem_fun(*this, &MainWindow::on_save_profile_activate));
+  delete_profile_item_.signal_activate().connect(
+      sigc::mem_fun(*this, &MainWindow::on_delete_profile_activate));
   images_directory_item_.signal_activate().connect(
       sigc::mem_fun(*this, &MainWindow::on_open_images_directory));
   videos_directory_item_.signal_activate().connect(
       sigc::mem_fun(*this, &MainWindow::on_open_videos_directory));
+
+  default_profile_item_.signal_activate().connect(
+      sigc::mem_fun(*this, &MainWindow::on_default_profile_activate));
+
+  refresh_profiles_menu();
 
   main_container_.pack_start(menu_bar_, Gtk::PACK_SHRINK);
   main_container_.pack_start(layout_box_, Gtk::PACK_EXPAND_WIDGET);
@@ -582,6 +597,7 @@ void MainWindow::on_save_profile_activate() {
   Gtk::Entry name_entry;
   name_entry.set_width_chars(24);
   name_entry.set_activates_default(true);
+  name_entry.set_text(kDefaultProfileName);
 
   content->pack_start(*label, Gtk::PACK_SHRINK);
   content->pack_start(name_entry, Gtk::PACK_SHRINK);
@@ -590,18 +606,34 @@ void MainWindow::on_save_profile_activate() {
   name_entry.show();
 
   const int response = dialog.run();
-  if (response == Gtk::RESPONSE_OK) {
-    Glib::ustring profile_name = name_entry.get_text();
-    if (profile_name.empty())
-      profile_name = "Default";
+  if (response != Gtk::RESPONSE_OK)
+    return;
 
-    std::string status =
-        "Salvar perfil \"" + std::string(profile_name.raw()) +
-        "\" ainda não está implementado.";
-    post_status(status);
+  Glib::ustring profile_input = name_entry.get_text();
+  if (profile_input.empty())
+    profile_input = kDefaultProfileName;
+
+  const std::string display_name = sanitize_profile_name(profile_input.raw());
+  const std::string profile_path = build_profile_path(profile_input.raw());
+
+  if (!ensure_profile_directory())
+    return;
+
+  if (!device_) {
+    post_status("Nenhum dispositivo disponível para salvar o perfil.");
+    return;
+  }
+
+  const int result = v4l2core_save_control_profile(device_, profile_path.c_str());
+  if (result == E_OK) {
+    refresh_profiles_menu();
+    post_status(Glib::ustring::compose("Perfil \"%1\" salvo em %2", display_name,
+                                       profile_path)
+                    .raw());
+  } else {
+    post_status("Falha ao salvar perfil em " + profile_path);
   }
 }
-
 
 void MainWindow::on_open_images_directory() {
   const char *pictures_dir = g_get_user_special_dir(G_USER_DIRECTORY_PICTURES);
@@ -633,6 +665,257 @@ void MainWindow::on_open_videos_directory() {
     g_mkdir_with_parents(path.c_str(), 0755);
 
   open_directory(path);
+}
+
+std::string MainWindow::sanitize_profile_name(const std::string &name) const {
+  std::string sanitized;
+  sanitized.reserve(name.size());
+
+  for (char ch : name) {
+    unsigned char uch = static_cast<unsigned char>(ch);
+    if (std::isalnum(uch)) {
+      sanitized.push_back(static_cast<char>(uch));
+    } else if (ch == '-' || ch == '_') {
+      if (sanitized.empty() || sanitized.back() != ch)
+        sanitized.push_back(ch);
+    } else if (std::isspace(uch)) {
+      if (!sanitized.empty() && sanitized.back() != '_')
+        sanitized.push_back('_');
+    }
+  }
+
+  while (!sanitized.empty() && (sanitized.front() == '_' || sanitized.front() == '-'))
+    sanitized.erase(sanitized.begin());
+  while (!sanitized.empty() && (sanitized.back() == '_' || sanitized.back() == '-'))
+    sanitized.pop_back();
+
+  if (sanitized.empty())
+    sanitized = "perfil";
+
+  return sanitized;
+}
+
+std::string MainWindow::build_profile_path(const std::string &name) const {
+  std::string sanitized = sanitize_profile_name(name);
+  const std::string filename = sanitized + kProfileExtension;
+  const std::string dir = profile_directory();
+  return dir + "/" + filename;
+}
+
+bool MainWindow::ensure_profile_directory() {
+  const std::string dir = profile_directory();
+  if (g_mkdir_with_parents(dir.c_str(), 0755) != 0) {
+    post_status("Falha ao preparar diretório de perfis: " +
+                std::string(std::strerror(errno)));
+    return false;
+  }
+  return true;
+}
+
+std::string MainWindow::profile_directory() const {
+  if (const char *data_dir = g_get_user_data_dir()) {
+    if (*data_dir)
+      return std::string(data_dir) + "/neoguvc";
+  }
+  if (const char *home = g_get_home_dir())
+    return std::string(home) + "/.local/share/neoguvc";
+  return "neoguvc_profiles";
+}
+
+void MainWindow::refresh_profiles_menu() {
+  for (auto &entry : profile_entries_) {
+    if (entry.handler.connected())
+      entry.handler.disconnect();
+    if (entry.item) {
+      profiles_menu_.remove(*entry.item);
+      delete entry.item;
+      entry.item = nullptr;
+    }
+  }
+  profile_entries_.clear();
+
+  const std::string dir_path = profile_directory();
+  const std::string default_profile_path = dir_path + "/" + kDefaultProfileFilename;
+  const bool default_profile_exists =
+      Glib::file_test(default_profile_path, Glib::FILE_TEST_IS_REGULAR);
+  default_profile_item_.set_sensitive(true);
+  if (default_profile_exists)
+    default_profile_item_.set_tooltip_text("Carregar perfil salvo \"Default\"");
+  else
+    default_profile_item_.set_tooltip_text("Restaurar valores padrão");
+
+  if (!Glib::file_test(dir_path, Glib::FILE_TEST_IS_DIR))
+    return;
+
+  std::vector<std::pair<std::string, std::string>> profiles;
+  const std::size_t extension_length = std::strlen(kProfileExtension);
+
+  GError *error = nullptr;
+  GDir *dir = g_dir_open(dir_path.c_str(), 0, &error);
+  if (!dir) {
+    if (error) {
+      post_status("Falha ao listar perfis: " +
+                  std::string(error->message ? error->message : "erro desconhecido"));
+      g_error_free(error);
+    }
+    return;
+  }
+
+  const char *entry_name = nullptr;
+  while ((entry_name = g_dir_read_name(dir))) {
+    std::string filename{entry_name};
+    if (filename.empty() || filename[0] == '.')
+      continue;
+    if (filename.size() <= extension_length)
+      continue;
+    if (filename.compare(filename.size() - extension_length, extension_length,
+                         kProfileExtension) != 0)
+      continue;
+
+    std::string base = filename.substr(0, filename.size() - extension_length);
+    if (base == kDefaultProfileName)
+      continue;
+
+    std::string full_path = dir_path + "/" + filename;
+    profiles.emplace_back(base, full_path);
+  }
+
+  g_dir_close(dir);
+
+  std::sort(profiles.begin(), profiles.end(),
+            [](const auto &lhs, const auto &rhs) {
+              return Glib::ustring(lhs.first).lowercase() <
+                     Glib::ustring(rhs.first).lowercase();
+            });
+
+  for (const auto &profile : profiles) {
+    auto *item = new Gtk::MenuItem(profile.first);
+    auto handler = item->signal_activate().connect(
+        sigc::bind(sigc::mem_fun(*this, &MainWindow::on_profile_selected),
+                   profile.first, profile.second));
+    profiles_menu_.append(*item);
+    item->show();
+
+    ProfileMenuEntry entry;
+    entry.name = profile.first;
+    entry.path = profile.second;
+    entry.item = item;
+    entry.handler = handler;
+    profile_entries_.push_back(entry);
+  }
+
+  profiles_menu_.show_all();
+}
+
+void MainWindow::on_profile_selected(const std::string &name,
+                                     const std::string &path) {
+  if (!device_) {
+    post_status("Nenhum dispositivo disponível para carregar perfil.");
+    return;
+  }
+
+  if (!Glib::file_test(path, Glib::FILE_TEST_IS_REGULAR)) {
+    post_status(Glib::ustring::compose("Perfil \"%1\" não encontrado.", name).raw());
+    return;
+  }
+
+  const int result = v4l2core_load_control_profile(device_, path.c_str());
+  if (result == E_OK) {
+    post_status(Glib::ustring::compose("Perfil \"%1\" carregado.", name).raw());
+  } else {
+    post_status(
+        Glib::ustring::compose("Falha ao carregar perfil \"%1\".", name).raw());
+  }
+}
+
+void MainWindow::on_delete_profile_activate() {
+  refresh_profiles_menu();
+
+  if (profile_entries_.empty()) {
+    post_status("Nenhum perfil salvo para excluir.");
+    return;
+  }
+
+  Gtk::Dialog dialog("Excluir perfil", *this, true);
+  dialog.add_button("_Cancelar", Gtk::RESPONSE_CANCEL);
+  dialog.add_button("_Excluir", Gtk::RESPONSE_OK);
+  dialog.set_default_response(Gtk::RESPONSE_OK);
+  dialog.set_resizable(false);
+  dialog.set_transient_for(*this);
+
+  auto *content = dialog.get_content_area();
+  content->set_spacing(8);
+  content->set_border_width(12);
+
+  auto *label = Gtk::manage(
+      new Gtk::Label("Selecione o perfil que deseja excluir:"));
+  label->set_halign(Gtk::ALIGN_START);
+  label->set_margin_bottom(4);
+  content->pack_start(*label, Gtk::PACK_SHRINK);
+
+  auto *combo = Gtk::manage(new Gtk::ComboBoxText());
+  for (const auto &entry : profile_entries_) {
+    combo->append(entry.path, entry.name);
+  }
+  combo->set_active(0);
+  combo->set_hexpand(true);
+  content->pack_start(*combo, Gtk::PACK_SHRINK);
+
+  label->show();
+  combo->show();
+
+  const int response = dialog.run();
+  if (response != Gtk::RESPONSE_OK)
+    return;
+
+  const Glib::ustring selected_path = combo->get_active_id();
+  const Glib::ustring selected_name = combo->get_active_text();
+  if (selected_path.empty()) {
+    post_status("Nenhum perfil selecionado para exclusão.");
+    return;
+  }
+
+  if (::g_remove(selected_path.c_str()) != 0) {
+    post_status(Glib::ustring::compose("Falha ao excluir perfil \"%1\": %2",
+                                       selected_name, std::strerror(errno))
+                    .raw());
+  } else {
+    post_status(
+        Glib::ustring::compose("Perfil \"%1\" excluído.", selected_name).raw());
+  }
+
+  refresh_profiles_menu();
+}
+
+void MainWindow::on_default_profile_activate() {
+  if (!device_) {
+    post_status("Nenhum dispositivo disponível para carregar perfil.");
+    return;
+  }
+
+  const std::string user_default = profile_directory() + "/" + kDefaultProfileFilename;
+  const std::string system_default =
+      std::string(kSystemProfileDirectory) + "/" + kDefaultProfileFilename;
+
+  std::vector<std::string> candidates;
+  if (Glib::file_test(user_default, Glib::FILE_TEST_IS_REGULAR))
+    candidates.push_back(user_default);
+  if (Glib::file_test(system_default, Glib::FILE_TEST_IS_REGULAR))
+    candidates.push_back(system_default);
+
+  for (const auto &candidate : candidates) {
+    const int result =
+        v4l2core_load_control_profile(device_, candidate.c_str());
+    if (result == E_OK) {
+      post_status(
+          Glib::ustring::compose("Perfil \"Default\" carregado de %1", candidate)
+              .raw());
+      return;
+    }
+  }
+
+  v4l2core_set_control_defaults(device_);
+  post_status("Perfil \"Default\" carregado (valores padrão do dispositivo).");
 }
 
 void MainWindow::open_directory(const std::string &path) {

@@ -69,14 +69,30 @@ private:
   void on_save_profile_activate();
   void on_open_images_directory();
   void on_open_videos_directory();
+  void refresh_profiles_menu();
+  std::string sanitize_profile_name(const std::string &name) const;
+  std::string build_profile_path(const std::string &name) const;
+  void on_profile_selected(const std::string &name, const std::string &path);
+  void on_delete_profile_activate();
+  void on_default_profile_activate();
+  bool ensure_profile_directory();
+  std::string profile_directory() const;
   void open_directory(const std::string &path);
+
+  struct ProfileMenuEntry {
+    std::string name;
+    std::string path;
+    Gtk::MenuItem *item{nullptr};
+    sigc::connection handler;
+  };
+  std::vector<ProfileMenuEntry> profile_entries_;
 
   Gtk::Box main_container_{Gtk::ORIENTATION_VERTICAL};
   Gtk::MenuBar menu_bar_;
   Gtk::MenuItem profiles_root_item_{"Perfis"};
   Gtk::Menu profiles_menu_;
   Gtk::MenuItem save_profile_item_{"Salvar perfil..."};
-  Gtk::MenuItem delete_profile_item_{"Excluir perfil"};
+  Gtk::MenuItem delete_profile_item_{"Excluir perfil..."};
   Gtk::SeparatorMenuItem profiles_separator_;
   Gtk::MenuItem default_profile_item_{"Default"};
   Gtk::MenuItem directories_root_item_{"Diretórios"};
