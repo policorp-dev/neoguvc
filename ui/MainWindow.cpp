@@ -13,15 +13,19 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <vector>
 
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
 #include <gdk/gdk.h>
+#include <gtkmm/dialog.h>
+#include <gtkmm/entry.h>
 #include <gtkmm/settings.h>
 
 #include <glibmm/fileutils.h>
 #include <glibmm/main.h>
 #include <glibmm/miscutils.h>
+#include <glibmm/spawn.h>
 #include <sigc++/bind.h>
 
 extern "C" {
@@ -106,7 +110,42 @@ MainWindow::MainWindow() {
       Gdk::Screen::get_default(), css,
       GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
-  add(layout_box_);
+  add(main_container_);
+  main_container_.set_orientation(Gtk::ORIENTATION_VERTICAL);
+  main_container_.set_spacing(0);
+  main_container_.set_hexpand(true);
+  main_container_.set_vexpand(true);
+
+  menu_bar_.set_hexpand(true);
+  menu_bar_.get_style_context()->add_class("app-menu-bar");
+
+  profiles_root_item_.set_submenu(profiles_menu_);
+  directories_root_item_.set_submenu(directories_menu_);
+
+  profiles_menu_.append(save_profile_item_);
+  profiles_menu_.append(delete_profile_item_);
+  profiles_menu_.append(profiles_separator_);
+  profiles_menu_.append(default_profile_item_);
+
+  delete_profile_item_.set_sensitive(false);
+  default_profile_item_.set_sensitive(false);
+
+  directories_menu_.append(images_directory_item_);
+  directories_menu_.append(videos_directory_item_);
+
+  menu_bar_.append(profiles_root_item_);
+  menu_bar_.append(directories_root_item_);
+
+  save_profile_item_.signal_activate().connect(
+      sigc::mem_fun(*this, &MainWindow::on_save_profile_activate));
+  images_directory_item_.signal_activate().connect(
+      sigc::mem_fun(*this, &MainWindow::on_open_images_directory));
+  videos_directory_item_.signal_activate().connect(
+      sigc::mem_fun(*this, &MainWindow::on_open_videos_directory));
+
+  main_container_.pack_start(menu_bar_, Gtk::PACK_SHRINK);
+  main_container_.pack_start(layout_box_, Gtk::PACK_EXPAND_WIDGET);
+
   layout_box_.pack_start(content_box_, Gtk::PACK_EXPAND_WIDGET);
   layout_box_.pack_start(sidebar_box_, Gtk::PACK_SHRINK);
   layout_box_.get_style_context()->add_class("content-box");
@@ -521,6 +560,91 @@ void MainWindow::on_frame_ready() {
   }
 
   image_widget_.set(pixbuf);
+}
+
+void MainWindow::on_save_profile_activate() {
+  Gtk::Dialog dialog("Salvar perfil", *this, true);
+  dialog.set_transient_for(*this);
+  dialog.set_modal(true);
+  dialog.add_button("_Cancelar", Gtk::RESPONSE_CANCEL);
+  dialog.add_button("_Salvar", Gtk::RESPONSE_OK);
+  dialog.set_default_response(Gtk::RESPONSE_OK);
+  dialog.set_resizable(false);
+
+  auto *content = dialog.get_content_area();
+  content->set_spacing(8);
+  content->set_border_width(12);
+
+  auto *label = Gtk::manage(new Gtk::Label("Nome do perfil:"));
+  label->set_halign(Gtk::ALIGN_START);
+  label->set_margin_bottom(4);
+
+  Gtk::Entry name_entry;
+  name_entry.set_width_chars(24);
+  name_entry.set_activates_default(true);
+
+  content->pack_start(*label, Gtk::PACK_SHRINK);
+  content->pack_start(name_entry, Gtk::PACK_SHRINK);
+
+  label->show();
+  name_entry.show();
+
+  const int response = dialog.run();
+  if (response == Gtk::RESPONSE_OK) {
+    Glib::ustring profile_name = name_entry.get_text();
+    if (profile_name.empty())
+      profile_name = "Default";
+
+    std::string status =
+        "Salvar perfil \"" + std::string(profile_name.raw()) +
+        "\" ainda não está implementado.";
+    post_status(status);
+  }
+}
+
+
+void MainWindow::on_open_images_directory() {
+  const char *pictures_dir = g_get_user_special_dir(G_USER_DIRECTORY_PICTURES);
+  std::string path;
+  if (pictures_dir && *pictures_dir)
+    path = pictures_dir;
+  else if (const char *home = g_get_home_dir())
+    path = std::string(home) + "/Imagens";
+  else
+    path = "Imagens";
+
+  if (!path.empty() && !Glib::file_test(path, Glib::FILE_TEST_IS_DIR))
+    g_mkdir_with_parents(path.c_str(), 0755);
+
+  open_directory(path);
+}
+
+void MainWindow::on_open_videos_directory() {
+  const char *videos_dir = g_get_user_special_dir(G_USER_DIRECTORY_VIDEOS);
+  std::string path;
+  if (videos_dir && *videos_dir)
+    path = videos_dir;
+  else if (const char *home = g_get_home_dir())
+    path = std::string(home) + "/Vídeos";
+  else
+    path = "Vídeos";
+
+  if (!path.empty() && !Glib::file_test(path, Glib::FILE_TEST_IS_DIR))
+    g_mkdir_with_parents(path.c_str(), 0755);
+
+  open_directory(path);
+}
+
+void MainWindow::open_directory(const std::string &path) {
+  if (path.empty())
+    return;
+
+  try {
+    std::vector<Glib::ustring> argv = {"xdg-open", path};
+    Glib::spawn_async("", argv, Glib::SPAWN_SEARCH_PATH);
+  } catch (const Glib::Error &error) {
+    post_status("Não foi possível abrir diretório: " + std::string(error.what()));
+  }
 }
 
 void MainWindow::on_capture_button_clicked() { snapshot_request_ = true; }
