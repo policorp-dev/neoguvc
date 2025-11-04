@@ -102,7 +102,6 @@ private:
   Gtk::Box layout_box_{Gtk::ORIENTATION_HORIZONTAL};
   Gtk::Box content_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Image image_widget_;
-  Gtk::Label status_label_;
   Gtk::Box sidebar_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_top_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_bottom_{Gtk::ORIENTATION_VERTICAL};

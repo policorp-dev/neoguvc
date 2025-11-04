@@ -18,6 +18,7 @@
 #include <vector>
 #include <utility>
 
+#include <cstdio>
 #include <cairomm/context.h>
 #include <cairomm/surface.h>
 #include <gdk/gdk.h>
@@ -166,14 +167,8 @@ MainWindow::MainWindow() {
   layout_box_.get_style_context()->add_class("content-box");
 
   content_box_.pack_start(image_widget_, Gtk::PACK_EXPAND_WIDGET);
-  content_box_.pack_start(status_label_, Gtk::PACK_SHRINK);
   content_box_.get_style_context()->add_class("content-box");
 
-  status_label_.set_margin_top(6);
-  status_label_.set_margin_bottom(6);
-  status_label_.set_text("Abrindo dispositivo " + std::string{kDefaultDevice} +
-                         "...");
-  status_label_.get_style_context()->add_class("status-label");
 
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
   sidebar_box_.set_spacing(16);
@@ -295,7 +290,6 @@ void MainWindow::initialise_device() {
                                                   : current_device_path_;
   device_ = v4l2core_init_dev(path.c_str());
   if (!device_) {
-    status_label_.set_text("Falha ao abrir " + path);
     return;
   }
   current_device_path_ = path;
@@ -303,24 +297,18 @@ void MainWindow::initialise_device() {
   v4l2core_prepare_valid_format(device_);
   v4l2core_prepare_valid_resolution(device_);
   if (v4l2core_update_current_format(device_) != E_OK) {
-    status_label_.set_text(
-        "Não foi possível aplicar formato ao dispositivo");
     return;
   }
 
   frame_width_ = v4l2core_get_frame_width(device_);
   frame_height_ = v4l2core_get_frame_height(device_);
   if (frame_width_ <= 0 || frame_height_ <= 0) {
-    status_label_.set_text(
-        "Resolução inválida reportada pelo dispositivo");
     return;
   }
 
   if (!start_streaming()) {
-    status_label_.set_text("Falha ao iniciar captura no dispositivo");
     return;
   }
-  status_label_.set_text("Capturando de " + current_device_path_);
 }
 
 void MainWindow::stop_stream() {
@@ -453,7 +441,6 @@ bool MainWindow::reopen_video_device(
   }
 
   current_device_path_ = device_path;
-  post_status("Capturando de " + current_device_path_);
   return true;
 }
 
@@ -627,9 +614,6 @@ void MainWindow::on_save_profile_activate() {
   const int result = v4l2core_save_control_profile(device_, profile_path.c_str());
   if (result == E_OK) {
     refresh_profiles_menu();
-    post_status(Glib::ustring::compose("Perfil \"%1\" salvo em %2", display_name,
-                                       profile_path)
-                    .raw());
   } else {
     post_status("Falha ao salvar perfil em " + profile_path);
   }
@@ -821,7 +805,6 @@ void MainWindow::on_profile_selected(const std::string &name,
 
   const int result = v4l2core_load_control_profile(device_, path.c_str());
   if (result == E_OK) {
-    post_status(Glib::ustring::compose("Perfil \"%1\" carregado.", name).raw());
   } else {
     post_status(
         Glib::ustring::compose("Falha ao carregar perfil \"%1\".", name).raw());
@@ -880,8 +863,6 @@ void MainWindow::on_delete_profile_activate() {
                                        selected_name, std::strerror(errno))
                     .raw());
   } else {
-    post_status(
-        Glib::ustring::compose("Perfil \"%1\" excluído.", selected_name).raw());
   }
 
   refresh_profiles_menu();
@@ -907,15 +888,11 @@ void MainWindow::on_default_profile_activate() {
     const int result =
         v4l2core_load_control_profile(device_, candidate.c_str());
     if (result == E_OK) {
-      post_status(
-          Glib::ustring::compose("Perfil \"Default\" carregado de %1", candidate)
-              .raw());
       return;
     }
   }
 
   v4l2core_set_control_defaults(device_);
-  post_status("Perfil \"Default\" carregado (valores padrão do dispositivo).");
 }
 
 void MainWindow::open_directory(const std::string &path) {
@@ -977,9 +954,7 @@ void MainWindow::save_snapshot(v4l2_frame_buff_t *frame) {
     return;
 
   std::string path = build_output_path(false);
-  if (v4l2core_save_image(frame, path.c_str(), IMG_FMT_JPG) == E_OK)
-    post_status("Foto salva em " + path);
-  else
+  if (v4l2core_save_image(frame, path.c_str(), IMG_FMT_JPG) != E_OK)
     post_status("Falha ao salvar foto");
 }
 
@@ -1028,7 +1003,6 @@ bool MainWindow::start_recording(v4l2_frame_buff_t *frame) {
     if (record_button_icon_ && record_icon_active_)
       record_button_icon_->set(record_icon_active_);
   });
-  post_status("Gravando em " + current_video_path_);
   if (audio_channels > 0) {
     std::lock_guard<std::mutex> lock(encoder_mutex_);
     if (encoder_ctx_ && encoder_ctx_->enc_audio_ctx)
@@ -1085,15 +1059,13 @@ void MainWindow::stop_recording() {
     }
   }
   if (!current_video_path_.empty())
-    post_status("Vídeo salvo em " + current_video_path_);
-  else
-    post_status("Gravação finalizada");
-  current_video_path_.clear();
+    current_video_path_.clear();
 }
 
 void MainWindow::post_status(const std::string &text) {
-  Glib::signal_idle().connect_once(
-      [this, text]() { status_label_.set_text(text); });
+  if (text.empty())
+    return;
+  std::fprintf(stderr, "[neoguvc] %s\n", text.c_str());
 }
 
 void MainWindow::initialise_audio() {
