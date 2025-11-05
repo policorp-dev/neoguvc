@@ -96,7 +96,7 @@ private:
   Gtk::MenuItem save_profile_item_{"Salvar perfil..."};
   Gtk::MenuItem delete_profile_item_{"Excluir perfil..."};
   Gtk::SeparatorMenuItem profiles_separator_;
-  Gtk::MenuItem default_profile_item_{"Default"};
+  Gtk::MenuItem default_profile_item_{"Padrão"};
   Gtk::MenuItem directories_root_item_{"Diretórios"};
   Gtk::Menu directories_menu_;
   Gtk::MenuItem images_directory_item_{"Imagens"};

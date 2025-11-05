@@ -3,8 +3,9 @@ guvcview (3.0.3) stable; urgency=medium
   * Ajuste no tamanho da janela por proporção.
   * Salvamento de perfis de configuração.
   * Botão para abrir diretórios de imagens e vídeos
+  * Feedback para gravação e tirar foto
 
- -- Carlos Eduardo Obristo <carlos.eduardo@policorp.com.br>  Wed, 5 Nov 2025 10:09:00 -0300
+ -- Carlos Eduardo Obristo <carlos.eduardo@policorp.com.br>  Wed, 5 Nov 2025 10:21:59 -0300
 
 
 guvcview (3.0.2) stable; urgency=medium

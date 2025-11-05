@@ -43,8 +43,8 @@ constexpr const char *kDefaultDevice = "/dev/video0";
 constexpr std::chrono::milliseconds kRetryDelay{10};
 
 constexpr const char *kProfileExtension = ".gpfl";
-constexpr const char *kDefaultProfileName = "Default";
-constexpr const char *kDefaultProfileFilename = "Default.gpfl";
+constexpr const char *kDefaultProfileName = "Padrão";
+constexpr const char *kDefaultProfileFilename = "padrao.gpfl";
 constexpr const char *kSystemProfileDirectory = "/usr/share/neoguvc";
 constexpr int kCaptureFlashFadeIntervalMs = 30;
 constexpr double kCaptureFlashFadeStep = 0.08;
@@ -841,7 +841,7 @@ void MainWindow::refresh_profiles_menu() {
       Glib::file_test(default_profile_path, Glib::FILE_TEST_IS_REGULAR);
   default_profile_item_.set_sensitive(true);
   if (default_profile_exists)
-    default_profile_item_.set_tooltip_text("Carregar perfil salvo \"Default\"");
+    default_profile_item_.set_tooltip_text("Carregar perfil salvo \"Padrão\"");
   else
     default_profile_item_.set_tooltip_text("Restaurar valores padrão");
 
