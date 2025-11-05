@@ -46,12 +46,15 @@ constexpr const char *kProfileExtension = ".gpfl";
 constexpr const char *kDefaultProfileName = "Default";
 constexpr const char *kDefaultProfileFilename = "Default.gpfl";
 constexpr const char *kSystemProfileDirectory = "/usr/share/neoguvc";
+constexpr int kCaptureFlashFadeIntervalMs = 30;
+constexpr double kCaptureFlashFadeStep = 0.08;
+constexpr int kRecordPulseIntervalMs = 320;
 
 enum class IconShape { Circle, RoundedSquare };
 
-Glib::RefPtr<Gdk::Pixbuf> create_control_icon(IconShape shape,
-                                              const std::array<double, 4> &inner_color,
-                                              const std::array<double, 4> &ring_color) {
+Glib::RefPtr<Gdk::Pixbuf> create_control_icon(
+    IconShape shape, const std::array<double, 4> &inner_color,
+    const std::array<double, 4> &ring_color, double glow_alpha = 0.0) {
   constexpr int kSize = 48;
   constexpr double kRingWidth = 4.0;
   constexpr double kGap = 6.0;
@@ -68,33 +71,82 @@ Glib::RefPtr<Gdk::Pixbuf> create_control_icon(IconShape shape,
   cr->arc(center, center, ring_radius - kRingWidth * 0.5, 0.0, 2.0 * G_PI);
   cr->stroke();
 
+  const double target_radius =
+      std::max(ring_radius - kRingWidth * 0.5 - kGap, 0.0);
+  double half_inner = 0.0;
+  double corner_radius = 0.0;
+  if (shape == IconShape::RoundedSquare && target_radius > 0.0) {
+    half_inner = target_radius / std::sqrt(2.0);
+    corner_radius = std::max(half_inner * 0.25, 3.0);
+  }
+
+  if (glow_alpha > 0.0 && target_radius > 0.0) {
+    constexpr double kGlowExpand = 3.0;
+    cr->save();
+    cr->set_source_rgba(inner_color[0], inner_color[1], inner_color[2],
+                        glow_alpha);
+    if (shape == IconShape::Circle) {
+      const double glow_radius = std::min(center,
+                                          target_radius + kGlowExpand);
+      cr->arc(center, center, glow_radius, 0.0, 2.0 * G_PI);
+      cr->fill();
+    } else {
+      const double glow_half =
+          std::min(center, (target_radius + kGlowExpand) / std::sqrt(2.0));
+      const double glow_corner =
+          std::max(corner_radius + kGlowExpand * 0.35, corner_radius + 1.0);
+      auto draw_square = [&](double half, double radius) {
+        cr->begin_new_path();
+        cr->move_to(center - half + radius, center - half);
+        cr->line_to(center + half - radius, center - half);
+        cr->arc(center + half - radius, center - half + radius, radius,
+                -G_PI_2, 0.0);
+        cr->line_to(center + half, center + half - radius);
+        cr->arc(center + half - radius, center + half - radius, radius,
+                0.0, G_PI_2);
+        cr->line_to(center - half + radius, center + half);
+        cr->arc(center - half + radius, center + half - radius, radius,
+                G_PI_2, G_PI);
+        cr->line_to(center - half, center - half + radius);
+        cr->arc(center - half + radius, center - half + radius, radius,
+                G_PI, 3.0 * G_PI_2);
+        cr->close_path();
+        cr->fill();
+      };
+      draw_square(glow_half, glow_corner);
+    }
+    cr->restore();
+  }
+
   cr->set_source_rgba(inner_color[0], inner_color[1], inner_color[2], inner_color[3]);
 
   if (shape == IconShape::Circle) {
-    const double inner_radius = std::max(ring_radius - kRingWidth * 0.5 - kGap, 0.0);
+    const double inner_radius = target_radius;
     cr->arc(center, center, inner_radius, 0.0, 2.0 * G_PI);
     cr->fill();
   } else {
-    const double target_radius = std::max(ring_radius - kRingWidth * 0.5 - kGap, 0.0);
-    const double half_inner = target_radius / std::sqrt(2.0);
-    const double corner_radius = std::max(half_inner * 0.25, 3.0);
+    auto draw_inner_square = [&](double half, double radius) {
+      cr->begin_new_path();
+      cr->move_to(center - half + radius, center - half);
+      cr->line_to(center + half - radius, center - half);
+      cr->arc(center + half - radius, center - half + radius, radius,
+              -G_PI_2, 0.0);
+      cr->line_to(center + half, center + half - radius);
+      cr->arc(center + half - radius, center + half - radius, radius,
+              0.0, G_PI_2);
+      cr->line_to(center - half + radius, center + half);
+      cr->arc(center - half + radius, center + half - radius, radius,
+              G_PI_2, G_PI);
+      cr->line_to(center - half, center - half + radius);
+      cr->arc(center - half + radius, center - half + radius, radius,
+              G_PI, 3.0 * G_PI_2);
+      cr->close_path();
+      cr->fill();
+    };
 
-    cr->begin_new_path();
-    cr->move_to(center - half_inner + corner_radius, center - half_inner);
-    cr->line_to(center + half_inner - corner_radius, center - half_inner);
-    cr->arc(center + half_inner - corner_radius, center - half_inner + corner_radius,
-            corner_radius, -G_PI_2, 0.0);
-    cr->line_to(center + half_inner, center + half_inner - corner_radius);
-    cr->arc(center + half_inner - corner_radius, center + half_inner - corner_radius,
-            corner_radius, 0.0, G_PI_2);
-    cr->line_to(center - half_inner + corner_radius, center + half_inner);
-    cr->arc(center - half_inner + corner_radius, center + half_inner - corner_radius,
-            corner_radius, G_PI_2, G_PI);
-    cr->line_to(center - half_inner, center - half_inner + corner_radius);
-    cr->arc(center - half_inner + corner_radius, center - half_inner + corner_radius,
-            corner_radius, G_PI, 3.0 * G_PI_2);
-    cr->close_path();
-    cr->fill();
+    if (target_radius > 0.0) {
+      draw_inner_square(half_inner, corner_radius);
+    }
   }
 
   return Gdk::Pixbuf::create(surface, 0, 0, kSize, kSize);
@@ -185,9 +237,30 @@ MainWindow::MainWindow() {
   layout_box_.pack_start(sidebar_box_, Gtk::PACK_SHRINK);
   layout_box_.get_style_context()->add_class("content-box");
 
-  content_box_.pack_start(image_widget_, Gtk::PACK_EXPAND_WIDGET);
+  content_box_.pack_start(video_overlay_, Gtk::PACK_EXPAND_WIDGET);
   content_box_.get_style_context()->add_class("content-box");
 
+  video_overlay_.set_hexpand(true);
+  video_overlay_.set_vexpand(true);
+  video_overlay_.add(image_widget_);
+
+  image_widget_.set_hexpand(true);
+  image_widget_.set_vexpand(true);
+  image_widget_.set_halign(Gtk::ALIGN_CENTER);
+  image_widget_.set_valign(Gtk::ALIGN_CENTER);
+
+  capture_flash_frame_.set_shadow_type(Gtk::SHADOW_NONE);
+  capture_flash_frame_.set_hexpand(true);
+  capture_flash_frame_.set_vexpand(true);
+  capture_flash_frame_.set_halign(Gtk::ALIGN_FILL);
+  capture_flash_frame_.set_valign(Gtk::ALIGN_FILL);
+  capture_flash_frame_.set_margin_top(0);
+  capture_flash_frame_.set_margin_bottom(0);
+  capture_flash_frame_.set_margin_left(0);
+  capture_flash_frame_.set_margin_right(0);
+  capture_flash_frame_.get_style_context()->add_class("capture-flash");
+  capture_flash_frame_.set_no_show_all(true);
+  video_overlay_.add_overlay(capture_flash_frame_);
 
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
   sidebar_box_.set_spacing(16);
@@ -274,6 +347,9 @@ MainWindow::MainWindow() {
   record_icon_active_ = create_control_icon(IconShape::RoundedSquare,
                                            {0.90, 0.0, 0.0, 1.0},
                                            {1.0, 1.0, 1.0, 1.0});
+  record_icon_active_glow_ = create_control_icon(IconShape::RoundedSquare,
+                                                {0.90, 0.0, 0.0, 1.0},
+                                                {1.0, 1.0, 1.0, 1.0}, 0.65);
   record_button_icon_ = Gtk::manage(new Gtk::Image(record_icon_idle_));
   record_button_.set_image(*record_button_icon_);
   record_button_icon_->show();
@@ -290,6 +366,7 @@ MainWindow::MainWindow() {
       sigc::mem_fun(*this, &MainWindow::on_record_button_clicked));
 
   show_all_children();
+  capture_flash_frame_.hide();
   initialise_audio();
   initialise_device();
 }
@@ -947,7 +1024,10 @@ void MainWindow::open_directory(const std::string &path) {
   }
 }
 
-void MainWindow::on_capture_button_clicked() { snapshot_request_ = true; }
+void MainWindow::on_capture_button_clicked() {
+  snapshot_request_ = true;
+  trigger_capture_feedback();
+}
 
 void MainWindow::on_record_button_clicked() {
   if (recording_.load(std::memory_order_acquire)) {
@@ -998,6 +1078,71 @@ void MainWindow::save_snapshot(v4l2_frame_buff_t *frame) {
     post_status("Falha ao salvar foto");
 }
 
+void MainWindow::trigger_capture_feedback() {
+  Glib::signal_idle().connect_once([this]() {
+    capture_flash_frame_.show();
+    capture_flash_opacity_ = 1.0;
+    capture_flash_frame_.set_opacity(capture_flash_opacity_);
+    capture_flash_frame_.queue_draw();
+    if (capture_flash_timeout_.connected())
+      capture_flash_timeout_.disconnect();
+    capture_flash_timeout_ = Glib::signal_timeout().connect(
+        sigc::mem_fun(*this, &MainWindow::on_capture_feedback_timeout),
+        kCaptureFlashFadeIntervalMs);
+  });
+}
+
+bool MainWindow::on_capture_feedback_timeout() {
+  capture_flash_opacity_ =
+      std::max(0.0, capture_flash_opacity_ - kCaptureFlashFadeStep);
+  capture_flash_frame_.set_opacity(capture_flash_opacity_);
+  capture_flash_frame_.queue_draw();
+
+  if (capture_flash_opacity_ <= 0.0) {
+    capture_flash_frame_.hide();
+    capture_flash_frame_.set_opacity(1.0);
+    capture_flash_timeout_.disconnect();
+    capture_flash_timeout_ = sigc::connection();
+    return false;
+  }
+
+  return true;
+}
+
+void MainWindow::start_record_button_animation() {
+  Glib::signal_idle().connect_once([this]() {
+    record_icon_glow_state_ = false;
+    if (record_pulse_timeout_.connected())
+      record_pulse_timeout_.disconnect();
+    record_pulse_timeout_ = Glib::signal_timeout().connect(
+        sigc::mem_fun(*this, &MainWindow::on_record_button_pulse_timeout),
+        kRecordPulseIntervalMs);
+  });
+}
+
+void MainWindow::stop_record_button_animation() {
+  Glib::signal_idle().connect_once([this]() {
+    if (record_pulse_timeout_.connected())
+      record_pulse_timeout_.disconnect();
+    record_pulse_timeout_ = sigc::connection();
+    record_icon_glow_state_ = false;
+  });
+}
+
+bool MainWindow::on_record_button_pulse_timeout() {
+  if (!recording_.load(std::memory_order_acquire))
+    return false;
+
+  record_icon_glow_state_ = !record_icon_glow_state_;
+  if (record_button_icon_) {
+    if (record_icon_glow_state_ && record_icon_active_glow_)
+      record_button_icon_->set(record_icon_active_glow_);
+    else if (record_icon_active_)
+      record_button_icon_->set(record_icon_active_);
+  }
+  return true;
+}
+
 bool MainWindow::start_recording(v4l2_frame_buff_t *frame) {
   if (recording_.load(std::memory_order_acquire) || !device_ || !frame)
     return false;
@@ -1043,6 +1188,7 @@ bool MainWindow::start_recording(v4l2_frame_buff_t *frame) {
     if (record_button_icon_ && record_icon_active_)
       record_button_icon_->set(record_icon_active_);
   });
+  start_record_button_animation();
   if (audio_channels > 0) {
     std::lock_guard<std::mutex> lock(encoder_mutex_);
     if (encoder_ctx_ && encoder_ctx_->enc_audio_ctx)
@@ -1082,6 +1228,7 @@ void MainWindow::stop_recording() {
     return;
 
   recording_.store(false, std::memory_order_release);
+  stop_record_button_animation();
   Glib::signal_idle().connect_once([this]() {
     if (record_button_icon_ && record_icon_idle_)
       record_button_icon_->set(record_icon_idle_);
@@ -1100,6 +1247,7 @@ void MainWindow::stop_recording() {
   }
   if (!current_video_path_.empty())
     current_video_path_.clear();
+  trigger_capture_feedback();
 }
 
 void MainWindow::post_status(const std::string &text) {

@@ -17,6 +17,8 @@
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
+#include <gtkmm/overlay.h>
+#include <gtkmm/frame.h>
 #include <gtkmm/separatormenuitem.h>
 #include <gtkmm/stylecontext.h>
 #include <gtkmm/window.h>
@@ -102,7 +104,9 @@ private:
   double scaling_factor_{1.0};
   Gtk::Box layout_box_{Gtk::ORIENTATION_HORIZONTAL};
   Gtk::Box content_box_{Gtk::ORIENTATION_VERTICAL};
+  Gtk::Overlay video_overlay_;
   Gtk::Image image_widget_;
+  Gtk::Frame capture_flash_frame_;
   Gtk::Box sidebar_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_top_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_bottom_{Gtk::ORIENTATION_VERTICAL};
@@ -112,6 +116,7 @@ private:
   Gtk::Image *record_button_icon_ = nullptr;
   Glib::RefPtr<Gdk::Pixbuf> record_icon_idle_;
   Glib::RefPtr<Gdk::Pixbuf> record_icon_active_;
+  Glib::RefPtr<Gdk::Pixbuf> record_icon_active_glow_;
   Gtk::Menu menu_popup_;
   Glib::Dispatcher dispatcher_;
 
@@ -158,6 +163,11 @@ private:
   void start_audio_capture(int frame_size);
   void stop_audio_capture();
   void audio_capture_loop();
+  void trigger_capture_feedback();
+  bool on_capture_feedback_timeout();
+  void start_record_button_animation();
+  void stop_record_button_animation();
+  bool on_record_button_pulse_timeout();
   void stop_capture_thread();
   bool start_streaming();
   void resize_rgb_buffer();
@@ -174,4 +184,8 @@ private:
   };
 
   std::vector<ConfigWindowEntry> config_windows_;
+  sigc::connection capture_flash_timeout_;
+  double capture_flash_opacity_{0.0};
+  sigc::connection record_pulse_timeout_;
+  bool record_icon_glow_state_{false};
 };
