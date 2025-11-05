@@ -103,7 +103,26 @@ Glib::RefPtr<Gdk::Pixbuf> create_control_icon(IconShape shape,
 
 MainWindow::MainWindow() {
   set_title("neoguvc");
-  set_default_size(960, 720);
+  int height = 0;
+  if (auto display = Gdk::Display::get_default()) {
+    if (auto monitor = gdk_display_get_primary_monitor(display->gobj())) {
+      GdkRectangle geometry;
+      gdk_monitor_get_geometry(monitor, &geometry);
+      height = geometry.height;
+    }
+  }
+
+  const int base_width = 960;
+  const int base_height = 720;
+  const double scaling =
+      (height > 0) ? static_cast<double>(height) / 1080.0 : 1.0;
+  scaling_factor_ = scaling;
+  const int scaled_width =
+      std::max(640, static_cast<int>(base_width * scaling));
+  const int scaled_height =
+      std::max(480, static_cast<int>(base_height * scaling));
+
+  set_default_size(scaled_width, scaled_height);
   set_resizable(false);
   if (auto settings = Gtk::Settings::get_default())
     settings->set_property("gtk-application-prefer-dark-theme", true);
@@ -174,8 +193,8 @@ MainWindow::MainWindow() {
   sidebar_box_.set_spacing(16);
   sidebar_box_.set_valign(Gtk::ALIGN_FILL);
   sidebar_box_.set_halign(Gtk::ALIGN_CENTER);
-  sidebar_box_.set_margin_left(15);
-  sidebar_box_.set_margin_right(15);
+  sidebar_box_.set_margin_left(7);
+  sidebar_box_.set_margin_right(7);
   sidebar_box_.set_hexpand(false);
   sidebar_box_.get_style_context()->add_class("sidebar");
 
@@ -189,6 +208,7 @@ MainWindow::MainWindow() {
   menu_button_.set_margin_left(0);
   menu_button_.set_margin_right(0);
   menu_button_.set_halign(Gtk::ALIGN_CENTER);
+  menu_button_.set_valign(Gtk::ALIGN_START);
   menu_button_.get_style_context()->add_class("menu-button");
   menu_button_.signal_clicked().connect(
       sigc::mem_fun(*this, &MainWindow::on_menu_button_clicked));
@@ -241,6 +261,7 @@ MainWindow::MainWindow() {
 
   record_button_.set_margin_left(0);
   record_button_.set_margin_right(0);
+  record_button_.set_margin_bottom(15);
   record_button_.set_relief(Gtk::RELIEF_NONE);
   record_button_.set_focus_on_click(false);
   record_button_.set_always_show_image(true);
@@ -561,7 +582,24 @@ void MainWindow::on_frame_ready() {
                 local_copy.data() + y * src_row_bytes, src_row_bytes);
   }
 
-  image_widget_.set(pixbuf);
+  Glib::RefPtr<Gdk::Pixbuf> display_pixbuf = pixbuf;
+  if (frame_width_ > 0 && frame_height_ > 0 && scaling_factor_ > 0.0) {
+    const double ratio = scaling_factor_;
+    if (std::abs(ratio - 1.0) > 1e-3) {
+      const int target_w =
+          std::max(1, static_cast<int>(std::round(frame_width_ * ratio)));
+      const int target_h =
+          std::max(1, static_cast<int>(std::round(frame_height_ * ratio)));
+      if (auto scaled =
+              pixbuf->scale_simple(target_w, target_h, Gdk::INTERP_BILINEAR))
+        display_pixbuf = scaled;
+      image_widget_.set_size_request(target_w, target_h);
+    } else {
+      image_widget_.set_size_request(frame_width_, frame_height_);
+    }
+  }
+
+  image_widget_.set(display_pixbuf);
 }
 
 void MainWindow::on_save_profile_activate() {
@@ -620,6 +658,7 @@ void MainWindow::on_save_profile_activate() {
 }
 
 void MainWindow::on_open_images_directory() {
+  std::this_thread::sleep_for(std::chrono::seconds(2));
   const char *pictures_dir = g_get_user_special_dir(G_USER_DIRECTORY_PICTURES);
   std::string path;
   if (pictures_dir && *pictures_dir)
@@ -636,6 +675,7 @@ void MainWindow::on_open_images_directory() {
 }
 
 void MainWindow::on_open_videos_directory() {
+  std::this_thread::sleep_for(std::chrono::seconds(2));
   const char *videos_dir = g_get_user_special_dir(G_USER_DIRECTORY_VIDEOS);
   std::string path;
   if (videos_dir && *videos_dir)

@@ -2,7 +2,6 @@
 
 .sidebar {
   background-color: #111111;
-  padding-top: 12px;
   border: none;
   box-shadow: none;
   border-left: none;
@@ -62,7 +61,6 @@
   border: none;
   border-radius: 50%;
   box-shadow: none;
-  padding: 6px;
 }
 
 .capture-button:hover,

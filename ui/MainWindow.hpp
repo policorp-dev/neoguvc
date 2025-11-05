@@ -99,6 +99,7 @@ private:
   Gtk::Menu directories_menu_;
   Gtk::MenuItem images_directory_item_{"Imagens"};
   Gtk::MenuItem videos_directory_item_{"Vídeos"};
+  double scaling_factor_{1.0};
   Gtk::Box layout_box_{Gtk::ORIENTATION_HORIZONTAL};
   Gtk::Box content_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Image image_widget_;
