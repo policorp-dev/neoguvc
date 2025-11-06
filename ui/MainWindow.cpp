@@ -49,6 +49,10 @@ constexpr const char *kSystemProfileDirectory = "/usr/share/neoguvc";
 constexpr int kCaptureFlashFadeIntervalMs = 30;
 constexpr double kCaptureFlashFadeStep = 0.08;
 constexpr int kRecordPulseIntervalMs = 320;
+constexpr int kWindowWidth = 640;
+constexpr int kWindowHeight = 360;
+constexpr int kCameraDisplayWidth = 640;
+constexpr int kCameraDisplayHeight = 360;
 
 enum class IconShape { Circle, RoundedSquare };
 
@@ -155,26 +159,9 @@ Glib::RefPtr<Gdk::Pixbuf> create_control_icon(
 
 MainWindow::MainWindow() {
   set_title("neoguvc");
-  int height = 0;
-  if (auto display = Gdk::Display::get_default()) {
-    if (auto monitor = gdk_display_get_primary_monitor(display->gobj())) {
-      GdkRectangle geometry;
-      gdk_monitor_get_geometry(monitor, &geometry);
-      height = geometry.height;
-    }
-  }
 
-  const int base_width = 960;
-  const int base_height = 720;
-  const double scaling =
-      (height > 0) ? static_cast<double>(height) / 1080.0 : 1.0;
-  scaling_factor_ = scaling;
-  const int scaled_width =
-      std::max(640, static_cast<int>(base_width * scaling));
-  const int scaled_height =
-      std::max(480, static_cast<int>(base_height * scaling));
-
-  set_default_size(scaled_width, scaled_height);
+  set_default_size(kWindowWidth, kWindowHeight);
+  set_size_request(kWindowWidth, kWindowHeight);
   set_resizable(false);
   if (auto settings = Gtk::Settings::get_default())
     settings->set_property("gtk-application-prefer-dark-theme", true);
@@ -242,12 +229,14 @@ MainWindow::MainWindow() {
 
   video_overlay_.set_hexpand(true);
   video_overlay_.set_vexpand(true);
+  video_overlay_.set_size_request(kCameraDisplayWidth, kCameraDisplayHeight);
   video_overlay_.add(image_widget_);
 
   image_widget_.set_hexpand(true);
   image_widget_.set_vexpand(true);
   image_widget_.set_halign(Gtk::ALIGN_CENTER);
   image_widget_.set_valign(Gtk::ALIGN_CENTER);
+  image_widget_.set_size_request(kCameraDisplayWidth, kCameraDisplayHeight);
 
   capture_flash_frame_.set_shadow_type(Gtk::SHADOW_NONE);
   capture_flash_frame_.set_hexpand(true);
@@ -260,6 +249,7 @@ MainWindow::MainWindow() {
   capture_flash_frame_.set_margin_right(0);
   capture_flash_frame_.get_style_context()->add_class("capture-flash");
   capture_flash_frame_.set_no_show_all(true);
+  capture_flash_frame_.set_size_request(kCameraDisplayWidth, kCameraDisplayHeight);
   video_overlay_.add_overlay(capture_flash_frame_);
 
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
@@ -660,22 +650,15 @@ void MainWindow::on_frame_ready() {
   }
 
   Glib::RefPtr<Gdk::Pixbuf> display_pixbuf = pixbuf;
-  if (frame_width_ > 0 && frame_height_ > 0 && scaling_factor_ > 0.0) {
-    const double ratio = scaling_factor_;
-    if (std::abs(ratio - 1.0) > 1e-3) {
-      const int target_w =
-          std::max(1, static_cast<int>(std::round(frame_width_ * ratio)));
-      const int target_h =
-          std::max(1, static_cast<int>(std::round(frame_height_ * ratio)));
-      if (auto scaled =
-              pixbuf->scale_simple(target_w, target_h, Gdk::INTERP_BILINEAR))
-        display_pixbuf = scaled;
-      image_widget_.set_size_request(target_w, target_h);
-    } else {
-      image_widget_.set_size_request(frame_width_, frame_height_);
-    }
+  if (frame_width_ != kCameraDisplayWidth ||
+      frame_height_ != kCameraDisplayHeight) {
+    if (auto scaled = pixbuf->scale_simple(
+            kCameraDisplayWidth, kCameraDisplayHeight, Gdk::INTERP_BILINEAR))
+      display_pixbuf = scaled;
   }
 
+  image_widget_.set_size_request(kCameraDisplayWidth, kCameraDisplayHeight);
+  capture_flash_frame_.set_size_request(kCameraDisplayWidth, kCameraDisplayHeight);
   image_widget_.set(display_pixbuf);
 }
 
