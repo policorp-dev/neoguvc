@@ -8,7 +8,11 @@ pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 
 add_executable(guvcview
   main.cpp
-  CameraWindow.cpp
+  MainWindow.cpp
+  AudioControls.cpp
+  ControlsBase.cpp
+  ImageControls.cpp
+  VideoControls.cpp
 )
 
 target_include_directories(guvcview PRIVATE
@@ -17,6 +21,7 @@ target_include_directories(guvcview PRIVATE
   ${CMAKE_SOURCE_DIR}/gview_v4l2core
   ${CMAKE_SOURCE_DIR}/gview_audio
   ${CMAKE_SOURCE_DIR}/gview_encoder
+  ${CMAKE_SOURCE_DIR}/gview_render
 )
 
 add_definitions(${GTKMM_CFLAGS_OTHER})

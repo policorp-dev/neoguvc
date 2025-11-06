@@ -1,10 +1,10 @@
 #include <gtkmm/application.h>
 
-#include "CameraWindow.hpp"
+#include "MainWindow.hpp"
 
 int main(int argc, char *argv[]) {
   auto app = Gtk::Application::create(argc, argv, "org.guvcview.fork");
 
-  CameraWindow window;
+  MainWindow window;
   return app->run(window);
 }
