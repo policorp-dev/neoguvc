@@ -1,4 +1,4 @@
-Source: guvcview
+Source: neoguvc
 Section: graphics
 Priority: optional
 Maintainer: Nobuhiro Iwamatsu <iwamatsu@debian.org>
@@ -22,7 +22,7 @@ Vcs-Git: https://salsa.debian.org/debian/guvcview.git
 Vcs-Browser: https://salsa.debian.org/debian/guvcview
 Rules-Requires-Root: no
 
-Package: guvcview
+Package: neoguvc
 Architecture: linux-any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Recommends: uvcdynctrl

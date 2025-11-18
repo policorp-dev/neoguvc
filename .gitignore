@@ -46,8 +46,8 @@ build_*
 obj-x86_64-linux-gnu/
 debian/debhelper-build-stamp
 debian/files
-debian/guvcview
-debian/guvcview.substvars
+debian/neoguvc
+debian/neoguvc.substvars
 debian/tmp
 debian/.debhelper/
 debian/*.log
