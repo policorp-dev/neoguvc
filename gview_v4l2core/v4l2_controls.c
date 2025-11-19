@@ -32,7 +32,7 @@
 #include <libintl.h>
 #include <locale.h>
 
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "v4l2_controls.h"
 #include "v4l2_devices.h"
 #include "v4l2_xu_ctrls.h"

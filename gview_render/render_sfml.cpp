@@ -29,8 +29,8 @@
 
 extern "C" {
 // #include "../config.h"
-#include "gview.h"
-#include "gviewrender.h"
+#include "neoguvc.h"
+#include "neoguvcrender.h"
 #include "render_sfml.h"
 }
 

@@ -29,7 +29,7 @@
 #include <unistd.h>
 
 #include "core_time.h"
-#include "gview.h"
+#include "neoguvc.h"
 
 /*
  * monotonic time in nanoseconds

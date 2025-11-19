@@ -2,7 +2,7 @@
 <!-- Copyright 2014 Paulo Assis <pj.assis@gmail.com> -->
 <component type="desktop-application">
  <id>net.sourceforge.guvcview</id>
- <launchable type="desktop-id">guvcview.desktop</launchable>
+ <launchable type="desktop-id">neoguvc.desktop</launchable>
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-2.0+</project_license>
  <name>Simple UVC Viewer</name>

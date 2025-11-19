@@ -29,7 +29,7 @@
 #include <inttypes.h>
 #include <sys/types.h>
 
-#include "gviewaudio.h"
+#include "neoguvcaudio.h"
 
 struct _audio_context_t {
   int api;                      /*audio api for this context*/

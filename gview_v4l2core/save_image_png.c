@@ -31,7 +31,7 @@
 #include <unistd.h>
 
 #include "colorspaces.h"
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "save_image.h"
 
 /*

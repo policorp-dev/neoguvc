@@ -22,7 +22,7 @@
 #ifndef UVC_H264_H
 #define UVC_H264_H
 
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "v4l2_core.h"
 #include "v4l2_xu_ctrls.h"
 
@@ -153,7 +153,7 @@
 #define xDependency_id(layer_id) (((layer_id) >> 3) & 15)
 #define xTemporal_id(layer_id) ((layer_id) & 7)
 
-/* h264 probe commit struct (defined in gviewv4l2core.h) */
+/* h264 probe commit struct (defined in neoguvc_v4l2core.h) */
 
 /* rate control */
 typedef struct _uvcx_rate_control_mode_t {

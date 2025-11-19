@@ -24,7 +24,7 @@
 #ifndef FRAME_DECODER_H
 #define FRAME_DECODER_H
 
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "v4l2_core.h"
 
 /*h264 and jpeg decoder (libavcodec)*/

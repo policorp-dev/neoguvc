@@ -31,9 +31,9 @@
 #include <locale.h>
 #include <libintl.h>
 
-#include "gviewencoder.h"
+#include "neoguvcencoder.h"
 #include "file_io.h"
-#include "gview.h"
+#include "neoguvc.h"
 
 
 /*

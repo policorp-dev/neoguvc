@@ -31,8 +31,8 @@
 #include <locale.h>
 #include <libintl.h>
 
-#include "gviewencoder.h"
-#include "gview.h"
+#include "neoguvcencoder.h"
+#include "neoguvc.h"
 #include "encoder.h"
 
 extern int enc_verbosity;

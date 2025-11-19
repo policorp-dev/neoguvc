@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gview.h"
+#include "neoguvc.h"
 
 extern int verbosity;
 

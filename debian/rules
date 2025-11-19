@@ -36,10 +36,10 @@ override_dh_install:
 		debian/neoguvc/usr/share/doc/neoguvc/ChangeLog
 
 	install -d debian/neoguvc/usr/share/metainfo
-	if [ -f debian/neoguvc/usr/share/appdata/guvcview.appdata.xml ]; then \
-	  cp -a debian/neoguvc/usr/share/appdata/guvcview.appdata.xml \
-	    debian/neoguvc/usr/share/metainfo/org.guvcview.appdata.xml; \
-	  rm -f debian/neoguvc/usr/share/appdata/guvcview.appdata.xml; \
+	if [ -f debian/neoguvc/usr/share/appdata/neoguvc.appdata.xml ]; then \
+	  cp -a debian/neoguvc/usr/share/appdata/neoguvc.appdata.xml \
+	    debian/neoguvc/usr/share/metainfo/org.neoguvc.appdata.xml; \
+	  rm -f debian/neoguvc/usr/share/appdata/neoguvc.appdata.xml; \
 	fi
 
 	dh_install

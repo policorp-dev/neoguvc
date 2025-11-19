@@ -40,8 +40,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA     # # #
 #endif
 #include "encoder.h"
 #include "file_io.h"
-#include "gview.h"
-#include "gviewencoder.h"
+#include "neoguvc.h"
+#include "neoguvcencoder.h"
 #include "matroska.h"
 #include "stream_io.h"
 

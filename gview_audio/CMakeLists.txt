@@ -1,7 +1,13 @@
 set(CMAKE_C_STANDARD 11)
 
+if(NOT DEFINED APP_MAIN_DOMAIN)
+  set(APP_MAIN_DOMAIN "neoguvc")
+endif()
+
 set(LIBSOVERSION "2")
 set(LIBVERSION  "2.2.0")
+set(LIBOUTPUT "${APP_MAIN_DOMAIN}audio")
+set(PC_OUTPUT "lib${LIBOUTPUT}.pc")
 
 option(USE_PULSE "Enable Pulseaudio API" ON)
 
@@ -14,6 +20,7 @@ add_library(gviewaudio SHARED
 
 set_target_properties(
   gviewaudio PROPERTIES
+  OUTPUT_NAME ${LIBOUTPUT}
   VERSION ${LIBVERSION}
   SOVERSION ${LIBSOVERSION}
 )
@@ -37,11 +44,11 @@ endif()
 include_directories(${CMAKE_SOURCE_DIR}/includes)
 
 if(INSTALL_DEVKIT)
-  configure_file(libgviewaudio.pc.in libgviewaudio.pc @ONLY)
+  configure_file(libgviewaudio.pc.in ${PC_OUTPUT} @ONLY)
 
-  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/gviewaudio.h TYPE INCLUDE)
+  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/neoguvcaudio.h TYPE INCLUDE)
   install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/libgviewaudio.pc
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${PC_OUTPUT}
     DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/pkgconfig
   )
 endif()

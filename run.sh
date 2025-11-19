@@ -3,7 +3,7 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BUILD_DIR="${ROOT_DIR}/build"
-BIN_PATH="${BUILD_DIR}/ui/guvcview"
+BIN_PATH="${BUILD_DIR}/ui/neoguvc"
 
 if [[ ! -x "${BIN_PATH}" ]]; then
   echo "Binário não encontrado em ${BIN_PATH}."

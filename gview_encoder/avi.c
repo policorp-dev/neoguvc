@@ -40,8 +40,8 @@
 #include "avi.h"
 #include "encoder.h"
 #include "file_io.h"
-#include "gview.h"
-#include "gviewencoder.h"
+#include "neoguvc.h"
+#include "neoguvcencoder.h"
 #include "stream_io.h"
 
 #ifndef O_BINARY

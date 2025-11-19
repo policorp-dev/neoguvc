@@ -30,7 +30,7 @@
 #include <unistd.h>
 
 #include "control_profile.h"
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "v4l2_controls.h"
 // #include "../config.h"
 

@@ -26,7 +26,7 @@
 #ifndef GVIEWAUDIO_PORTAUDIO_H
 #define GVIEWAUDIO_PORTAUDIO_H
 
-#include "gviewaudio.h"
+#include "neoguvcaudio.h"
 
 /*
  * init portaudio api

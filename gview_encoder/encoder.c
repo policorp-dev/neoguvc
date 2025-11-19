@@ -47,8 +47,8 @@
 // #include "../config.h"
 #include "encoder.h"
 #include "packet.h"
-#include "gview.h"
-#include "gviewencoder.h"
+#include "neoguvc.h"
+#include "neoguvcencoder.h"
 #include "stream_io.h"
 
 #if LIBAVUTIL_VER_AT_LEAST(52, 2)

@@ -27,11 +27,11 @@
 #include <sigc++/functors/mem_fun.h>
 
 extern "C" {
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "colorspaces.h"
-#include "gviewencoder.h"
+#include "neoguvcencoder.h"
 #include "audio.h"
-#include "gviewrender.h"
+#include "neoguvcrender.h"
 #include "render.h"
 }
 

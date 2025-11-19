@@ -1,7 +1,13 @@
 set(CMAKE_C_STANDARD 11)
 
+if(NOT DEFINED APP_MAIN_DOMAIN)
+  set(APP_MAIN_DOMAIN "neoguvc")
+endif()
+
 set(LIBSOVERSION "2")
 set(LIBVERSION  "2.2.1")
+set(LIBOUTPUT "${APP_MAIN_DOMAIN}encoder")
+set(PC_OUTPUT "lib${LIBOUTPUT}.pc")
 
 add_library(gviewencoder SHARED
   audio_codecs.c
@@ -18,6 +24,7 @@ add_library(gviewencoder SHARED
 
 set_target_properties(
   gviewencoder PROPERTIES
+  OUTPUT_NAME ${LIBOUTPUT}
   VERSION ${LIBVERSION}
   SOVERSION ${LIBSOVERSION}
 )
@@ -30,12 +37,12 @@ add_definitions(${FFMPEG_CFLAGS} ${FFMPEG_CFLAGS_OTHER})
 include_directories(${CMAKE_SOURCE_DIR}/includes)
 
 if(INSTALL_DEVKIT)
-  configure_file(libgviewencoder.pc.in libgviewencoder.pc @ONLY)
+  configure_file(libgviewencoder.pc.in ${PC_OUTPUT} @ONLY)
 
-  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/gviewencoder.h TYPE INCLUDE)
+  install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/neoguvcencoder.h TYPE INCLUDE)
 
   install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/libgviewencoder.pc
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${PC_OUTPUT}
     DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/pkgconfig
   )
 endif()

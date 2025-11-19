@@ -35,8 +35,8 @@
 #include <sys/types.h>
 
 #include "dct.h"
-#include "gview.h"
-#include "gviewv4l2core.h"
+#include "neoguvc.h"
+#include "neoguvc_v4l2core.h"
 
 /*
  * Level shifting to get 8 bit SIGNED values for the data
