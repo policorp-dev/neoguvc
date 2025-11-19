@@ -34,8 +34,8 @@
 
 // #include "core_time.h"
 #include "dct.h"
-// #include "gview.h"
-#include "gviewv4l2core.h"
+// #include "neoguvc.h"
+#include "neoguvc_v4l2core.h"
 #include "soft_autofocus.h"
 // #include "../config.h"
 

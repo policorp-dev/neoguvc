@@ -26,7 +26,7 @@
 #ifndef GVIEWAUDIO_PULSEAUDIO_H
 #define GVIEWAUDIO_PULSEAUDIO_H
 
-#include "gviewaudio.h"
+#include "neoguvcaudio.h"
 
 /*
  * init pulseaudio api

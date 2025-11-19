@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "gview.h"
+#include "neoguvc.h"
 #include "v4l2_devices.h"
 #include "v4l2_xu_ctrls.h"
 

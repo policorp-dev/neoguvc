@@ -42,7 +42,7 @@
 #include <locale.h>
 
 // #include "../config.h"
-#include "gviewrender.h"
+#include "neoguvcrender.h"
 #include "render.h"
 
 #if ENABLE_SDL2

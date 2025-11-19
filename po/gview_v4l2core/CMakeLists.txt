@@ -1,11 +1,15 @@
-set(_potFile gview_v4l2core.pot)
+if(NOT DEFINED APP_V4L2_DOMAIN)
+  set(APP_V4L2_DOMAIN "neoguvc_v4l2core")
+endif()
+
+set(_potFile ${APP_V4L2_DOMAIN}.pot)
 set(_xgettext_option_list
   "--language=C"
   "--keyword=_"
   "--keyword=N_"
   "--keyword=C_:1c,2"
   "--keyword=NC_:1c,2 -s"
-  "--package-name=gview_v4l2core"
+  "--package-name=${APP_V4L2_DOMAIN}"
 )
 
 file(GLOB pofiles "${CMAKE_SOURCE_DIR}/po/gview_v4l2core/*.po")
@@ -31,4 +35,3 @@ add_custom_target(
   DEPENDS ${_potFile}
   COMMENT "Updating ${_potFile} from sources"
 )
-

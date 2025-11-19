@@ -1,12 +1,19 @@
 cmake_minimum_required(VERSION 3.14)
 project(guvcview VERSION 2.2.1)
 
+set(APP_MAIN_DOMAIN "neoguvc")
+set(APP_V4L2_DOMAIN "${APP_MAIN_DOMAIN}_v4l2core")
+
 include(GNUInstallDirs)
 
 find_package(PkgConfig REQUIRED)
 
-add_compile_definitions(PACKAGE_STRING="guvcview ${CMAKE_PROJECT_VERSION}")
+add_compile_definitions(PACKAGE_STRING="${APP_MAIN_DOMAIN} ${CMAKE_PROJECT_VERSION}")
 add_compile_definitions(PACKAGE_LOCALE_DIR="${CMAKE_INSTALL_FULL_LOCALEDIR}")
+add_compile_definitions(GETTEXT_PACKAGE="${APP_MAIN_DOMAIN}")
+add_compile_definitions(GETTEXT_PACKAGE_V4L2CORE="${APP_V4L2_DOMAIN}")
+
+set(PRJ_VER ${PROJECT_VERSION})
 
 option(USE_SDL2 "Enable SDL2 render engine" ON)
 option(USE_SFML "Enable SFML render engine" OFF)

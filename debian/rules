@@ -27,19 +27,19 @@ override_dh_auto_configure:
                 -DCMAKE_SHARED_LINKER_FLAGS_RELEASE="$(LDFLAGS)"
 
 override_dh_auto_install:
-	dh_auto_install --destdir=$(CURDIR)/debian/guvcview
+	dh_auto_install --destdir=$(CURDIR)/debian/neoguvc
 
 override_dh_install:
-	rm -rf debian/guvcview/usr/share/doc/guvcview/NEWS \
-		debian/guvcview/usr/share/doc/guvcview/COPYING \
-		debian/guvcview/usr/share/doc/guvcview/INSTALL \
-		debian/guvcview/usr/share/doc/guvcview/ChangeLog
+	rm -rf debian/neoguvc/usr/share/doc/neoguvc/NEWS \
+		debian/neoguvc/usr/share/doc/neoguvc/COPYING \
+		debian/neoguvc/usr/share/doc/neoguvc/INSTALL \
+		debian/neoguvc/usr/share/doc/neoguvc/ChangeLog
 
-	install -d debian/guvcview/usr/share/metainfo
-	if [ -f debian/guvcview/usr/share/appdata/guvcview.appdata.xml ]; then \
-	  cp -a debian/guvcview/usr/share/appdata/guvcview.appdata.xml \
-	    debian/guvcview/usr/share/metainfo/org.guvcview.appdata.xml; \
-	  rm -f debian/guvcview/usr/share/appdata/guvcview.appdata.xml; \
+	install -d debian/neoguvc/usr/share/metainfo
+	if [ -f debian/neoguvc/usr/share/appdata/neoguvc.appdata.xml ]; then \
+	  cp -a debian/neoguvc/usr/share/appdata/neoguvc.appdata.xml \
+	    debian/neoguvc/usr/share/metainfo/org.neoguvc.appdata.xml; \
+	  rm -f debian/neoguvc/usr/share/appdata/neoguvc.appdata.xml; \
 	fi
 
 	dh_install

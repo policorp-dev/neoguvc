@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTKMM REQUIRED gtkmm-3.0)
 
-add_executable(guvcview
+add_executable(neoguvc
   main.cpp
   MainWindow.cpp
   AudioControls.cpp
@@ -15,7 +15,7 @@ add_executable(guvcview
   VideoControls.cpp
 )
 
-target_include_directories(guvcview PRIVATE
+target_include_directories(neoguvc PRIVATE
   ${GTKMM_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}/includes
   ${CMAKE_SOURCE_DIR}/gview_v4l2core
@@ -26,7 +26,7 @@ target_include_directories(guvcview PRIVATE
 
 add_definitions(${GTKMM_CFLAGS_OTHER})
 
-target_link_libraries(guvcview
+target_link_libraries(neoguvc
   gviewv4l2core
   gviewaudio
   gviewencoder
@@ -35,4 +35,4 @@ target_link_libraries(guvcview
   pthread
 )
 
-install(TARGETS guvcview RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS neoguvc RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

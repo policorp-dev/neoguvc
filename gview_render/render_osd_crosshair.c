@@ -27,8 +27,8 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "gview.h"
-#include "gviewrender.h"
+#include "neoguvc.h"
+#include "neoguvcrender.h"
 
 extern int render_verbosity;
 

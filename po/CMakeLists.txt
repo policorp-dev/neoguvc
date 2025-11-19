@@ -1,22 +1,30 @@
 include(FindGettext)
 
+if(NOT DEFINED APP_MAIN_DOMAIN)
+  set(APP_MAIN_DOMAIN "neoguvc")
+endif()
+if(NOT DEFINED APP_V4L2_DOMAIN)
+  set(APP_V4L2_DOMAIN "${APP_MAIN_DOMAIN}_v4l2core")
+endif()
+
 add_subdirectory(gview_v4l2core)
 
-set(_potFile ${PROJECT_NAME}.pot)
+set(_text_domain ${APP_MAIN_DOMAIN})
+set(_potFile ${_text_domain}.pot)
 set(_xgettext_option_list
   "--language=C"
   "--keyword=_"
   "--keyword=N_"
   "--keyword=C_:1c,2"
   "--keyword=NC_:1c,2 -s"
-  "--package-name=${PROJECT_NAME}"
+  "--package-name=${_text_domain}"
   "--package-version=${PRJ_VER}"
 )
 
 file(GLOB pofiles "${CMAKE_SOURCE_DIR}/po/*.po")
 file(GLOB _src_list
-  "${CMAKE_SOURCE_DIR}/guvcview/*.c"
-  "${CMAKE_SOURCE_DIR}/guvcview/*.cpp"
+  "${CMAKE_SOURCE_DIR}/ui/*.cpp"
+  "${CMAKE_SOURCE_DIR}/ui/*.hpp"
 )
 
 gettext_create_translations(${_potFile} ALL ${pofiles})
@@ -37,4 +45,3 @@ add_custom_target(
   DEPENDS ${_potFile}
   COMMENT "Updating ${_potFile} from sources"
 )
-

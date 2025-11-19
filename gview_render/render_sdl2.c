@@ -23,7 +23,7 @@
 #include <assert.h>
 
 // #include "../config.h"
-#include "gviewrender.h"
+#include "neoguvcrender.h"
 #include "render_sdl2.h"
 
 extern int render_verbosity;

@@ -23,8 +23,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA     # # #
 #include <time.h>
 #include <unistd.h>
 
-#include "gview.h"
-#include "gviewrender.h"
+#include "neoguvc.h"
+#include "neoguvcrender.h"
 // #include "../config.h"
 
 static uint8_t fx_bin_treshold = 0x7F; /* 127 -> 50% */

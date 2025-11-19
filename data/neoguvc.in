@@ -1,7 +1,7 @@
-?package(guvcview):\
+?package(neoguvc):\
 	needs="X11"\
 	section="Applications/Video"\
-	title="guvcview"\
+	title="neoguvc"\
 	longtitle="GTK UVC Viewer - uvc video viewer and capturer"\
-	command="guvcview"\
-	icon="@DATADIR@/pixmaps/guvcview.png"
+	command="neoguvc"\
+	icon="@DATADIR@/pixmaps/neoguvc.png"

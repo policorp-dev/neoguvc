@@ -21,7 +21,7 @@
 #ifndef V4L2_FORMATS_H
 #define V4L2_FORMATS_H
 
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "v4l2_core.h"
 
 /*

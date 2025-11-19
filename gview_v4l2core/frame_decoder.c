@@ -33,7 +33,7 @@
 
 #include "colorspaces.h"
 #include "frame_decoder.h"
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "jpeg_decoder.h"
 #include "uvc_h264.h"
 // #include "../config.h"

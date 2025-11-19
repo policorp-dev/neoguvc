@@ -3,8 +3,8 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/@LIBDIR@
 includedir=${prefix}/@INCLUDEDIR@
 
-Name: gviewencoder
+Name: lib@LIBOUTPUT@
 Description: guvcview encoder library.
 Version: @LIBVERSION@
-Libs: -L${libdir} -lgviewencoder
+Libs: -L${libdir} -l@LIBOUTPUT@
 Cflags: -I${includedir}

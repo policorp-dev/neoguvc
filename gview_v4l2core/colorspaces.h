@@ -22,7 +22,7 @@
 #ifndef COLORSPACES_H
 #define COLORSPACES_H
 
-#include "gview.h"
+#include "neoguvc.h"
 
 /*
  *convert from packed 422 yuv (yuyv) to 420 planar (yu12)

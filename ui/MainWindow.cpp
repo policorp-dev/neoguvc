@@ -252,6 +252,24 @@ MainWindow::MainWindow() {
   capture_flash_frame_.set_size_request(kCameraDisplayWidth, kCameraDisplayHeight);
   video_overlay_.add_overlay(capture_flash_frame_);
 
+  no_camera_label_.set_hexpand(true);
+  no_camera_label_.set_vexpand(true);
+  no_camera_label_.set_halign(Gtk::ALIGN_CENTER);
+  no_camera_label_.set_valign(Gtk::ALIGN_CENTER);
+  no_camera_label_.set_justify(Gtk::JUSTIFY_CENTER);
+  no_camera_label_.set_line_wrap(true);
+  no_camera_label_.set_max_width_chars(42);
+  no_camera_label_.set_margin_top(12);
+  no_camera_label_.set_margin_bottom(12);
+  no_camera_label_.set_margin_left(16);
+  no_camera_label_.set_margin_right(16);
+  no_camera_label_.set_text("Nenhuma câmera disponível.\n"
+                            "Conecte um dispositivo compatível e tente novamente.");
+  no_camera_label_.get_style_context()->add_class("no-camera-warning");
+  no_camera_label_.set_no_show_all(true);
+  video_overlay_.add_overlay(no_camera_label_);
+  no_camera_label_.hide();
+
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
   sidebar_box_.set_spacing(16);
   sidebar_box_.set_valign(Gtk::ALIGN_FILL);
@@ -378,6 +396,8 @@ void MainWindow::initialise_device() {
                                                   : current_device_path_;
   device_ = v4l2core_init_dev(path.c_str());
   if (!device_) {
+    if (v4l2core_get_num_devices() <= 0)
+      show_no_camera_warning();
     return;
   }
   current_device_path_ = path;
@@ -397,6 +417,7 @@ void MainWindow::initialise_device() {
   if (!start_streaming()) {
     return;
   }
+  hide_no_camera_warning();
 }
 
 void MainWindow::stop_stream() {
@@ -503,6 +524,8 @@ bool MainWindow::reopen_video_device(
   v4l2_dev_t *new_device = v4l2core_init_dev(device_path.c_str());
   if (!new_device) {
     post_status("Falha ao abrir " + device_path);
+    if (v4l2core_get_num_devices() <= 0)
+      show_no_camera_warning();
     return false;
   }
 
@@ -529,6 +552,7 @@ bool MainWindow::reopen_video_device(
   }
 
   current_device_path_ = device_path;
+  hide_no_camera_warning();
   return true;
 }
 
@@ -1237,6 +1261,31 @@ void MainWindow::post_status(const std::string &text) {
   if (text.empty())
     return;
   std::fprintf(stderr, "[neoguvc] %s\n", text.c_str());
+}
+
+void MainWindow::show_no_camera_warning() {
+  if (no_camera_warning_visible_)
+    return;
+  no_camera_warning_visible_ = true;
+  set_config_menu_items_sensitive(false);
+  if (!no_camera_label_.get_visible())
+    no_camera_label_.show();
+}
+
+void MainWindow::hide_no_camera_warning() {
+  if (!no_camera_warning_visible_)
+    return;
+  no_camera_warning_visible_ = false;
+  set_config_menu_items_sensitive(true);
+  if (no_camera_label_.get_visible())
+    no_camera_label_.hide();
+}
+
+void MainWindow::set_config_menu_items_sensitive(bool enabled) {
+  for (auto &entry : config_windows_) {
+    if (entry.menu_item)
+      entry.menu_item->set_sensitive(enabled);
+  }
 }
 
 void MainWindow::initialise_audio() {

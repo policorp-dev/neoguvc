@@ -14,7 +14,6 @@
 #include <gtkmm/menu.h>
 #include <gtkmm/menuitem.h>
 #include <gtkmm/menubar.h>
-#include <gtkmm/messagedialog.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
 #include <gtkmm/overlay.h>
@@ -28,11 +27,11 @@
 #include <sigc++/functors/mem_fun.h>
 
 extern "C" {
-#include "gviewv4l2core.h"
+#include "neoguvc_v4l2core.h"
 #include "colorspaces.h"
-#include "gviewencoder.h"
+#include "neoguvcencoder.h"
 #include "audio.h"
-#include "gviewrender.h"
+#include "neoguvcrender.h"
 #include "render.h"
 }
 
@@ -106,6 +105,7 @@ private:
   Gtk::Overlay video_overlay_;
   Gtk::Image image_widget_;
   Gtk::Frame capture_flash_frame_;
+  Gtk::Label no_camera_label_;
   Gtk::Box sidebar_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_top_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_bottom_{Gtk::ORIENTATION_VERTICAL};
@@ -172,6 +172,9 @@ private:
   void resize_rgb_buffer();
   bool reopen_video_device(const std::string &device_path,
                            const std::function<void(v4l2_dev_t *)> &initializer);
+  void show_no_camera_warning();
+  void hide_no_camera_warning();
+  void set_config_menu_items_sensitive(bool enabled);
 
   struct ConfigWindowEntry {
     std::string id;
@@ -187,4 +190,5 @@ private:
   double capture_flash_opacity_{0.0};
   sigc::connection record_pulse_timeout_;
   bool record_icon_glow_state_{false};
+  bool no_camera_warning_visible_{false};
 };

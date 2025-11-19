@@ -42,8 +42,8 @@
 #include <libintl.h>
 #include <locale.h>
 
-#include "gview.h"
-#include "gviewv4l2core.h"
+#include "neoguvc.h"
+#include "neoguvc_v4l2core.h"
 // #include "v4l2_core.h"
 #include "control_profile.h"
 #include "core_time.h"

@@ -38,8 +38,8 @@
 
 #include "audio.h"
 #include "core_time.h"
-#include "gview.h"
-#include "gviewaudio.h"
+#include "neoguvc.h"
+#include "neoguvcaudio.h"
 
 extern int audio_verbosity;
 

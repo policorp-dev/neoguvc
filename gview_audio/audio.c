@@ -42,8 +42,8 @@
 
 #include "audio.h"
 #include "audio_portaudio.h"
-#include "gview.h"
-#include "gviewaudio.h"
+#include "neoguvc.h"
+#include "neoguvcaudio.h"
 #if HAS_PULSEAUDIO
 #include "audio_pulseaudio.h"
 #endif

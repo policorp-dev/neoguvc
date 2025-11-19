@@ -22,8 +22,8 @@
 #ifndef V4L2CORE_H
 #define V4L2CORE_H
 
-#include "gview.h"
-#include "gviewv4l2core.h"
+#include "neoguvc.h"
+#include "neoguvc_v4l2core.h"
 
 /*
  * video device data

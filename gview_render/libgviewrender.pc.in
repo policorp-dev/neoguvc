@@ -3,8 +3,8 @@ exec_prefix=${prefix}
 libdir=${exec_prefix}/@LIBDIR@
 includedir=${prefix}/@INCLUDEDIR@
 
-Name: gviewrender
+Name: lib@LIBOUTPUT@
 Description: guvcview render library.
 Version: @LIBVERSION@
-Libs: -L${libdir} -lgviewrender
+Libs: -L${libdir} -l@LIBOUTPUT@
 Cflags: -I${includedir}
