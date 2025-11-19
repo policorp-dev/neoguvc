@@ -1,8 +1,9 @@
 [Desktop Entry]
 Name=Webcam
-_GenericName=GTK UVC video viewer
-_X-GNOME-FullName=GTK UVC video viewer
-_Comment=A video viewer and capturer for the linux uvc driver
+GenericName=GTK UVC video viewer
+X-GNOME-FullName=GTK UVC video viewer
+Comment=A video viewer and capturer for the linux uvc driver
+Comment[pt_BR]=Tire fotos e vídeos com sua Webcam.
 TryExec=neoguvc
 Keywords=photo;video;webcam;camera;selfie;
 Keywords[pt_BR]=fotos;photos;vídeos;webcam;câmera;selfie;autorretrato;
