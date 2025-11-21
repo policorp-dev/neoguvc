@@ -1,7 +1,7 @@
 Source: neoguvc
 Section: graphics
 Priority: optional
-Maintainer: Edson Juliano Drosdeck <edson@policorp.com.br>
+Maintainer: Carlos Eduardo Obristo <carlos.eduardo@policorp.com.br>
 Build-Depends: debhelper-compat (= 13),
                cmake,
                intltool,
