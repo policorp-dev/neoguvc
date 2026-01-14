@@ -1,7 +1,7 @@
 neoguvc
 ===================
 
-Teste
+Teste espelhamento
 
 > Este repositório deriva do projeto original **guvcview** (https://guvcview.sourceforge.net/). Licença e créditos completos encontram-se em `COPYING`, `AUTHORS` e demais arquivos herdados.
 
