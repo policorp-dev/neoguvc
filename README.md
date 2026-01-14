@@ -1,6 +1,8 @@
 neoguvc
 ===================
 
+Teste espelhamento para o GitHub
+
 > Este repositório deriva do projeto original **guvcview** (https://guvcview.sourceforge.net/). Licença e créditos completos encontram-se em `COPYING`, `AUTHORS` e demais arquivos herdados.
 
 Guia mínimo para compilar, executar em modo desenvolvimento e instalar a
@@ -51,3 +53,6 @@ Estrutura do projeto
 - includes/ - cabeçalhos compartilhados entre os módulos C herdados
 - po/ - arquivos de tradução (gettext)
 - ui/ - implementação da nova interface (GTKmm) e integrações com as libs C
+
+
+
