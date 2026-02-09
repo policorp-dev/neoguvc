@@ -1,3 +1,9 @@
+neoguvc (3.0.5) stable; urgency=medium
+
+  * Adicionado exit para quando perde conexao
+
+ -- Edson Juliano Drosdeck <edson@policorp.com.br>  Mon, 09 Feb 2026 16:09:18 -0300
+
 neoguvc (3.0.4) stable; urgency=medium
 
   * Aviso de câmera inexistente.
