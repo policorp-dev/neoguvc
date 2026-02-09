@@ -1181,10 +1181,12 @@ v4l2_frame_buff_t *v4l2core_get_frame(v4l2_dev_t *vd) {
 
       if (!ret)
         qind = process_input_buffer(vd);
-      else
+      else{
         fprintf(stderr,
                 "V4L2_CORE: (VIDIOC_DQBUF) Unable to dequeue buffer: %s\n",
                 strerror(errno));
+	 exit(-1);
+      }
     } else
       res = -1;
 
