@@ -1,3 +1,9 @@
+neoguvc (3.0.6) stable; urgency=medium
+
+  * Reconectar webcam
+
+ -- Vinicius Neves <vinicius.neves@policorp.com.br>  Fri, 29 May 2026 12:32:03 -0400
+
 neoguvc (3.0.5) stable; urgency=medium
 
   * Adicionado exit para quando perde conexao

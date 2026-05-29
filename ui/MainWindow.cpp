@@ -6,6 +6,7 @@
 #include <chrono>
 #include <cstring>
 #include <ctime>
+#include <filesystem>
 #include <iomanip>
 #include <sstream>
 #include <stdexcept>
@@ -41,6 +42,7 @@ extern "C" {
 namespace {
 constexpr const char *kDefaultDevice = "/dev/video0";
 constexpr std::chrono::milliseconds kRetryDelay{10};
+constexpr std::chrono::seconds kCameraRetry{1};
 
 constexpr const char *kProfileExtension = ".gpfl";
 constexpr const char *kDefaultProfileName = "Padrão";
@@ -394,6 +396,20 @@ void MainWindow::initialise_device() {
   v4l2core_set_verbosity(0);
   std::string path = current_device_path_.empty() ? std::string{kDefaultDevice}
                                                   : current_device_path_;
+
+  std::string next_device = std::string{kDefaultDevice};
+
+  for (int i = 0; i <= 64; ++i) {
+    const std::string candidate = "/dev/video" + std::to_string(i);
+    if (std::filesystem::exists(candidate)) {
+      next_device = candidate;
+      break;
+    }
+  }
+
+  switch_device(next_device);
+  /*return;
+
   device_ = v4l2core_init_dev(path.c_str());
   if (!device_) {
     if (v4l2core_get_num_devices() <= 0)
@@ -417,7 +433,7 @@ void MainWindow::initialise_device() {
   if (!start_streaming()) {
     return;
   }
-  hide_no_camera_warning();
+  hide_no_camera_warning();*/
 }
 
 void MainWindow::stop_stream() {
@@ -429,9 +445,21 @@ void MainWindow::stop_stream() {
 }
 
 void MainWindow::stop_capture_thread() {
+  const bool joining_self = capture_thread_.joinable() &&
+                             capture_thread_.get_id() ==
+                                 std::this_thread::get_id();
+
   running_.store(false, std::memory_order_release);
-  if (capture_thread_.joinable())
+
+  if (capture_thread_.joinable() && !joining_self)
     capture_thread_.join();
+
+  if (device_) {
+    v4l2core_stop_stream(device_);
+    v4l2core_close_dev(device_);
+    device_ = nullptr;
+  }
+
   pending_frame_ = false;
 }
 
@@ -515,18 +543,21 @@ bool MainWindow::reopen_video_device(
     const std::function<void(v4l2_dev_t *)> &initializer) {
   stop_capture_thread();
 
-  if (device_) {
-    v4l2core_stop_stream(device_);
-    v4l2core_close_dev(device_);
-    device_ = nullptr;
+  v4l2_dev_t *new_device = nullptr;
+  const auto retry_deadline = std::chrono::steady_clock::now() +
+      std::chrono::minutes{1};
+  while (!new_device && std::chrono::steady_clock::now() < retry_deadline) {
+    new_device = v4l2core_init_dev(device_path.c_str());
+    if (!new_device)
+      g_usleep(std::chrono::minutes{1}.count());
   }
 
-  v4l2_dev_t *new_device = v4l2core_init_dev(device_path.c_str());
   if (!new_device) {
     post_status("Falha ao abrir " + device_path);
     if (v4l2core_get_num_devices() <= 0)
       show_no_camera_warning();
-    return false;
+    exit(-1); // Fecha apos 15 minutos sem conectar webcam
+    //return false;
   }
 
   if (initializer)
@@ -565,7 +596,13 @@ void MainWindow::capture_loop() {
 
     v4l2_frame_buff_t *frame = v4l2core_get_decoded_frame(device_);
     if (!frame) {
-      std::this_thread::sleep_for(kRetryDelay);
+      show_no_camera_warning();
+      std::this_thread::sleep_for(kCameraRetry);
+      Glib::signal_idle().connect_once([this]() {
+        if (!running_.load(std::memory_order_acquire))
+          return;
+        initialise_device();
+      });
       continue;
     }
 
