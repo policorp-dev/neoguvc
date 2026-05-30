@@ -254,6 +254,14 @@ MainWindow::MainWindow() {
   capture_flash_frame_.set_size_request(kCameraDisplayWidth, kCameraDisplayHeight);
   video_overlay_.add_overlay(capture_flash_frame_);
 
+  no_camera_warning_box_.set_hexpand(true);
+  no_camera_warning_box_.set_vexpand(true);
+  no_camera_warning_box_.set_halign(Gtk::ALIGN_FILL);
+  no_camera_warning_box_.set_valign(Gtk::ALIGN_FILL);
+  no_camera_warning_box_.set_spacing(0);
+  no_camera_warning_box_.get_style_context()->add_class("no-camera-warning");
+  no_camera_warning_box_.set_no_show_all(true);
+
   no_camera_label_.set_hexpand(true);
   no_camera_label_.set_vexpand(true);
   no_camera_label_.set_halign(Gtk::ALIGN_CENTER);
@@ -267,10 +275,11 @@ MainWindow::MainWindow() {
   no_camera_label_.set_margin_right(16);
   no_camera_label_.set_text("Nenhuma câmera disponível.\n"
                             "Conecte um dispositivo compatível e tente novamente.");
-  no_camera_label_.get_style_context()->add_class("no-camera-warning");
   no_camera_label_.set_no_show_all(true);
-  video_overlay_.add_overlay(no_camera_label_);
-  no_camera_label_.hide();
+  no_camera_warning_box_.add(no_camera_label_);
+  no_camera_label_.show();
+  video_overlay_.add_overlay(no_camera_warning_box_);
+  no_camera_warning_box_.hide();
 
   sidebar_box_.set_orientation(Gtk::ORIENTATION_VERTICAL);
   sidebar_box_.set_spacing(16);
@@ -1305,8 +1314,8 @@ void MainWindow::show_no_camera_warning() {
     return;
   no_camera_warning_visible_ = true;
   set_config_menu_items_sensitive(false);
-  if (!no_camera_label_.get_visible())
-    no_camera_label_.show();
+  if (!no_camera_warning_box_.get_visible())
+    no_camera_warning_box_.show();
 }
 
 void MainWindow::hide_no_camera_warning() {
@@ -1314,8 +1323,8 @@ void MainWindow::hide_no_camera_warning() {
     return;
   no_camera_warning_visible_ = false;
   set_config_menu_items_sensitive(true);
-  if (no_camera_label_.get_visible())
-    no_camera_label_.hide();
+  if (no_camera_warning_box_.get_visible())
+    no_camera_warning_box_.hide();
 }
 
 void MainWindow::set_config_menu_items_sensitive(bool enabled) {

@@ -95,6 +95,13 @@
   background-color: transparent;
 }
 
+.no-camera-warning {
+  background-color: rgba(0, 0, 0, 0.85);
+  border-radius: 0;
+  padding: 14px;
+  color: #fff;
+}
+
 .controls-window-root {
   background-color: #101010;
 }

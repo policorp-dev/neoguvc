@@ -105,6 +105,7 @@ private:
   Gtk::Overlay video_overlay_;
   Gtk::Image image_widget_;
   Gtk::Frame capture_flash_frame_;
+  Gtk::Box no_camera_warning_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Label no_camera_label_;
   Gtk::Box sidebar_box_{Gtk::ORIENTATION_VERTICAL};
   Gtk::Box spacer_top_{Gtk::ORIENTATION_VERTICAL};
