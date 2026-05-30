@@ -403,46 +403,29 @@ MainWindow::~MainWindow() {
 
 void MainWindow::initialise_device() {
   v4l2core_set_verbosity(0);
-  std::string path = current_device_path_.empty() ? std::string{kDefaultDevice}
-                                                  : current_device_path_;
+  const std::string preferred_path = current_device_path_.empty()
+                                         ? std::string{kDefaultDevice}
+                                         : current_device_path_.c_str();
 
-  std::string next_device = std::string{kDefaultDevice};
-
-  for (int i = 0; i <= 64; ++i) {
-    const std::string candidate = "/dev/video" + std::to_string(i);
-    if (std::filesystem::exists(candidate)) {
-      next_device = candidate;
-      break;
+  std::string next_device;
+  if (std::filesystem::exists(preferred_path)) {
+    next_device = preferred_path;
+  } else {
+    for (int i = 0; i <= 64; ++i) {
+      const std::string candidate = "/dev/video" + std::to_string(i);
+      if (std::filesystem::exists(candidate)) {
+        next_device = candidate;
+        break;
+      }
     }
   }
 
+  if (next_device.empty()) {
+    show_no_camera_warning();
+    return;
+  }
+
   switch_device(next_device);
-  /*return;
-
-  device_ = v4l2core_init_dev(path.c_str());
-  if (!device_) {
-    if (v4l2core_get_num_devices() <= 0)
-      show_no_camera_warning();
-    return;
-  }
-  current_device_path_ = path;
-
-  v4l2core_prepare_valid_format(device_);
-  v4l2core_prepare_valid_resolution(device_);
-  if (v4l2core_update_current_format(device_) != E_OK) {
-    return;
-  }
-
-  frame_width_ = v4l2core_get_frame_width(device_);
-  frame_height_ = v4l2core_get_frame_height(device_);
-  if (frame_width_ <= 0 || frame_height_ <= 0) {
-    return;
-  }
-
-  if (!start_streaming()) {
-    return;
-  }
-  hide_no_camera_warning();*/
 }
 
 void MainWindow::stop_stream() {
@@ -552,21 +535,12 @@ bool MainWindow::reopen_video_device(
     const std::function<void(v4l2_dev_t *)> &initializer) {
   stop_capture_thread();
 
-  v4l2_dev_t *new_device = nullptr;
-  const auto retry_deadline = std::chrono::steady_clock::now() +
-      std::chrono::minutes{1};
-  while (!new_device && std::chrono::steady_clock::now() < retry_deadline) {
-    new_device = v4l2core_init_dev(device_path.c_str());
-    if (!new_device)
-      g_usleep(std::chrono::minutes{1}.count());
-  }
-
+  v4l2_dev_t *new_device = v4l2core_init_dev(device_path.c_str());
   if (!new_device) {
     post_status("Falha ao abrir " + device_path);
     if (v4l2core_get_num_devices() <= 0)
       show_no_camera_warning();
-    exit(-1); // Fecha apos 15 minutos sem conectar webcam
-    //return false;
+    return false;
   }
 
   if (initializer)
