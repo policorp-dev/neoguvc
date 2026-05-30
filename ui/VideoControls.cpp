@@ -338,6 +338,7 @@ void VideoControls::populate_frame_rates() {
 
 void VideoControls::refresh_state() {
   device_ = main_window_.device_handle();
+  v4l2core_check_device_list_events();
 
   if (!device_) {
     if (device_combo_)
