@@ -168,6 +168,7 @@ private:
   void start_record_button_animation();
   void stop_record_button_animation();
   bool on_record_button_pulse_timeout();
+  bool on_device_poll_timeout();
   void stop_capture_thread();
   bool start_streaming();
   void resize_rgb_buffer();
@@ -190,6 +191,7 @@ private:
   sigc::connection capture_flash_timeout_;
   double capture_flash_opacity_{0.0};
   sigc::connection record_pulse_timeout_;
+  sigc::connection device_poll_timeout_;
   bool record_icon_glow_state_{false};
   bool no_camera_warning_visible_{false};
 };

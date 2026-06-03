@@ -388,6 +388,9 @@ MainWindow::MainWindow() {
   capture_flash_frame_.hide();
   initialise_audio();
   initialise_device();
+
+  device_poll_timeout_ = Glib::signal_timeout().connect_seconds(
+      sigc::mem_fun(*this, &MainWindow::on_device_poll_timeout), 1);
 }
 
 MainWindow::~MainWindow() {
@@ -619,6 +622,14 @@ void MainWindow::capture_loop() {
     v4l2core_release_frame(device_, frame);
     dispatcher_();
   }
+}
+
+bool MainWindow::on_device_poll_timeout() {
+  v4l2core_check_device_list_events();
+  if (!device_ && v4l2core_get_num_devices() > 0) {
+    initialise_device();
+  }
+  return true;
 }
 
 void MainWindow::on_menu_button_clicked() {
